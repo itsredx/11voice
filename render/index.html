@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11Voice</title>
+    <script>
+        window._console_logs = [];
+        (function() {
+            const origLog = console.log;
+            const origWarn = console.warn;
+            const origErr = console.error;
+            console.log = function(...args) {
+                window._console_logs.push("[LOG] " + args.map(String).join(" "));
+                origLog.apply(console, args);
+            };
+            console.warn = function(...args) {
+                window._console_logs.push("[WARN] " + args.map(String).join(" "));
+                origWarn.apply(console, args);
+            };
+            console.error = function(...args) {
+                window._console_logs.push("[ERROR] " + args.map(String).join(" "));
+                origErr.apply(console, args);
+            };
+        })();
+    </script>
+    <!-- ADD SIMPLEBAR CSS -->
+    <link rel="stylesheet" href="./js/scroll-bar/simplebar.min.css" />
+     <link id="base-stylesheet" type="text/css" rel="stylesheet" href="styles.css">
+                <style id="theme-styles">:root {
+    --md-sys-color-primary: #6750A4;
+    --md-sys-color-on-primary: #FFFFFF;
+    --md-sys-color-primary-container: #EADDFF;
+    --md-sys-color-on-primary-container: #21005D;
+    --md-sys-color-secondary: #625B71;
+    --md-sys-color-on-secondary: #FFFFFF;
+    --md-sys-color-secondary-container: #E8DEF8;
+    --md-sys-color-on-secondary-container: #1D192B;
+    --md-sys-color-tertiary: #7D5260;
+    --md-sys-color-on-tertiary: #FFFFFF;
+    --md-sys-color-tertiary-container: #FFD8E4;
+    --md-sys-color-on-tertiary-container: #31111D;
+    --md-sys-color-error: #B3261E;
+    --md-sys-color-on-error: #FFFFFF;
+    --md-sys-color-error-container: #F9DEDC;
+    --md-sys-color-on-error-container: #410E0B;
+    --md-sys-color-background: #FFFBFE;
+    --md-sys-color-on-background: #1C1B1F;
+    --md-sys-color-surface: #FFFBFE;
+    --md-sys-color-on-surface: #1C1B1F;
+    --md-sys-color-surface-variant: #E7E0EC;
+    --md-sys-color-on-surface-variant: #49454F;
+    --md-sys-color-outline: #79747E;
+    --md-sys-color-outline-variant: #CAC4D0;
+    --md-sys-color-surface-tint: #6750A4;
+    --md-sys-color-surface-bright: #FFFBFE;
+    --md-sys-color-surface-dim: #DED8E1;
+    --md-sys-color-surface-container-lowest: #FFFFFF;
+    --md-sys-color-surface-container-low: #F7F2FA;
+    --md-sys-color-surface-container: #F3EDF7;
+    --md-sys-color-surface-container-high: #ECE6F0;
+    --md-sys-color-surface-container-highest: #E6E0E9;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #313033;
+    --md-sys-color-inverse-on-surface: #F4EFF4;
+    --md-sys-color-inverse-primary: #D0BCFF;
+    --primary: var(--md-sys-color-primary);
+    --background: var(--md-sys-color-background);
+    --surface: var(--md-sys-color-surface);
+}</style>
+                <style id="dynamic-styles">
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-19 { box-sizing: border-box; background: #0F172A; width: 100vw; height: 100vh; }
+.shared-column-2 { display: flex; flex-direction: column; justify-content: flex-start; align-items: center; height: 100%; direction: ltr; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-16 { box-sizing: border-box; background: #1E293B; padding: 16px 24px; width: -webkit-fill-available; }
+.shared-row-1 { display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; direction: ltr; }
+.shared-row-0 { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; width: 100%; direction: ltr; }
+
+                .material-icon-5 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 28px;
+                    color: #6366F1;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-9 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #F8FAFC; font-size: 20px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+            .shared-text-10 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #34D399; font-size: 12px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+.shared-iconbutton-1 { display: inline-flex; align-items: center; justify-content: center; padding: 8px; margin: 0; border: none; background-color: #334155; color: None; cursor: pointer; outline: none; pointer-events: auto; border-radius: 6px; overflow: hidden; position: relative; box-sizing: border-box; transition: background-color 0.15s linear; -webkit-appearance: none; appearance: none; z-index: 1000; width: calc(24px + 16px); height: calc(24px + 16px); }
+
+            .shared-iconbutton-1 > i, .shared-iconbutton-1 > img, .shared-iconbutton-1 > svg, .shared-iconbutton-1 > * {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                display: block;
+                object-fit: contain;
+            }
+.shared-iconbutton-1:hover { background-color: rgba(0, 0, 0, 0.08); }
+.shared-iconbutton-1:active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-1.active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-1.disabled { background-color: transparent; color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+@keyframes ripple_shared-iconbutton-1 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-iconbutton-1::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: currentColor; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-iconbutton-1:active::after { animation: ripple_shared-iconbutton-1 0.6s ease-out; }
+
+                .material-icon-6 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 24px;
+                    color: #F8FAFC;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-17 { box-sizing: border-box; padding: 16px; width: -webkit-fill-available; }
+.shared-row-2 { display: flex; flex-direction: row; justify-content: space-around; align-items: center; width: 100%; direction: ltr; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-4 { box-sizing: border-box; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-3 { box-sizing: border-box; background: #1E293B; border-radius: 10px; padding: 16px; width: 500px; }
+.shared-column-0 { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; height: 100%; direction: ltr; }
+
+                .material-icon-0 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #38BDF8;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-0 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #F8FAFC; font-size: 15px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-0 { box-sizing: border-box; background: #334155; border-radius: 12px; padding: 3px 8px; }
+
+            .shared-text-1 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #38BDF8; font-size: 10px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+            .shared-text-2 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #64748B; font-size: 11px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-1 { box-sizing: border-box; }
+
+        .shared-dropdown-0.dropdown-container {
+            position: relative;
+            width: 100%;
+            heifht: auto; //TODO
+            font-family: sans-serif;
+        }
+        .shared-dropdown-0 .dropdown-value-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background-color: #334155;
+            color: #F8FAFC;
+            border-radius: 6px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom:1px solid #334155; outline: none; box-sizing: border-box;
+            cursor: pointer;
+            transition: border-bottom-color 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+        .shared-dropdown-0.open .dropdown-value-container {
+            border-bottom-color: var(--md-sys-color-primary); /* Highlight when open */
+            
+        }
+        .shared-dropdown-0 .dropdown-caret {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            
+            transition: transform 0.2s ease-in-out;
+        }
+        .shared-dropdown-0.open .dropdown-caret {
+            transform: rotate(180deg);
+        }
+        .shared-dropdown-0 .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: auto;
+            background-color: #FFFFFF;
+            color: #000000;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            list-style: none;
+            margin: 12px 0.0px 0.0px;
+            padding: 4px 0.0px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+            box-shadow: 0 4.0px 8px rgba(0,0,0,0.15);
+            overflow-y: auto;
+        }
+        /* Elegant Native Scrollbars for Pythra Menu */
+        .shared-dropdown-0 .dropdown-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+        .shared-dropdown-0 .dropdown-menu::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .shared-dropdown-0 .dropdown-menu::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1); 
+            border-radius: 4px;
+        }
+        .shared-dropdown-0 .dropdown-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(103, 80, 164, 0.1); 
+        }
+        .shared-dropdown-0.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            z-index: 1500;
+        }
+        .shared-dropdown-0.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .shared-dropdown-0 .dropdown-item {
+            padding: 8px 12px;
+            margin: 0px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 4px;
+        }
+        .shared-dropdown-0 .dropdown-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+            background-color: transparent !important;
+        }
+        .shared-dropdown-0 .dropdown-item:hover {
+            background-color: rgba(103, 80, 164, 0.1); /* Hover color */
+        }
+        .shared-dropdown-0 .dropdown-item.selected {
+            background-color: #E0E0E0;
+            font-weight: bold;
+        }
+        .shared-dropdown-0 .dropdown-value-container:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* Hover color */
+        }
+        .shared-dropdown-0 .dropdown-menu:hover {
+            background-color: rgba(0, 0, 0, 0.08); /* Hover color */
+        }
+        
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-2 { box-sizing: border-box; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-9 { box-sizing: border-box; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-8 { box-sizing: border-box; background: #1E293B; border-radius: 10px; padding: 16px; width: 500px; }
+
+                .material-icon-1 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #34D399;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-5 { box-sizing: border-box; background: #334155; border-radius: 12px; padding: 3px 8px; }
+
+            .shared-text-3 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #34D399; font-size: 10px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-6 { box-sizing: border-box; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-7 { box-sizing: border-box; }
+.shared-scrollview-0 { display: flex; width: 100%; height: 100%; box-sizing: border-box; flex-direction: column; overflow-x: hidden; overflow-y: auto; padding: 8px 16px; }
+.shared-scrollview-0 > * { flex-shrink: 0; }
+.shared-column-1 { display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; height: 100%; direction: ltr; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-12 { box-sizing: border-box; background: #1E293B; border-radius: 10px; padding: 16px; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-10 { box-sizing: border-box; background: #38BDF8; border-radius: 5px; width: 10px; height: 10px; }
+
+            .shared-text-4 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #38BDF8; font-size: 13px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+            .shared-text-5 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #64748B; font-family: monospace; font-size: 11px;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-11 { box-sizing: border-box; background: #334155; border-radius: 4px; padding: 2px 6px; }
+
+            .shared-text-6 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #10B981; font-size: 10px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+.shared-iconbutton-0 { display: inline-flex; align-items: center; justify-content: center; padding: 4px; margin: 0; border: none; background-color: None; color: None; cursor: pointer; outline: none; pointer-events: auto; border-radius: 4px; overflow: hidden; position: relative; box-sizing: border-box; transition: background-color 0.15s linear; -webkit-appearance: none; appearance: none; z-index: 1000; width: calc(24px + 8px); height: calc(24px + 8px); }
+
+            .shared-iconbutton-0 > i, .shared-iconbutton-0 > img, .shared-iconbutton-0 > svg, .shared-iconbutton-0 > * {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                display: block;
+                object-fit: contain;
+            }
+.shared-iconbutton-0:hover { background-color: rgba(0, 0, 0, 0.08); }
+.shared-iconbutton-0:active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-0.active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-0.disabled { background-color: transparent; color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+@keyframes ripple_shared-iconbutton-0 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-iconbutton-0::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: currentColor; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-iconbutton-0:active::after { animation: ripple_shared-iconbutton-0 0.6s ease-out; }
+
+                .material-icon-2 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 16px;
+                    color: #6366F1;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+                .material-icon-3 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #94A3B8;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+                .material-icon-4 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #64748B;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-7 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #F8FAFC; font-size: 15px; line-height: 1.4;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-15 { box-sizing: border-box; background: #1E293B; border-radius: 10px; padding: 16px; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-13 { box-sizing: border-box; background: #34D399; border-radius: 5px; width: 10px; height: 10px; }
+
+            .shared-text-8 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #34D399; font-size: 13px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-14 { box-sizing: border-box; background: #334155; border-radius: 4px; padding: 2px 6px; }
+
+                    [data-role="floating-label-container"] {
+                        background: linear-gradient(
+                            to bottom,
+                            transparent 35%,
+                            var(--ptf-bg, white) 35%
+                        );  
+                    }
+                    
+.shared-container-18 { box-sizing: border-box; background: #1E293B; padding: 16px 24px; width: -webkit-fill-available; }
+.shared-iconbutton-2 { display: inline-flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: none; background-color: #6366F1; color: None; cursor: pointer; outline: none; pointer-events: auto; border-radius: 30px; overflow: hidden; position: relative; box-sizing: border-box; transition: background-color 0.15s linear; -webkit-appearance: none; appearance: none; z-index: 1000; width: calc(24px + 24px); height: calc(24px + 24px); }
+
+            .shared-iconbutton-2 > i, .shared-iconbutton-2 > img, .shared-iconbutton-2 > svg, .shared-iconbutton-2 > * {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                display: block;
+                object-fit: contain;
+            }
+.shared-iconbutton-2:hover { background-color: rgba(0, 0, 0, 0.08); }
+.shared-iconbutton-2:active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-2.active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-2.disabled { background-color: transparent; color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+@keyframes ripple_shared-iconbutton-2 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-iconbutton-2::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: currentColor; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-iconbutton-2:active::after { animation: ripple_shared-iconbutton-2 0.6s ease-out; }
+.shared-iconbutton-3 { display: inline-flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: none; background-color: #334155; color: None; cursor: pointer; outline: none; pointer-events: auto; border-radius: 30px; overflow: hidden; position: relative; box-sizing: border-box; transition: background-color 0.15s linear; -webkit-appearance: none; appearance: none; z-index: 1000; width: calc(24px + 24px); height: calc(24px + 24px); }
+
+            .shared-iconbutton-3 > i, .shared-iconbutton-3 > img, .shared-iconbutton-3 > svg, .shared-iconbutton-3 > * {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                display: block;
+                object-fit: contain;
+            }
+.shared-iconbutton-3:hover { background-color: rgba(0, 0, 0, 0.08); }
+.shared-iconbutton-3:active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-3.active { background-color: rgba(0, 0, 0, 0.12); }
+.shared-iconbutton-3.disabled { background-color: transparent; color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+@keyframes ripple_shared-iconbutton-3 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-iconbutton-3::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: currentColor; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-iconbutton-3:active::after { animation: ripple_shared-iconbutton-3 0.6s ease-out; }
+
+                .material-icon-7 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 22px;
+                    color: #F8FAFC;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-11 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #64748B; font-size: 10px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+
+            .shared-text-12 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #F8FAFC; font-size: 13px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+.shared-row-3 { display: flex; flex-direction: row; justify-content: flex-end; align-items: center; width: 100%; direction: ltr; }
+.shared-elevatedbutton-0 { display: inline-flex; align-items: center; justify-content: center; padding: 12px 14px; margin: 4px; border: none; border-radius: 8px; background-color: #334155; color: #6366F1; cursor: pointer; text-align: center; text-decoration: none; outline: none; box-sizing: border-box; overflow: hidden; position: relative; transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s linear; -webkit-appearance: none; -moz-appearance: none; appearance: none; box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.30), 0px 1px 1px 0px rgba(0,0,0,0.15); }
+.shared-elevatedbutton-0:hover { 
+                box-shadow: 0px 1.5px 3.0px 0px rgba(0,0,0,0.18), 0px 3.0px 6.0px 1px rgba(0,0,0,0.13); 
+                
+                /* Add background overlay? */ 
+                }
+.shared-elevatedbutton-0:active { box-shadow: none; background-color: rgba(0, 0, 0, 0.12) }
+.shared-elevatedbutton-0.disabled { background-color: rgba(0, 0, 0, 0.12); color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+
+@keyframes ripple_shared-elevatedbutton-0 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-elevatedbutton-0::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: '#6366F1' if '#6366F1' else 'currentColor'; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-elevatedbutton-0:active::after { animation: ripple_shared-elevatedbutton-0 0.6s ease-out; }
+
+                .material-icon-8 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #6366F1;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-13 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                color: #6366F1; font-size: 13px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+
+.shared-elevatedbutton-1 { display: inline-flex; align-items: center; justify-content: center; padding: 12px 16px; margin: 4px; border: none; border-radius: 8px; background-color: #334155; color: #F8FAFC; cursor: pointer; text-align: center; text-decoration: none; outline: none; box-sizing: border-box; overflow: hidden; position: relative; transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s linear; -webkit-appearance: none; -moz-appearance: none; appearance: none; box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.30), 0px 1px 1px 0px rgba(0,0,0,0.15); }
+.shared-elevatedbutton-1:hover { 
+                box-shadow: 0px 1.5px 3.0px 0px rgba(0,0,0,0.18), 0px 3.0px 6.0px 1px rgba(0,0,0,0.13); 
+                
+                /* Add background overlay? */ 
+                }
+.shared-elevatedbutton-1:active { box-shadow: none; background-color: rgba(0, 0, 0, 0.12) }
+.shared-elevatedbutton-1.disabled { background-color: rgba(0, 0, 0, 0.12); color: rgba(0, 0, 0, 0.38); box-shadow: none; cursor: default; pointer-events: none;  }
+
+@keyframes ripple_shared-elevatedbutton-1 { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
+.shared-elevatedbutton-1::after { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; padding-top: 100%; background-color: '#F8FAFC' if '#F8FAFC' else 'currentColor'; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
+.shared-elevatedbutton-1:active::after { animation: ripple_shared-elevatedbutton-1 0.6s ease-out; }
+
+                .material-icon-9 {
+                    position: relative;
+                    font-family: 'Material Symbols Rounded';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 18px;
+                    color: #F8FAFC;
+                    line-height: 1;
+                    letter-spacing: normal;
+                    text-transform: none;
+                    z-index: 100;
+                    display: inline-block;
+                    white-space: nowrap;
+                    word-wrap: normal;
+                    direction: ltr;
+                    -webkit-font-smoothing: antialiased;
+                    text-rendering: optimizeLegibility;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-feature-settings: 'liga';
+                    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                    
+                }
+            
+
+
+            .shared-text-14 {
+                margin: 0; /* Reset default paragraph margin */
+                padding: 0;
+                font-size: 13px; font-weight: bold;
+                
+                white-space: pre-wrap;
+                
+            }
+            
+</style>
+                
+        <script src="qwebchannel.js"></script>
+        <script>
+            // Suppress inset-area deprecation warnings
+            (function() {
+                const originalWarn = console.warn;
+                console.warn = function(...args) {
+                    const message = args.join(' ');
+                    if (message.includes('inset-area') || 
+                        message.includes('position-area') ||
+                        message.includes('has been deprecated')) {
+                        return; // Suppress these specific warnings
+                    }
+                    originalWarn.apply(console, args);
+                };
+            })();
+
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                new QWebChannel(qt.webChannelTransport, (channel) => {
+                    window.pywebview = channel.objects.pywebview;
+                    console.log("PyWebChannel connected.");
+
+                    // --- Client-side viewport resize detection ---
+                    // ResizeObserver fires only after the DOM is loaded and the
+                    // JS-Python bridge is connected, avoiding premature events.
+                    const root = document.getElementById('root-container');
+                    if (root) {
+                        const ro = new ResizeObserver(entries => {
+                            for (const entry of entries) {
+                                const w = Math.round(entry.contentRect.width);
+                                const h = Math.round(entry.contentRect.height);
+                                if (window.pywebview) {
+                                    window.pywebview.on_viewport_resize(w, h);
+                                }
+                            }
+                        });
+                        ro.observe(root);
+                    }
+                    
+                    // --- Frameless Drag & Resize Listeners ---
+                    document.querySelectorAll('.resize-handle').forEach(handle => {
+                        handle.addEventListener('mousedown', (e) => {
+                            if (e.button === 0 && window.pywebview) {
+                                const edge = parseInt(handle.dataset.edge, 10);
+                                window.pywebview.startWindowResize(edge);
+                                e.preventDefault();
+                            }
+                        });
+                    });
+
+                    document.addEventListener('mousedown', (e) => {
+                        if (e.button !== 0) return;
+                        
+                        // Check if we clicked on or inside a drag region
+                        const dragRegion = e.target.closest('.pythra-window-drag');
+                        if (dragRegion && window.pywebview) {
+                            window.pywebview.startWindowDrag();
+                            e.preventDefault();
+                        }
+                    });
+                });
+                window.__PYTHRA_CONFIG__ = {"app_name":"11Voice","app_id":"com.pythra.11voice","win_width":1280,"win_height":720,"min_win_width":400,"min_win_height":300,"frameless":false,"maximixed":false,"fixed_size":false,"Debug":true,"render_dir":"render","assets_dir":"assets","assets_server_port":8008,"plugins":[]};
+                try {
+                    setFloatingLabelBg(color=getFinalSolidColor());
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+            function sendMessage(message) { if(window.pywebview) window.pywebview.send_message(message, ()=>{}); }
+            function handleClick(name) { if(window.pywebview) window.pywebview.on_pressed_str(name, ()=>{}); }
+            function handleClickWithArgs(callback_name, ...args) {
+                if (window.pywebview) {
+                    console.log("index", args);
+                    window.pywebview.on_pressed(callback_name, ...args).then(function(response) {
+                        console.log(response);
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                } else {
+                    console.error('pywebview is not defined');
+                }
+            }
+            function handleItemTap(name, index) { if(window.pywebview) window.pywebview.on_item_tap(name, index, ()=>{}); }
+            function handleInput(name, value) {
+                if(window.pywebview) {
+                    window.pywebview.on_input_changed(name, value, ()=>{});
+                }
+            }
+            function setFloatingLabelBg(key, color) {
+                let el;
+
+                if (key) {
+                    el = document.querySelector(`[data-key="${key}"]`);
+                } else {
+                    el = document.querySelector(`[data-role="floating-label-container"]`);
+                }
+                console.log("Floating label bg:", color);
+
+                if (!el) return;
+
+                el.style.setProperty('--ptf-bg', color);
+            }
+            function getFinalSolidColor(key) {
+                function getElement(key) {
+                    if (key) {
+                        return document.querySelector(`[data-key="${key}"]`);
+                    } else {
+                        return document.querySelector(`[data-role="dropdown-button"]`);
+                    }
+                }
+
+                const container = getElement(key);
+                console.log(container);
+                if (!container) return null;
+
+                function parseColor(colorStr) {
+                    const matches = colorStr.match(/[\d.]+/g);
+                    if (!matches) return [255, 255, 255, 1];
+                    const values = matches.map(Number);
+                    if (values.length === 3) values.push(1);
+                    return values;
+                }
+
+                // Step 1: Find background behind container
+                let parent = container.parentElement;
+                let bgRgb = [255, 255, 255];
+
+                while (parent) {
+                    const parentBg = window.getComputedStyle(parent).backgroundColor;
+
+                    if (parentBg !== 'rgba(0, 0, 0, 0)' && parentBg !== 'transparent') {
+                        const parsed = parseColor(parentBg);
+                        bgRgb = parsed;
+
+                        if (parsed[3] >= 0.99) break;
+                    }
+
+                    parent = parent.parentElement;
+                }
+
+                // Step 2: Get container bg
+                const containerBg = window.getComputedStyle(container).backgroundColor;
+                const fgRgba = parseColor(containerBg);
+
+                // Step 3: Alpha blend
+                const alpha = fgRgba[3];
+                const r = Math.round((fgRgba[0] * alpha) + (bgRgb[0] * (1 - alpha)));
+                const g = Math.round((fgRgba[1] * alpha) + (bgRgb[1] * (1 - alpha)));
+                const b = Math.round((fgRgba[2] * alpha) + (bgRgb[2] * (1 - alpha)));
+
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+        </script>
+        
+                
+            </head>
+<body>
+    <div id="app-wrapper">
+        <!-- Resize Handles for Frameless Window -->
+        <div class="resize-handle top" data-edge="1"></div>
+        <div class="resize-handle bottom" data-edge="8"></div>
+        <div class="resize-handle left" data-edge="2"></div>
+        <div class="resize-handle right" data-edge="4"></div>
+        <div class="resize-handle top-left" data-edge="3"></div>
+        <div class="resize-handle top-right" data-edge="5"></div>
+        <div class="resize-handle bottom-left" data-edge="10"></div>
+        <div class="resize-handle bottom-right" data-edge="12"></div>
+
+        <div id="root-container"><div id="fw_id_1" class="custom-widget" data-key="" data-role=""><div id="fw_id_2" class="custom-widget" data-key="" data-role=""><div id="fw_id_3" class="shared-container-19" data-key="studio_root_view" data-role="None"><div id="fw_id_4" class="shared-column-2" data-key="" data-role=""><div id="fw_id_5" class="shared-container-16" data-key="studio_heading_container" data-role="None"><div id="fw_id_6" class="shared-row-1" data-key="" data-role=""><div id="fw_id_7" class="shared-row-0" data-key="" data-role=""><i id="fw_id_8" class="material-icon-5" data-key="" data-role="">record_voice_over</i><div id="fw_id_9" class="" data-key="" data-role="" style="width: 12px"></div><p id="fw_id_10" class="shared-text-9" data-key="" data-role="" style="color: #F8FAFC; font-size: 20; font-weight: bold">11Voice Conversation Studio</p></div><div id="fw_id_11" class="shared-row-1" data-key="" data-role=""><p id="fw_id_12" class="shared-text-10" data-key="" data-role="" style="color: #34D399; font-size: 12; font-weight: bold">PipeWire Multi-Output</p><div id="fw_id_13" class="" data-key="" data-role="" style="width: 12px"></div><button id="fw_id_14" class="shared-iconbutton-1" data-key="" data-role="" onclick="handleClick('header_refresh_devices')"><i id="fw_id_15" class="material-icon-6" data-key="" data-role="">refresh</i></button></div></div></div><div id="fw_id_16" class="shared-container-17" data-key="speakers_deck" data-role="None"><div id="fw_id_17" class="shared-row-2" data-key="" data-role=""><div id="fw_id_18" class="shared-container-4" data-key="spk_exp_spk_a" data-role="None"><div id="fw_id_19" class="shared-container-3" data-key="speaker_card_spk_a" data-role="None"><div id="fw_id_20" class="shared-column-0" data-key="" data-role=""><div id="fw_id_21" class="shared-row-1" data-key="" data-role=""><div id="fw_id_22" class="shared-row-0" data-key="" data-role=""><i id="fw_id_23" class="material-icon-0" data-key="" data-role="">mic</i><div id="fw_id_24" class="" data-key="" data-role="" style="width: 8px"></div><p id="fw_id_25" class="shared-text-0" data-key="" data-role="" style="color: #F8FAFC; font-size: 15; font-weight: bold">Speaker A (Host)</p></div><div id="fw_id_26" class="shared-container-0" data-key="speaker_pill_spk_a" data-role="None"><p id="fw_id_27" class="shared-text-1" data-key="" data-role="" style="color: #38BDF8; font-size: 10; font-weight: bold">Configured</p></div></div><div id="fw_id_28" class="" data-key="" data-role="" style="height: 12px"></div><p id="fw_id_29" class="shared-text-2" data-key="" data-role="" style="color: #64748B; font-size: 11; font-weight: bold">Voice Model</p><div id="fw_id_30" class="" data-key="" data-role="" style="height: 4px"></div><div id="fw_id_31" class="shared-container-1" data-key="voice_sel_spk_a_container" data-role="None">
+        <div id="fw_id_32" class="dropdown-container shared-dropdown-0">
+            <div class="dropdown-value-container">
+                <span>Rachel (Calm &amp; Clear)</span>
+                <svg class="dropdown-caret" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </div>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item" data-value="21m00Tcm4TlvDq8ikWAM">Rachel (Calm &amp; Clear)</li><li class="dropdown-item" data-value="AZnzlk1XvdvUeBnXmlld">Domi (Strong &amp; Engaging)</li><li class="dropdown-item" data-value="EXAVITQu4vr4xnSDxMaL">Bella (Expressive Narrative)</li><li class="dropdown-item" data-value="ErXwobaYiN019PkySvjV">Antoni (Warm &amp; Natural)</li><li class="dropdown-item" data-value="TxGEqnHWrfWFTfGW9XjX">Josh (Deep &amp; Conversational)</li><li class="dropdown-item" data-value="pNInz6obpgDQGcFmaJgB">Adam (Professional &amp; Narrative)</li><li class="dropdown-item" data-value="VR6AewLTigWG4xSOukaG">Arnold (Crisp &amp; Articulate)</li><li class="dropdown-item" data-value="yoZ06aMxZJJ28mfd3POQ">Sam (Dynamic &amp; Lively)</li>
+            </ul>
+        </div>
+        </div><div id="fw_id_33" class="" data-key="" data-role="" style="height: 10px"></div><p id="fw_id_34" class="shared-text-2" data-key="" data-role="" style="color: #64748B; font-size: 11; font-weight: bold">Target PipeWire Output</p><div id="fw_id_35" class="" data-key="" data-role="" style="height: 4px"></div><div id="fw_id_36" class="shared-container-2" data-key="dev_sel_spk_a_container" data-role="None">
+        <div id="fw_id_37" class="dropdown-container shared-dropdown-0">
+            <div class="dropdown-value-container">
+                <span>Built-in Audio Analog Stereo</span>
+                <svg class="dropdown-caret" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </div>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item" data-value="alsa_output.pci-0000_00_1f.3.analog-stereo">Built-in Audio Analog Stereo</li><li class="dropdown-item" data-value="bluez_output.41:42:26:60:14:ED">DV-1008 [Default]</li>
+            </ul>
+        </div>
+        </div></div></div></div><div id="fw_id_38" class="" data-key="" data-role="" style="width: 16px"></div><div id="fw_id_39" class="shared-container-9" data-key="spk_exp_spk_b" data-role="None"><div id="fw_id_40" class="shared-container-8" data-key="speaker_card_spk_b" data-role="None"><div id="fw_id_41" class="shared-column-0" data-key="" data-role=""><div id="fw_id_42" class="shared-row-1" data-key="" data-role=""><div id="fw_id_43" class="shared-row-0" data-key="" data-role=""><i id="fw_id_44" class="material-icon-1" data-key="" data-role="">mic</i><div id="fw_id_45" class="" data-key="" data-role="" style="width: 8px"></div><p id="fw_id_46" class="shared-text-0" data-key="" data-role="" style="color: #F8FAFC; font-size: 15; font-weight: bold">Speaker B (Guest)</p></div><div id="fw_id_47" class="shared-container-5" data-key="speaker_pill_spk_b" data-role="None"><p id="fw_id_48" class="shared-text-3" data-key="" data-role="" style="color: #34D399; font-size: 10; font-weight: bold">Configured</p></div></div><div id="fw_id_49" class="" data-key="" data-role="" style="height: 12px"></div><p id="fw_id_50" class="shared-text-2" data-key="" data-role="" style="color: #64748B; font-size: 11; font-weight: bold">Voice Model</p><div id="fw_id_51" class="" data-key="" data-role="" style="height: 4px"></div><div id="fw_id_52" class="shared-container-6" data-key="voice_sel_spk_b_container" data-role="None">
+        <div id="fw_id_53" class="dropdown-container shared-dropdown-0">
+            <div class="dropdown-value-container">
+                <span>Domi (Strong &amp; Engaging)</span>
+                <svg class="dropdown-caret" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </div>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item" data-value="21m00Tcm4TlvDq8ikWAM">Rachel (Calm &amp; Clear)</li><li class="dropdown-item" data-value="AZnzlk1XvdvUeBnXmlld">Domi (Strong &amp; Engaging)</li><li class="dropdown-item" data-value="EXAVITQu4vr4xnSDxMaL">Bella (Expressive Narrative)</li><li class="dropdown-item" data-value="ErXwobaYiN019PkySvjV">Antoni (Warm &amp; Natural)</li><li class="dropdown-item" data-value="TxGEqnHWrfWFTfGW9XjX">Josh (Deep &amp; Conversational)</li><li class="dropdown-item" data-value="pNInz6obpgDQGcFmaJgB">Adam (Professional &amp; Narrative)</li><li class="dropdown-item" data-value="VR6AewLTigWG4xSOukaG">Arnold (Crisp &amp; Articulate)</li><li class="dropdown-item" data-value="yoZ06aMxZJJ28mfd3POQ">Sam (Dynamic &amp; Lively)</li>
+            </ul>
+        </div>
+        </div><div id="fw_id_54" class="" data-key="" data-role="" style="height: 10px"></div><p id="fw_id_55" class="shared-text-2" data-key="" data-role="" style="color: #64748B; font-size: 11; font-weight: bold">Target PipeWire Output</p><div id="fw_id_56" class="" data-key="" data-role="" style="height: 4px"></div><div id="fw_id_57" class="shared-container-7" data-key="dev_sel_spk_b_container" data-role="None">
+        <div id="fw_id_58" class="dropdown-container shared-dropdown-0">
+            <div class="dropdown-value-container">
+                <span>DV-1008 [Default]</span>
+                <svg class="dropdown-caret" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </div>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item" data-value="alsa_output.pci-0000_00_1f.3.analog-stereo">Built-in Audio Analog Stereo</li><li class="dropdown-item" data-value="bluez_output.41:42:26:60:14:ED">DV-1008 [Default]</li>
+            </ul>
+        </div>
+        </div></div></div></div></div></div><div id="fw_id_59" class="" data-key="" data-role="" style="flex-grow: 1; flex-shrink: 1; flex-basis: 0%; min-width: 100%; min-height: 0; display: flex; flex-direction: column"><div id="fw_id_60" class="shared-scrollview-0" data-key="" data-role=""><div id="fw_id_61" class="shared-column-1" data-key="" data-role=""><div id="fw_id_62" class="shared-container-12" data-key="turn_bubble_1e7b9bf8" data-role="None"><div id="fw_id_63" class="shared-column-0" data-key="" data-role=""><div id="fw_id_64" class="shared-row-1" data-key="" data-role=""><div id="fw_id_65" class="shared-row-0" data-key="" data-role=""><div id="fw_id_66" class="shared-container-10" data-key="turn_dot_1e7b9bf8" data-role="None"></div><div id="fw_id_67" class="" data-key="" data-role="" style="width: 8px"></div><p id="fw_id_68" class="shared-text-4" data-key="" data-role="" style="color: #38BDF8; font-size: 13; font-weight: bold">Speaker A (Host)</p><div id="fw_id_69" class="" data-key="" data-role="" style="width: 10px"></div><p id="fw_id_70" class="shared-text-5" data-key="" data-role="" style="color: #64748B; font-family: monospace; font-size: 11">-&gt; Built-in Audio Analog Stereo</p><div id="fw_id_71" class="" data-key="" data-role="" style="width: 10px"></div><div id="fw_id_72" class="shared-container-11" data-key="turn_status_pill_1e7b9bf8" data-role="None"><p id="fw_id_73" class="shared-text-6" data-key="" data-role="" style="color: #10B981; font-size: 10; font-weight: bold">Ready</p></div></div><div id="fw_id_74" class="shared-row-0" data-key="" data-role=""><button id="fw_id_75" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('preview_turn_1e7b9bf8')"><i id="fw_id_76" class="material-icon-1" data-key="" data-role="">play_circle</i></button><div id="fw_id_77" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_78" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('generate_turn_1e7b9bf8')"><i id="fw_id_79" class="material-icon-2" data-key="" data-role="">auto_awesome</i></button><div id="fw_id_80" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_81" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('edit_turn_1e7b9bf8')"><i id="fw_id_82" class="material-icon-3" data-key="" data-role="">edit_note</i></button><div id="fw_id_83" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_84" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('delete_turn_1e7b9bf8')"><i id="fw_id_85" class="material-icon-4" data-key="" data-role="">delete_outline</i></button></div></div><div id="fw_id_86" class="" data-key="" data-role="" style="height: 10px"></div><p id="fw_id_87" class="shared-text-7" data-key="" data-role="" style="color: #F8FAFC; font-size: 15; line-height: 1.4">Welcome to Conversation Studio on Linux with PipeWire.</p></div></div><div id="fw_id_88" class="" data-key="" data-role="" style="height: 12px"></div><div id="fw_id_89" class="shared-container-15" data-key="turn_bubble_5e6c7adf" data-role="None"><div id="fw_id_90" class="shared-column-0" data-key="" data-role=""><div id="fw_id_91" class="shared-row-1" data-key="" data-role=""><div id="fw_id_92" class="shared-row-0" data-key="" data-role=""><div id="fw_id_93" class="shared-container-13" data-key="turn_dot_5e6c7adf" data-role="None"></div><div id="fw_id_94" class="" data-key="" data-role="" style="width: 8px"></div><p id="fw_id_95" class="shared-text-8" data-key="" data-role="" style="color: #34D399; font-size: 13; font-weight: bold">Speaker B (Guest)</p><div id="fw_id_96" class="" data-key="" data-role="" style="width: 10px"></div><p id="fw_id_97" class="shared-text-5" data-key="" data-role="" style="color: #64748B; font-family: monospace; font-size: 11">-&gt; DV-1008</p><div id="fw_id_98" class="" data-key="" data-role="" style="width: 10px"></div><div id="fw_id_99" class="shared-container-14" data-key="turn_status_pill_5e6c7adf" data-role="None"><p id="fw_id_100" class="shared-text-6" data-key="" data-role="" style="color: #10B981; font-size: 10; font-weight: bold">Ready</p></div></div><div id="fw_id_101" class="shared-row-0" data-key="" data-role=""><button id="fw_id_102" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('preview_turn_5e6c7adf')"><i id="fw_id_103" class="material-icon-1" data-key="" data-role="">play_circle</i></button><div id="fw_id_104" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_105" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('generate_turn_5e6c7adf')"><i id="fw_id_106" class="material-icon-2" data-key="" data-role="">auto_awesome</i></button><div id="fw_id_107" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_108" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('edit_turn_5e6c7adf')"><i id="fw_id_109" class="material-icon-3" data-key="" data-role="">edit_note</i></button><div id="fw_id_110" class="" data-key="" data-role="" style="width: 4px"></div><button id="fw_id_111" class="shared-iconbutton-0" data-key="" data-role="" onclick="handleClick('delete_turn_5e6c7adf')"><i id="fw_id_112" class="material-icon-4" data-key="" data-role="">delete_outline</i></button></div></div><div id="fw_id_113" class="" data-key="" data-role="" style="height: 10px"></div><p id="fw_id_114" class="shared-text-7" data-key="" data-role="" style="color: #F8FAFC; font-size: 15; line-height: 1.4">Glad to be here! This stream is routed independently.</p></div></div><div id="fw_id_115" class="" data-key="" data-role="" style="height: 12px"></div></div></div></div><div id="fw_id_116" class="shared-container-18" data-key="playback_controls_container" data-role="None"><div id="fw_id_117" class="shared-row-1" data-key="" data-role=""><div id="fw_id_118" class="shared-row-0" data-key="" data-role=""><button id="fw_id_119" class="shared-iconbutton-2" data-key="" data-role="" onclick="handleClick('main_play_pause')"><i id="fw_id_120" class="material-icon-6" data-key="" data-role="">play_arrow</i></button><div id="fw_id_121" class="" data-key="" data-role="" style="width: 12px"></div><button id="fw_id_122" class="shared-iconbutton-3" data-key="" data-role="" onclick="handleClick('main_stop')"><i id="fw_id_123" class="material-icon-7" data-key="" data-role="">stop</i></button><div id="fw_id_124" class="" data-key="" data-role="" style="width: 20px"></div><div id="fw_id_125" class="shared-column-0" data-key="" data-role=""><p id="fw_id_126" class="shared-text-11" data-key="" data-role="" style="color: #64748B; font-size: 10; font-weight: bold">STATUS</p><div id="fw_id_127" class="" data-key="" data-role="" style="height: 2px"></div><p id="fw_id_128" class="shared-text-12" data-key="" data-role="" style="color: #F8FAFC; font-size: 13; font-weight: bold">Ready</p></div></div><div id="fw_id_129" class="shared-row-3" data-key="" data-role=""><button id="fw_id_130" class="shared-elevatedbutton-0" data-key="" data-role="" onclick="handleClick('main_gen_all')"><div id="fw_id_131" class="shared-row-0" data-key="" data-role=""><i id="fw_id_132" class="material-icon-8" data-key="" data-role="">auto_awesome</i><div id="fw_id_133" class="" data-key="" data-role="" style="width: 6px"></div><p id="fw_id_134" class="shared-text-13" data-key="" data-role="" style="color: #6366F1; font-size: 13; font-weight: bold">Synthesize All</p></div></button><div id="fw_id_135" class="" data-key="" data-role="" style="width: 12px"></div><button id="fw_id_136" class="shared-elevatedbutton-1" data-key="" data-role="" onclick="handleClick('main_add_turn')"><div id="fw_id_137" class="shared-row-0" data-key="" data-role=""><i id="fw_id_138" class="material-icon-9" data-key="" data-role="">add</i><div id="fw_id_139" class="" data-key="" data-role="" style="width: 6px"></div><p id="fw_id_140" class="shared-text-14" data-key="" data-role="" style="font-size: 13; font-weight: bold">Add Turn</p></div></button></div></div></div></div></div></div></div></div>
+        <div id="overlay-container"></div>
+        
+        <!-- Interactive Debug Banner -->
+        <div id="pythra-debug-banner-wrapper">
+            <div id="pythra-debug-banner">
+                <span class="banner-text">DEBUG</span>
+                <div class="debug-controls">
+                    <button class="debug-btn restart-btn" title="Hot Restart" onclick="if(window.pywebview) { window.pywebview.hot_restart(); } else { window.location.reload(); }">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                        </svg>
+                    </button>
+                    <button class="debug-btn hotreload-btn" title="Hot Reload" onclick="if(window.pywebview) { window.pywebview.hot_reload_from_ui(); }">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                        </svg>
+                    </button>
+                    <button class="debug-btn close-btn" title="Close App" onclick="if(window.pywebview) { window.pywebview.close_app(); } else { window.close(); }">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+
+    <!-- ADD SIMPLEBAR JS -->
+    <script src="./js/scroll-bar/simplebar.min.js"></script>
+    <script src="./js/pythra_bridge.js"></script>
+    <!-- ADD THE NEW SLIDER JS ENGINE -->
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                window._pythra_instances = window._pythra_instances || {};
+                try {
+                    // First, DEFINE all our JS classes and functions
+                    // --- Injected from dropdown.js ---
+try {
+                        
+/**
+ * PythraDropdown: Client-side engine for a custom Dropdown widget.
+ *
+ * Handles toggling the dropdown menu, closing it when clicking outside,
+ * and sending the selected value back to the Python backend.
+ */
+class PythraDropdown {
+    constructor(elementId, options) {
+        this.container = document.getElementById(elementId);
+        if (!this.container) {
+            console.error(`Dropdown container with ID #${elementId} not found.`);
+            return;
+        }
+
+        console.log(`✅ PythraDropdown engine is initializing for #${elementId}`);
+
+        this.options = options;
+        this.valueContainer = this.container.querySelector('.dropdown-value-container');
+        this.menu = this.container.querySelector('.dropdown-menu');
+        this.items = this.menu.querySelectorAll('.dropdown-item');
+
+        // Apply initial selected style
+        const initialValue = this.options.selectedValue;
+        if (initialValue !== undefined && initialValue !== null) {
+            this.items.forEach(item => {
+                if (item.dataset.value === String(initialValue)) {
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+        // Bind 'this' to maintain context in event handlers
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+
+        // Attach event listeners
+        this.valueContainer.addEventListener('click', this.toggleMenu);
+        this.items.forEach(item => {
+            item.addEventListener('click', this.handleItemClick);
+        });
+    }
+
+    toggleMenu(event) {
+        event.stopPropagation(); // Prevent click from bubbling to the document
+        
+        // Prevent opening if entire Dropdown is disabled
+        if (this.container.classList.contains('disabled') || this.container.dataset.disabled === "true") {
+            return;
+        }
+
+        const isCurrentlyOpen = this.container.classList.toggle('open');
+        console.log("Value container Clicked");
+        
+        if (isCurrentlyOpen) {
+            // If we just opened the menu, listen for clicks outside to close it
+            document.addEventListener('click', this.handleClickOutside);
+        } else {
+            // If we just closed it, stop listening
+            document.removeEventListener('click', this.handleClickOutside);
+        }
+    }
+
+    handleItemClick(event) {
+        // Find the actual dropdown item in case the user clicked a deeply nested child Widget
+        const itemElement = event.currentTarget.closest('.dropdown-item') || event.currentTarget;
+        
+        // Prevent action if item represents a disabled DropdownMenuItem
+        if (itemElement.classList.contains('disabled') || itemElement.dataset.disabled === "true") {
+            event.stopPropagation();
+            return;
+        }
+
+        const selectedValue = itemElement.dataset.value;
+        const selectedLabel = itemElement.dataset.label || itemElement.textContent;
+
+        console.log("Dropdown option Clicked");
+        
+        // 1. Update the display value immediately for instant feedback
+        this.valueContainer.querySelector('span').textContent = selectedLabel;
+
+        // 2. Update visual selection class
+        this.items.forEach(item => item.classList.remove('selected'));
+        itemElement.classList.add('selected');
+        
+        // 3. Send the selected *value* back to the Python backend
+        if (window.pywebview && this.options.onChangedName) {
+            window.pywebview.on_input_changed(this.options.onChangedName, selectedValue);
+        }
+        
+        // 4. Close the menu
+        this.closeMenu();
+    }
+    
+    closeMenu() {
+        if (this.container.classList.contains('open')) {
+            this.container.classList.remove('open');
+            document.removeEventListener('click', this.handleClickOutside);
+        }
+    }
+
+    handleClickOutside(event) {
+        // If the click is outside the main container, close the menu
+        if (!this.container.contains(event.target)) {
+            this.closeMenu();
+        }
+    }
+
+    destroy() {
+        // Cleanup to prevent memory leaks
+        if (!this.container) return;
+        this.valueContainer.removeEventListener('click', this.toggleMenu);
+        this.items.forEach(item => {
+            item.removeEventListener('click', this.handleItemClick);
+        });
+        document.removeEventListener('click', this.handleClickOutside);
+    }
+}
+
+                        // Make common names available on window if defined
+
+                        if (typeof ResponsiveClipPath !== 'undefined') window.ResponsiveClipPath = ResponsiveClipPath;
+
+                        if (typeof PythraSlider !== 'undefined') window.PythraSlider = PythraSlider;
+
+                        if (typeof PythraDropdown !== 'undefined') window.PythraDropdown = PythraDropdown;
+
+                        if (typeof PythraGestureDetector !== 'undefined') window.PythraGestureDetector = PythraGestureDetector;
+
+                        if (typeof PythraGradientClipPath !== 'undefined') window.PythraGradientClipPath = PythraGradientClipPath;
+
+                        if (typeof PythraVirtualList !== 'undefined') window.PythraVirtualList = PythraVirtualList;
+
+                        if (typeof PythraVirtualGrid !== 'undefined') window.PythraVirtualGrid = PythraVirtualGrid;
+
+                        if (typeof generateRoundedPath !== 'undefined') window.generateRoundedPath = generateRoundedPath;
+
+                        if (typeof scalePathAbsoluteMLA !== 'undefined') window.scalePathAbsoluteMLA = scalePathAbsoluteMLA;
+
+                        if (typeof PythraTextField !== 'undefined') window.PythraTextField = PythraTextField;
+
+                    } catch (e) { console.error('Error loading dropdown.js:', e); }
+                    
+                    // Then, RUN the initialization commands that were generated
+                    window._pythra_instances['fw_id_32'] = new PythraDropdown('fw_id_32', {"onChangedName":"dropdown_change_voice_sel_spk_a_dropdown","selectedValue":"21m00Tcm4TlvDq8ikWAM"});window._pythra_instances['fw_id_37'] = new PythraDropdown('fw_id_37', {"onChangedName":"dropdown_change_dev_sel_spk_a_dropdown","selectedValue":"alsa_output.pci-0000_00_1f.3.analog-stereo"});window._pythra_instances['fw_id_53'] = new PythraDropdown('fw_id_53', {"onChangedName":"dropdown_change_voice_sel_spk_b_dropdown","selectedValue":"AZnzlk1XvdvUeBnXmlld"});window._pythra_instances['fw_id_58'] = new PythraDropdown('fw_id_58', {"onChangedName":"dropdown_change_dev_sel_spk_b_dropdown","selectedValue":"bluez_output.41:42:26:60:14:ED"});
+
+                } catch (e) {
+                    console.error("Error running Pythra initializers:", e);
+                }
+            });
+        </script>
+        
+</body>
+</html>

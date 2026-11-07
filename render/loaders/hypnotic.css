@@ -1,0 +1,484 @@
+/* --- loader-hypnotic-1 --- */
+/* HTML: <div class="loader-hypnotic-1"></div> */
+.loader-hypnotic-1 {
+  width: 50px;
+  aspect-ratio: 1;
+  color: var(--loader-color, var(--loader-color, #000));
+  border: 2px solid;
+  display: grid;
+  box-sizing: border-box;
+  animation: l1 4s infinite linear;
+}
+.loader-hypnotic-1::before,
+.loader-hypnotic-1::after {
+  content: "";
+  grid-area: 1/1;
+  margin: auto;
+  width: 70.7%;
+  aspect-ratio: 1;
+  border: 2px solid;
+  box-sizing: content-box;
+  animation: inherit;
+}
+.loader-hypnotic-1::after {
+  width: 50%;
+  aspect-ratio: 1;
+  border: 2px solid;
+  animation-duration: 2s;
+}
+@keyframes l1{
+  100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-2 --- */
+/* HTML: <div class="loader-hypnotic-2"></div> */
+.loader-hypnotic-2 {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  color: var(--loader-color, var(--loader-color, #000));
+  border: 2px solid;
+  box-sizing: border-box;
+  position: relative;
+  transform-origin: left;
+  animation: l2 1s infinite linear;
+}
+.loader-hypnotic-2::before,
+.loader-hypnotic-2::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  margin: auto;
+  width: 50%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid;
+  box-sizing: content-box;
+  transform-origin: 50% calc(100% - 4px);
+  animation: inherit;
+}
+.loader-hypnotic-2::after {
+  inset:auto 0 calc(100% + 2px);
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+  transform-origin: 50% calc(200% - 2px);
+}
+@keyframes l2{
+  100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-3 --- */
+/* HTML: <div class="loader-hypnotic-3"></div> */
+.loader-hypnotic-3 {
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid;
+  --c:conic-gradient(from -90deg at calc(100% - 2px) calc(100% - 2px),#0000 0 90deg,var(--loader-color, #000) 0);
+  background: var(--c),var(--c);
+  background-size: 16px 16px;
+  background-position: 0 0;
+  animation: l3 1s infinite;
+}
+@keyframes l3{
+  100% {background-position: -16px -16px,16px 16px}
+}
+/* --- loader-hypnotic-4 --- */
+/* HTML: <div class="loader-hypnotic-4"></div> */
+.loader-hypnotic-4 {
+  width: 50px;
+  aspect-ratio: 1;
+  color: var(--loader-color, var(--loader-color, #000));
+  border: 2px solid;
+  box-sizing: border-box;
+  --c:radial-gradient(farthest-side,#0000 calc(100% - 3px),var(--loader-color, currentColor) calc(100% - 2px) 98%,#0000);
+  background: var(--c),var(--c);
+  background-size: 23px 23px;
+  background-position: 0 0,12px 12px;
+  animation: l4 1s infinite;
+}
+@keyframes l4{
+  100% {background-position: -23px 0px,12px 35px}
+}
+/* --- loader-hypnotic-5 --- */
+/* HTML: <div class="loader-hypnotic-5"></div> */
+.loader-hypnotic-5 {
+  width: 50px;
+  aspect-ratio: 1.154;
+  display: grid;
+  color: var(--loader-color, var(--loader-color, #000));
+  background:
+    linear-gradient(to bottom left ,#0000 calc(50% - 1px),var(--loader-color, currentColor) 0 calc(50% + 1px),#0000 0) right/50% 100%,
+    linear-gradient(to bottom right,#0000 calc(50% - 1px),var(--loader-color, currentColor) 0 calc(50% + 1px),#0000 0) left /50% 100%,
+    linear-gradient(var(--loader-color, currentColor) 0 0) bottom/100% 2px;
+  background-repeat: no-repeat;
+  transform-origin: 50% 66%;
+  animation: l5 4s infinite linear;
+}
+.loader-hypnotic-5::before,
+.loader-hypnotic-5::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  transform-origin: inherit;
+  animation: inherit;
+}
+.loader-hypnotic-5::after {
+  animation-duration: 2s;
+}
+@keyframes l5{
+  100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-6 --- */
+/* HTML: <div class="loader-hypnotic-6"></div> */
+.loader-hypnotic-6 {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  color: var(--loader-color, var(--loader-color, #000));
+  background:
+    linear-gradient(90deg,var(--loader-color, currentColor) 2px,#0000 0 calc(100% - 2px),var(--loader-color, currentColor) 0) center/100% 14px,
+    linear-gradient(0deg, var(--loader-color, currentColor) 2px,#0000 0 calc(100% - 2px),var(--loader-color, currentColor) 0) center/14px 100%,
+    linear-gradient(var(--loader-color, currentColor) 0 0) center/100% 2px,
+    linear-gradient(var(--loader-color, currentColor) 0 0) center/2px 100%;
+  background-repeat: no-repeat;
+  animation: l6 4s infinite linear;
+}
+.loader-hypnotic-6::before,
+.loader-hypnotic-6::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  transform-origin: inherit;
+  animation: inherit;
+}
+.loader-hypnotic-6::after {
+  animation-duration: 2s;
+}
+@keyframes l6{
+  100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-7 --- */
+/* HTML: <div class="loader-hypnotic-7"></div> */
+.loader-hypnotic-7 {
+  width: 50px;
+  aspect-ratio: 1;
+  color: var(--loader-color, var(--loader-color, #000));
+  border: 2px solid;
+  box-sizing: border-box;
+  background:
+    repeating-conic-gradient(#0000 0 90deg,var(--loader-color, currentColor) 0 180deg),
+    repeating-conic-gradient(var(--loader-color, currentColor) 0 90deg,#0000 0 180deg);
+  background-size: 16px 16px;
+  background-position: 0 0;
+  animation: l7 2s infinite;
+}
+@keyframes l7{
+  100% {background-position: 0px 32px,16px 0px}
+}
+/* --- loader-hypnotic-8 --- */
+/* HTML: <div class="loader-hypnotic-8"></div> */
+.loader-hypnotic-8 {
+  width: 50px;
+  aspect-ratio: 1;
+  color: var(--loader-color, var(--loader-color, #000));
+  border: 2px solid;
+  box-sizing: border-box;
+  background:
+    radial-gradient(farthest-side,var(--loader-color, currentColor) 90%,#0000),
+    radial-gradient(farthest-side,#0000 90%,var(--loader-color, currentColor));
+  background-size: 16px 16px;
+  background-position: 0 0;
+  animation: l8 2s infinite;
+}
+@keyframes l8{
+  100% {background-position: 0px 32px,-16px 0}
+}
+/* --- loader-hypnotic-9 --- */
+/* HTML: <div class="loader-hypnotic-9"></div> */
+.loader-hypnotic-9 {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#0000,var(--loader-color, #000) 1deg 18deg,#0000 20deg 36deg);
+  animation: l9 4s infinite linear;
+  position: relative;
+}
+.loader-hypnotic-9::before{
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset:0;
+  background: inherit;
+  animation: inherit;
+}
+@keyframes l9{
+  100% {transform:rotate(.5turn)}
+}
+/* --- loader-hypnotic-10 --- */
+/* HTML: <div class="loader-hypnotic-10"></div> */
+.loader-hypnotic-10 {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader-hypnotic-10::before,
+.loader-hypnotic-10::after{
+  content: "";
+  grid-area: 1/1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#0000,var(--loader-color, #000) 1deg 18deg,#0000 20deg 36deg);
+  -webkit-mask:repeating-radial-gradient(farthest-side,var(--loader-color, #000) 0 10%,#0000 0 20%);
+  animation: l10 4s infinite linear;
+}
+.loader-hypnotic-10::after{
+  -webkit-mask:repeating-radial-gradient(farthest-side,#0000 0 10%,var(--loader-color, #000) 0 20%);
+  animation-direction: reverse;
+}
+@keyframes l10 {
+  100% {transform:rotate(.5turn)}
+}
+/* --- loader-hypnotic-11 --- */
+/* HTML: <div class="loader-hypnotic-11"></div> */
+.loader-hypnotic-11 {
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: grid;
+  animation: l11 1.5s infinite linear;
+  transform-origin: 50% 80%;
+}
+.loader-hypnotic-11:before,
+.loader-hypnotic-11:after {
+  content: "";
+  grid-area: 1/1;
+  border: inherit;
+  border-radius: 50%;
+  animation: inherit;
+  animation-duration: 1s;
+  transform-origin: inherit;
+}
+.loader-hypnotic-11:after {
+  --s:-1;
+}
+@keyframes l11 {
+   100% {transform:rotate(calc(var(--s,1)*1turn))}
+}
+/* --- loader-hypnotic-12 --- */
+/* HTML: <div class="loader-hypnotic-12"></div> */
+.loader-hypnotic-12 {
+  width: 60px;
+  height: 25px;
+  border: 2px solid;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: grid;
+  animation: l2 2s infinite linear;
+}
+.loader-hypnotic-12:before,
+.loader-hypnotic-12:after {
+  content: "";
+  grid-area: 1/1;
+  border: inherit;
+  border-radius: 50%;
+  animation: inherit;
+  animation-duration: 3s;
+}
+.loader-hypnotic-12:after {
+  --s:-1;
+}
+@keyframes l2 {
+   100% {transform:rotate(calc(var(--s,1)*1turn))}
+}
+/* --- loader-hypnotic-13 --- */
+/* HTML: <div class="loader-hypnotic-13"></div> */
+.loader-hypnotic-13 {
+  width: 60px;
+  height: 30px;
+  display: flex;
+  --c:#0000 calc(100% - 5px),var(--loader-color, #000) calc(100% - 4px) 96%,#0000;
+  background:
+    radial-gradient(farthest-side at bottom,var(--c)) 0 0,
+    radial-gradient(farthest-side at top   ,var(--c)) 100% 100%;
+  background-size:calc(50% + 2px) 50%;
+  background-repeat: no-repeat;
+  animation: l13 2s infinite linear;
+}
+.loader-hypnotic-13:before {
+  content: "";
+  flex: 1;
+  background: inherit;
+  transform: rotate(90deg);
+}
+@keyframes l13 {
+   100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-14 --- */
+/* HTML: <div class="loader-hypnotic-14"></div> */
+.loader-hypnotic-14 {
+  width: 60px;
+  height: 30px;
+  display: grid;
+  --c: #0000 calc(100% - 5px),var(--loader-color, #000) calc(100% - 4px) 96%,#0000;
+  background:
+    radial-gradient(farthest-side at bottom,var(--c)) 0 0,
+    radial-gradient(farthest-side at top   ,var(--c)) 100% 100%;
+  background-size: calc(50% + 2px) 50%;
+  background-repeat: no-repeat;
+  animation: l14 1.5s infinite linear;
+}
+.loader-hypnotic-14:before,
+.loader-hypnotic-14:after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+.loader-hypnotic-14:after {
+  --s:-1;
+}
+@keyframes l14 {
+   100% {transform:rotate(calc(var(--s,1)*1turn))}
+}
+/* --- loader-hypnotic-15 --- */
+/* HTML: <div class="loader-hypnotic-15"></div> */
+.loader-hypnotic-15 {
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid;
+  box-sizing: border-box;
+  --c:conic-gradient(from 180deg at 50% calc(100% - 2px),var(--loader-color, #000) 90deg, #0000 0);
+  background: var(--c),var(--c);
+  background-position: 0 0,8px 0;
+  background-size: 16px 9.6px;
+  animation: l15 1s infinite;
+}
+@keyframes l15 {
+  100% {background-position: 0 -9.6px,8px 9.6px}
+}
+/* --- loader-hypnotic-16 --- */
+/* HTML: <div class="loader-hypnotic-16"></div> */
+.loader-hypnotic-16 {
+  width: 50px;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid;
+}
+.loader-hypnotic-16::before {
+  content: "";
+  position: absolute;
+  inset: -48px;
+  --c:conic-gradient(from 180deg at 50% calc(100% - 2px),var(--loader-color, #000) 90deg, #0000 0);
+  background: var(--c),var(--c);
+  background-position: 0 0,8px 0;
+  background-size: 16px 9.6px;
+  animation: l16 2s infinite;
+}
+@keyframes l16 {
+  50%  {background-position: 0 -9.6px ,8px 9.6px; transform:rotate(90deg)}
+  100% {background-position: 0 -19.2px,8px 19.2px;transform:rotate(180deg)}
+}
+/* --- loader-hypnotic-17 --- */
+/* HTML: <div class="loader-hypnotic-17"></div> */
+.loader-hypnotic-17 {
+  width: 30px;
+  aspect-ratio: .577;
+  color: var(--loader-color, var(--loader-color, #000));
+  display: grid;
+  background:
+    linear-gradient(var(--loader-color, currentColor) 0 0) top   /100% 1px,
+    linear-gradient(var(--loader-color, currentColor) 0 0) bottom/100% 1px,
+    linear-gradient(to bottom right, #0000 calc(50% - 2px),var(--loader-color, currentColor) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+    linear-gradient(to bottom left , #0000 calc(50% - 2px),var(--loader-color, currentColor) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+  background-repeat: no-repeat;
+  animation: l17 4s infinite linear;
+}
+.loader-hypnotic-17::before,
+.loader-hypnotic-17::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  border:inherit;
+  animation: inherit;
+}
+.loader-hypnotic-17::after {
+  animation-duration: 2s;
+}
+@keyframes l17 {
+  100% {transform: rotate(1turn)}
+}
+/* --- loader-hypnotic-18 --- */
+/* HTML: <div class="loader-hypnotic-18"></div> */
+.loader-hypnotic-18 {
+  width: 25px;
+  height: 50px;
+  display: grid;
+  color: var(--loader-color, var(--loader-color, #000));
+  background:
+    linear-gradient(var(--loader-color, currentColor) 0 0) top/100% 2px,
+    radial-gradient(farthest-side at  top, #0000 calc(100% - 2px),var(--loader-color, currentColor) calc(100% - 1px) ,#0000) top,
+    linear-gradient(var(--loader-color, currentColor) 0 0) bottom/100% 2px,
+    radial-gradient(farthest-side at  bottom, #0000 calc(100% - 2px),var(--loader-color, currentColor) calc(100% - 1px) ,#0000) bottom;
+  background-size: 100% 1px,100% 50%; 
+  background-repeat: no-repeat;
+  animation: l18 4s infinite linear;
+}
+.loader-hypnotic-18::before,
+.loader-hypnotic-18::after {
+  content: "";
+  grid-area: 1/1;
+  background: inherit;
+  border: inherit;
+  animation: inherit;
+}
+.loader-hypnotic-18::after {
+  animation-duration: 2s;
+}
+@keyframes l18 {
+  100% {transform: rotate(1turn)}
+}
+/* --- loader-hypnotic-19 --- */
+/* HTML: <div class="loader-hypnotic-19"></div> */
+.loader-hypnotic-19 {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader-hypnotic-19::before,
+.loader-hypnotic-19::after {
+  content: "";
+  grid-area: 1/1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(farthest-side,#0000 0%,var(--loader-color, #000) 1% 10%,#0000 11% 30%);
+  -webkit-mask: repeating-conic-gradient(var(--loader-color, #000) 0 36deg,#0000 0 72deg);
+  animation: l19 4s infinite linear;
+}
+.loader-hypnotic-19::after {
+  -webkit-mask: repeating-conic-gradient(#0000 0 36deg,var(--loader-color, #000) 0 72deg);
+  animation-direction: reverse;
+}
+@keyframes l19 {
+  100% {transform:rotate(1turn)}
+}
+/* --- loader-hypnotic-20 --- */
+/* HTML: <div class="loader-hypnotic-20"></div> */
+.loader-hypnotic-20 {
+  --b: 5px; 
+  width: calc(12*var(--b));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: 
+    repeating-radial-gradient(calc(2*var(--b)) at top,#0000 -1px,var(--loader-color, #000) 0 calc(50% - 1px),#0000 50% calc(100% - 1px)) calc(50% + var(--b)) 100%, 
+    repeating-radial-gradient(calc(2*var(--b)) at bottom,var(--loader-color, #000) -1px,#0000 0 calc(50% - 1px),var(--loader-color, #000) 50% calc(100% - 1px)) 50% 0;
+  background-size: 150% 50%;
+  background-repeat: no-repeat;
+  mask: 
+    radial-gradient(calc(1.5*var(--b)) at calc(100% - var(--b)/2) 0, #0000 calc(100%/3), var(--loader-color, #000) calc(100%/3 + 1px) 110%, #0000 0) calc(50% + var(--b)/2) 
+     100%/calc(3*var(--b)) 50% exclude no-repeat, 
+    conic-gradient(var(--loader-color, #000) 0 0);
+  animation: l20 1s infinite linear;
+}
+@keyframes l20 {
+  100% {transform: rotate(1turn)}
+}

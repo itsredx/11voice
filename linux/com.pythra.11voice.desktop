@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=11Voice
+Comment=A PyThra desktop application
+Exec=com.pythra.11voice
+Icon=com.pythra.11voice
+Terminal=false
+Path=/home/red-x/projects/desktop/11voice/lib
+Categories=Utility;
+StartupWMClass=com.pythra.11voice

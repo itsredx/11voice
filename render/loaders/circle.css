@@ -1,0 +1,353 @@
+/* --- loader-circle-1 --- */
+/* HTML: <div class="loader-circle-1"></div> */
+.loader-circle-1 {
+  width: 65px;
+  display: grid;
+  --mask: 
+    radial-gradient(12px at left 15px top 50%, #0000 95%, var(--loader-color, #000)),
+    radial-gradient(12px at right 15px top 50%, #0000 95%, var(--loader-color, #000));
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l1 1s infinite alternate;
+}
+.loader-circle-1:before,
+.loader-circle-1:after {
+  content: "";
+  grid-area: 1/1;
+  height: 30px;
+  aspect-ratio: 1;
+  background: var(--loader-color, #fff);
+  border-radius: 50%;
+}
+.loader-circle-1:after {
+  margin-left: auto;
+}
+@keyframes l1 {
+  to {
+    width: 40px;
+  }
+}
+/* --- loader-circle-2 --- */
+/* HTML: <div class="loader-circle-2"></div> */
+.loader-circle-2 {
+  width: 100px;
+  display: grid;
+  background: radial-gradient(farthest-side, var(--loader-color, #fff) 98%, #0000) center/30px 100%
+    no-repeat;
+  --mask: 
+    radial-gradient(12px at left 15px top 50%, #0000 95%, var(--loader-color, #000)),
+    radial-gradient(12px at center, #0000 95%, var(--loader-color, #000)),
+    radial-gradient(12px at right 15px top 50%, #0000 95%, var(--loader-color, #000));
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l2 1s infinite alternate;
+}
+.loader-circle-2:before,
+.loader-circle-2:after {
+  content: "";
+  grid-area: 1/1;
+  height: 30px;
+  aspect-ratio: 1;
+  background: var(--loader-color, #fff);
+  border-radius: 50%;
+}
+.loader-circle-2:after {
+  margin-left: auto;
+}
+@keyframes l2 {
+  to {
+    width: 50px;
+  }
+}
+/* --- loader-circle-3 --- */
+/* HTML: <div class="loader-circle-3"></div> */
+.loader-circle-3 {
+  width: 65px;
+  height: 30px;
+  position: relative;
+}
+.loader-circle-3:before {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  box-shadow: 0 0 0 3px inset var(--loader-color, #fff);
+  animation: l3 0.75s infinite alternate;
+}
+@keyframes l3 {
+  0% {
+    inset: 0 35px 0 0;
+  }
+  50% {
+    inset: 0 0 0 0;
+  }
+  100% {
+    inset: 0 0 0 35px;
+  }
+}
+/* --- loader-circle-4 --- */
+/* HTML: <div class="loader-circle-4"></div> */
+.loader-circle-4 {
+  width: 65px;
+  aspect-ratio: 1;
+  position: relative;
+}
+.loader-circle-4:before,
+.loader-circle-4:after {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  box-shadow: 0 0 0 3px inset var(--loader-color, #fff);
+  animation: l4 2.5s infinite;
+}
+.loader-circle-4:after {
+  animation-delay: -1.25s;
+}
+@keyframes l4 {
+  0% {
+    inset: 0 35px 35px 0;
+  }
+  12.5% {
+    inset: 0 35px 0 0;
+  }
+  25% {
+    inset: 35px 35px 0 0;
+  }
+  37.5% {
+    inset: 35px 0 0 0;
+  }
+  50% {
+    inset: 35px 0 0 35px;
+  }
+  62.5% {
+    inset: 0 0 0 35px;
+  }
+  75% {
+    inset: 0 0 35px 35px;
+  }
+  87.5% {
+    inset: 0 0 35px 0;
+  }
+  100% {
+    inset: 0 35px 35px 0;
+  }
+}
+/* --- loader-circle-5 --- */
+/* HTML: <div class="loader-circle-5"></div> */
+.loader-circle-5 {
+  width: 65px;
+  aspect-ratio: 1;
+  position: relative;
+}
+.loader-circle-5:before,
+.loader-circle-5:after {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  aspect-ratio: 1;
+  border-radius: 50px;
+  box-shadow: 0 0 0 3px inset var(--loader-color, #fff);
+  animation: l5 1s infinite linear alternate;
+}
+.loader-circle-5:after {
+  inset: auto 0 0 auto;
+  animation-delay: -1s;
+}
+@keyframes l5 {
+  0% {
+    width: 20px;
+  }
+  100% {
+    width: 50px;
+  }
+}
+/* --- loader-circle-6 --- */
+/* HTML: <div class="loader-circle-6"></div> */
+.loader-circle-6 {
+  width: 50px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px var(--loader-color, #fff) inset;
+  border-radius: 50%;
+  position: relative;
+  animation: l6 1.5s linear infinite;
+}
+.loader-circle-6:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  box-shadow: inherit;
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+@keyframes l6 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* --- loader-circle-7 --- */
+/* HTML: <div class="loader-circle-7"></div> */
+.loader-circle-7 {
+  width: 50px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px var(--loader-color, #fff) inset;
+  border-radius: 50%;
+  position: relative;
+}
+.loader-circle-7:before,
+.loader-circle-7:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: calc(50% - 12.5px);
+  box-shadow: inherit;
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform-origin: 50% calc(100% - 5px);
+  animation: l7 1.5s linear infinite;
+}
+.loader-circle-7:after {
+  top: calc(100% + 2px);
+  transform-origin: 50% -27px;
+  animation-delay: -0.75s;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* --- loader-circle-8 --- */
+/* HTML: <div class="loader-circle-8"></div> */
+.loader-circle-8 {
+  width: 50px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px var(--loader-color, #fff) inset;
+  border-radius: 50%;
+  position: relative;
+  animation: l8-0 1.5s linear infinite;
+}
+.loader-circle-8:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 2px);
+  box-shadow: inherit;
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l8-1 1.5s linear infinite;
+}
+@keyframes l8-1 {
+  0% {
+    transform-origin: -27px 50%;
+    width: 20px;
+    transform: translateY(-50%) rotate(0);
+  }
+  100% {
+    transform-origin: -12px 50%;
+    width: 50px;
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
+@keyframes l8-0 {
+  0% {
+    width: 50px;
+    transform: translate(0);
+  }
+  100% {
+    width: 20px;
+    transform: translate(37px);
+  }
+}
+/* --- loader-circle-9 --- */
+/* HTML: <div class="loader-circle-9"></div> */
+.loader-circle-9 {
+  width: 100px;
+  height: 40px;
+  --g: radial-gradient(farthest-side,#0000 calc(95% - 3px),var(--loader-color, #fff) calc(100% - 3px) 98%,#0000 101%) no-repeat;
+  background: var(--g), var(--g), var(--g);
+  background-size: 30px 30px;
+  animation: l9 1s infinite alternate;
+}
+@keyframes l9 {
+  0% {
+    background-position: 0 50%, 50% 50%, 100% 50%;
+  }
+  20% {
+    background-position: 0 0, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0 100%, 50% 0, 100% 50%;
+  }
+  60% {
+    background-position: 0 50%, 50% 100%, 100% 0;
+  }
+  80% {
+    background-position: 0 50%, 50% 50%, 100% 100%;
+  }
+  100% {
+    background-position: 0 50%, 50% 50%, 100% 50%;
+  }
+}
+/* --- loader-circle-10 --- */
+/* HTML: <div class="loader-circle-10"></div> */
+.loader-circle-10 {
+  width: 65px;
+  aspect-ratio: 1;
+  --g: radial-gradient(farthest-side,#0000 calc(95% - 3px),var(--loader-color, #fff) calc(100% - 3px) 98%,#0000 101%) no-repeat;
+  background: var(--g), var(--g), var(--g);
+  background-size: 30px 30px;
+  animation: l10 1.5s infinite;
+}
+@keyframes l10 {
+  0% {
+    background-position: 0 0, 0 100%, 100% 100%;
+  }
+  25% {
+    background-position: 100% 0, 0 100%, 100% 100%;
+  }
+  50% {
+    background-position: 100% 0, 0 0, 100% 100%;
+  }
+  75% {
+    background-position: 100% 0, 0 0, 0 100%;
+  }
+  100% {
+    background-position: 100% 100%, 0 0, 0 100%;
+  }
+}
+/* --- loader-circle-11 --- */
+/* HTML: <div class="loader-circle-11"></div> */
+.loader-circle-11 {
+  width: 50px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px var(--loader-color, #fff) inset;
+  border-radius: 50%;
+  position: relative;
+  animation: l11 7s infinite;
+}
+.loader-circle-11:before,
+.loader-circle-11:after {
+  content: "";
+  position: absolute;
+  top: calc(100% + 3px);
+  left: calc(50% - 12.5px);
+  box-shadow: inherit;
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform-origin: 50% -28px;
+  animation: l11 1.5s infinite;
+}
+.loader-circle-11:after {
+  animation-delay: -0.75s;
+}
+@keyframes l11 {
+  100% {
+    transform: rotate(360deg);
+  }
+}

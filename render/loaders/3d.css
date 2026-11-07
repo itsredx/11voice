@@ -1,0 +1,302 @@
+/* Defaults */
+.loader-3d-1, .loader-3d-2, .loader-3d-3, .loader-3d-4, .loader-3d-5, .loader-3d-6,
+.loader-3d-7, .loader-3d-8, .loader-3d-9, .loader-3d-10, .loader-3d-11, .loader-3d-12 {
+  /* Default Sizing */
+  --s: var(--opt-size, 25px); 
+  --g: var(--opt-gap, 5px);
+  
+  /* Primary Color */
+  --base: var(--opt-color, #ffffff);
+  
+  /* Secondary Color (used in variants 7, 9, 10, 11, 12) */
+  --accent: var(--opt-accent, #ff1818);
+
+  /* Calculated Shadows (Overridable via --opt-shadow-1/2) */
+  --shadow-1: var(--opt-shadow-1, color-mix(in srgb, var(--base), black 60%));
+  --shadow-2: var(--opt-shadow-2, color-mix(in srgb, var(--base), black 33%));
+}
+
+/* --- loader-3d-1 --- */
+.loader-3d-1 {
+  --_d: calc(0.353*var(--s));
+  width: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  clip-path: polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at var(--s) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+  animation: l3d1 1s infinite cubic-bezier(0.5,300,0.5,-300);
+}
+@keyframes l3d1{ 50%,100% {transform:translateY(0.1px)} }
+
+/* --- loader-3d-2 --- */
+.loader-3d-2 {
+  --_d: calc(0.353*var(--s));
+  width: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  display: grid;
+  filter: drop-shadow(0 0 0 var(--base));
+  animation: l3d2 0.8s infinite;
+}
+.loader-3d-2:before {
+  content: "";
+  clip-path: polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at var(--s) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+}
+@keyframes l3d2{ 50% {filter:drop-shadow(0 0 5px var(--base))} }
+
+/* --- loader-3d-3 --- */
+.loader-3d-3 {
+  --_d: calc(0.353*var(--s));
+  height: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader-3d-3:before {
+  content: "";
+  height: 100%;
+  margin: auto 0;
+  clip-path: polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at var(--s) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+  animation: l3d3 .8s infinite alternate;
+}
+@keyframes l3d3{ 100% {height:40%} }
+
+/* --- loader-3d-4 --- */
+.loader-3d-4 {
+  --_d: calc(0.353*var(--s));
+  width: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader-3d-4:before,
+.loader-3d-4:after {
+  content:"";
+  clip-path:polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at var(--s) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+  animation: l3d4 1.2s infinite;
+}
+.loader-3d-4:before {
+  z-index: 1;
+  margin-bottom: calc(var(--_d)/-2 - 1px);
+}
+.loader-3d-4:after {
+  margin-top: calc(var(--_d)/-2 - 1px);
+  animation-delay: 0.6s
+}
+@keyframes l3d4{
+  0%     {transform: translate(0)}
+  16.67% {transform: translate(-10px)}
+  33.33% {transform: translate(10px)}
+  50%, 100%   {transform: translate(0)}
+}
+
+/* --- loader-3d-5 --- */
+.loader-3d-5 {
+  --_d: calc(0.353*var(--s));
+  width: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  display: flex;
+}
+.loader-3d-5:before,
+.loader-3d-5:after {
+  content: "";
+  flex: 1;
+  clip-path: polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at calc(100% - var(--_d)) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+  animation: l3d5 1.2s infinite;
+}
+.loader-3d-5:before { margin-right: calc(var(--_d)/-2 - 1px); }
+.loader-3d-5:after { margin-left: calc(var(--_d)/-2 - 1px); animation-delay: 0.6s; }
+@keyframes l3d5{
+  0%     {transform: translateY(0)}
+  16.67% {transform: translateY(-10px)}
+  33.33% {transform: translateY(10px)}
+  50%, 100%   {transform: translateY(0)}
+}
+
+/* --- loader-3d-6 --- */
+.loader-3d-6 {
+  --_d: calc(0.353*var(--s));
+  width: calc(var(--s) + var(--_d));
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader-3d-6:before,
+.loader-3d-6:after {
+  content: "";
+  grid-area: 1/1;
+  clip-path: polygon(var(--_d) 0,100% 0,100% calc(100% - var(--_d)),calc(100% - var(--_d)) 100%,0 100%,0 var(--_d));
+  background:
+    conic-gradient(from -90deg at calc(100% - var(--_d)) var(--_d),
+     var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0);
+  animation: l3d6 2s infinite;
+}
+.loader-3d-6:after { animation-delay:-1s; }
+@keyframes l3d6{
+  0%  {transform:translate(0,0)}
+  25% {transform:translate(30px,0)}
+  50% {transform:translate(30px,30px)}
+  75% {transform:translate(0,30px)}
+  100%{transform:translate(0,0)}
+}
+
+/* --- loader-3d-7 --- */
+.loader-3d-7 {
+  height: calc(1.353*var(--s) + var(--g));
+  aspect-ratio: 3;
+  background:
+    linear-gradient(var(--accent) 0 0) left/33% 100% no-repeat,
+    conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+      var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0); 
+  background-blend-mode: multiply;
+  --_m:
+    linear-gradient(to bottom right,
+       #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0),
+    conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  background-size:   calc(100%/3) 100%;
+  -webkit-mask-size: calc(100%/3) 100%;
+          mask-size: calc(100%/3) 100%;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l3d7 steps(3) 1.5s infinite;
+}
+@keyframes l3d7 { to {background-position: 150% 0%} }
+
+/* --- loader-3d-8 --- */
+.loader-3d-8 {
+  height: calc(1.353*var(--s) + var(--g));
+  aspect-ratio: 3;
+  display: grid;
+  justify-items: end;
+  overflow: hidden;
+  --_m: linear-gradient(90deg,#0000,#000 15px calc(100% - 15px),#0000);
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+}
+.loader-3d-8:before { 
+  content: "";
+  width: calc(4*100%/3);
+  background:
+  conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+      var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0); 
+  --_m:
+    linear-gradient(to bottom right,
+       #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0),
+    conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
+   -webkit-mask: var(--_m);
+           mask: var(--_m);
+  background-size:   calc(100%/4) 100%;
+  -webkit-mask-size: calc(100%/4) 100%;
+          mask-size: calc(100%/4) 100%;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l3d8 1s infinite linear;
+}
+@keyframes l3d8 { to {transform:translate(calc(100%/4))} }
+
+/* --- loader-3d-9 --- */
+.loader-3d-9 {
+  width: calc(2*(1.353*var(--s) + var(--g)));
+  aspect-ratio: 1;
+  background:
+    linear-gradient(var(--accent) 0 0) left/50% 100% no-repeat,
+    conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+      var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0); 
+  background-blend-mode: multiply;
+  --_m:
+    linear-gradient(to bottom right,
+       #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0),
+    conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  background-size:   50% 50%;
+  -webkit-mask-size: 50% 50%;
+          mask-size: 50% 50%;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l3d9 1.5s infinite;
+}
+@keyframes l3d9 {
+  0%,12.5%    {background-position:0% 0%,0 0}
+  12.6%,37.5% {background-position:100% 0%,0 0}
+  37.6%,62.5% {background-position:100% 100%,0 0}
+  62.6%,87.5% {background-position:0% 100%,0 0}
+  87.6%,100%  {background-position:0% 0%,0 0}
+}
+
+/* --- loader-3d-10 --- */
+.loader-3d-10 {
+  width: calc(3*(1.353*var(--s) + var(--g)));
+  display: grid;
+  justify-items: end;
+  aspect-ratio: 3;
+  overflow: hidden;
+  --_m: linear-gradient(90deg,#0000,#000 15px calc(100% - 15px),#0000);
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+}
+.loader-3d-10:before { 
+  content: "";
+  width: 200%;
+  background:
+    linear-gradient(90deg,var(--accent) 50%,#0000 0),
+    conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)),
+      var(--base) 135deg,var(--shadow-1) 0 270deg,var(--shadow-2) 0); 
+  background-blend-mode: multiply;
+  --_m:
+    linear-gradient(to bottom right,
+       #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0),
+    conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  background-size:   calc(100%/3) 100%, calc(100%/6) 100%;
+  -webkit-mask-size: calc(100%/6) 100%;
+          mask-size: calc(100%/6) 100%;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  animation: l3d10 1s infinite linear;
+}
+@keyframes l3d10 { to {transform:translate(calc(100%/3))} }
+
+/* --- loader-3d-11 --- */
+.loader-3d-11 {
+  height: calc(var(--s) + var(--g));
+  aspect-ratio: 3;
+  background:
+    radial-gradient(calc(var(--s)/sqrt(2)) at calc(50% - .1*var(--s)) calc(50% - .2*var(--s)),#0000 5%,60%,#111 98%), 
+    linear-gradient(var(--accent) 0 0) no-repeat var(--base); 
+  background-size: calc(100%/3) 100%;
+  mask: radial-gradient(calc(var(--s)/2),#000 calc(100% - 1px),#0000) 0/calc(100%/3) 100%;
+  animation: l3d11 steps(3) 1.5s infinite;
+}
+@keyframes l3d11 { to {background-position:0 ,150%} }
+
+/* --- loader-3d-12 --- */
+.loader-3d-12 {
+  height: calc(2*(var(--s) + var(--g)));
+  aspect-ratio: 1;
+  background:
+    radial-gradient(calc(var(--s)/sqrt(2)) at calc(50% - .1*var(--s)) calc(50% - .2*var(--s)),#0000 5%,60%,#111 98%), 
+    linear-gradient(var(--accent) 0 0) no-repeat var(--base); 
+  background-size: 50% 50%;
+  mask: radial-gradient(calc(var(--s)/2),#000 calc(100% - 1px),#0000) 0 0/50% 50%;
+  animation: l3d12 steps(3) 1.5s infinite;
+}
+@keyframes l3d12 {
+  0%,12.5%    {background-position:0 0}
+  12.6%,37.5% {background-position:0 0,100% 0}
+  37.6%,62.5% {background-position:0 0,100% 100%}
+  62.6%,87.5% {background-position:0 0,0 100%}
+  87.6%,100%  {background-position:0 0}
+}

@@ -1,0 +1,154 @@
+/* --- loader-continuous-1 --- */
+/* HTML: <div class="loader-continuous-1"></div> */
+.loader-continuous-1 {
+  width: 120px;
+  height: 20px;
+  background: 
+    linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+    var(--loader-color-7, var(--loader-color-7, #f2f2f2));
+  background-size:300% 100%;
+  animation: l1 1s infinite linear;
+}
+@keyframes l1 {
+  0% {background-position: right}
+}
+/* --- loader-continuous-2 --- */
+/* HTML: <div class="loader-continuous-2"></div> */
+.loader-continuous-2 {
+  width: 120px;
+  height: 20px;
+  background: 
+    linear-gradient(90deg, #0000 ,var(--loader-color-9, orange)) left -50px top 0/50px 20px no-repeat 
+    lightblue;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {
+  100% {background-position: right -50px top 0}
+}
+/* --- loader-continuous-3 --- */
+/* HTML: <div class="loader-continuous-3"></div> */
+.loader-continuous-3 {
+  width: 120px;
+  height: 20px;
+  transform: skewX(-45deg);
+  background: 
+    linear-gradient(var(--loader-color-6, var(--loader-color-6, #f03355)) 0 0) left -30px top 0/30px 20px no-repeat 
+    var(--loader-color-3, var(--loader-color-3, #ccc));
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  100% {background-position: right -30px top 0}
+}
+/* --- loader-continuous-4 --- */
+/* HTML: <div class="loader-continuous-4"></div> */
+.loader-continuous-4 {
+  width: 120px;
+  height: 22px;
+  border-radius: 40px;
+  color: var(--loader-color-2, var(--loader-color-2, #514b82));
+  border: 2px solid;
+  position: relative;
+  overflow: hidden;
+}
+.loader-continuous-4::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  width: 14px;
+  top: 0;
+  bottom: 0;
+  left: -20px;
+  border-radius: inherit;
+  background: currentColor;
+  box-shadow: -10px 0 12px 3px currentColor;
+  clip-path: polygon(0 5%, 100% 0,100% 100%,0 95%,-30px 50%);
+  animation: l14 1s infinite linear;
+}
+@keyframes l14 {
+  100% {left: calc(100% + 20px)}
+}
+/* --- loader-continuous-5 --- */
+/* HTML: <div class="loader-continuous-5"></div> */
+.loader-continuous-5 {
+  width: 120px;
+  height: 20px;
+  background: 
+    linear-gradient(var(--loader-color, var(--loader-color, #25b09b)) 0 0) left -40px top 0/40px 20px,
+    linear-gradient(var(--loader-color-4, var(--loader-color-4, #ddd)) 0 0) center/100% 50%; 
+  background-repeat: no-repeat;
+  animation: l5 1s infinite linear;
+}
+@keyframes l5 {
+  100% {background-position: right -40px top 0,center}
+}
+/* --- loader-continuous-6 --- */
+/* HTML: <div class="loader-continuous-6"></div> */
+.loader-continuous-6 {
+  width: 120px;
+  height: 20px;
+  background: 
+    radial-gradient(circle 10px,#000 95%,#0000 )  right /calc(200% + 20px) 100%,
+    linear-gradient(#000 0 0) center/100% 6px; 
+  background-repeat: no-repeat; 
+  -webkit-mask: radial-gradient(circle 4px,#0000 93%,#000 ) right/calc(200% + 20px) 100%;
+  animation: l6 1s infinite linear;
+}
+@keyframes l6 {
+  100% {background-position: left;-webkit-mask-position:left}
+}
+/* --- loader-continuous-7 --- */
+/* HTML: <div class="loader-continuous-7"></div> */
+.loader-continuous-7 {
+  width: 120px;
+  height: 20px;
+  -webkit-mask: linear-gradient(90deg,#000 70%,#0000 0) left/20% 100%;
+  background:
+   linear-gradient(#000 0 0) left -25% top 0 /20% 100% no-repeat
+   var(--loader-color-4, var(--loader-color-4, #ddd));
+  animation: l7 1s infinite steps(6);
+}
+@keyframes l7 {
+    100% {background-position: right -25% top 0}
+}
+/* --- loader-continuous-8 --- */
+/* HTML: <div class="loader-continuous-8"></div> */
+.loader-continuous-8 {
+  width: 40px;
+  aspect-ratio: 1;
+  background:
+    linear-gradient(to bottom right,#0000 calc(50% - 40px),#fff 50%,#0000 calc(50% + 40px)) 
+    bottom right/calc(200% + 80px) calc(200% + 80px) 
+    var(--loader-color-9, orange);
+  animation: l8 1s infinite ;
+}
+@keyframes l8 {
+    100% {background-position: top left}
+}
+/* --- loader-continuous-9 --- */
+/* HTML: <div class="loader-continuous-9"></div> */
+.loader-continuous-9 {
+  width: 120px;
+  height: 20px;
+  background: 
+    radial-gradient(circle closest-side,var(--loader-color-6, var(--loader-color-6, #f03355)) 94%,#0000) 50% 50%/calc(50% + 10px) 70% repeat-x 
+    var(--loader-color-3, var(--loader-color-3, #ccc));
+  animation: l9 1s infinite cubic-bezier(0.3,1,0,1);
+}
+@keyframes l9 {
+  100% {background-position: calc(200% - 5px)}
+}
+/* --- loader-continuous-10 --- */
+/* HTML: <div class="loader-continuous-10"></div> */
+.loader-continuous-10 {
+  width: 120px;
+  height: 20px;
+  background: linear-gradient(var(--loader-color-2, var(--loader-color-2, #514b82)) 0 0) left -40px top 0/40px 100% no-repeat var(--loader-color-5, var(--loader-color-5, #eee));
+  -webkit-mask:
+    conic-gradient(from 90deg at 5px 5px,#0000 25%,#000 0)
+     0 0/calc((100% - 5px)/5) calc(100% - 5px);
+  animation: l10 1s infinite linear;
+}
+@keyframes l10 {
+  100% {background-position: right -40px top 0}
+}

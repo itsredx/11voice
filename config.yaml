@@ -1,0 +1,14 @@
+app_name: 11Voice
+app_id: com.pythra.11voice
+win_width: 1280
+win_height: 720
+min_win_width: 400
+min_win_height: 300
+frameless: false
+maximixed: false
+fixed_size: false
+Debug: true
+render_dir: render
+assets_dir: assets
+assets_server_port: 8008
+plugins: []
