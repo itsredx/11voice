@@ -14,6 +14,9 @@ class VoiceInfo:
     preview_url: Optional[str] = None
     labels: Dict[str, str] = field(default_factory=dict)
     description: str = ""
+    available_for_tiers: List[str] = field(default_factory=list)
+    free_users_allowed: Optional[bool] = None
+    is_library_voice: bool = False
 
     @property
     def gender(self) -> str:
@@ -22,6 +25,24 @@ class VoiceInfo:
     @property
     def accent(self) -> str:
         return self.labels.get("accent", "neutral")
+
+
+# These two preset voices were confirmed usable with this account. Keep them
+# available while the remote catalog is still loading or temporarily offline.
+FALLBACK_USABLE_VOICES = [
+    VoiceInfo(
+        voice_id="pNInz6obpgDQGcFmaJgB",
+        name="Adam",
+        category="premade",
+        labels={"gender": "male"},
+    ),
+    VoiceInfo(
+        voice_id="EXAVITQu4vr4xnSDxMaL",
+        name="Bella",
+        category="premade",
+        labels={"gender": "female"},
+    ),
+]
 
 
 # ── Voice Manager ─────────────────────────────────────────────────────
@@ -41,13 +62,20 @@ class VoiceManager:
         parsed: Dict[str, VoiceInfo] = {}
         for item in raw_voices:
             v_id = item.get("voice_id", "")
+            category = item.get("category") or "premade"
             info = VoiceInfo(
                 voice_id=v_id,
                 name=item.get("name", "Unnamed Voice"),
-                category=item.get("category", "premade"),
+                category=category,
                 preview_url=item.get("preview_url"),
                 labels=item.get("labels", {}),
                 description=item.get("description", "") or "",
+                available_for_tiers=item.get("available_for_tiers", []) or [],
+                free_users_allowed=(item.get("sharing") or {}).get("free_users_allowed"),
+                # `sharing` metadata is also present on some built-in voices,
+                # so it does not mean the voice is paywalled. The category is
+                # the reliable catalog signal for Voice Library entries.
+                is_library_voice=category.lower() in {"professional", "community"},
             )
             parsed[v_id] = info
 

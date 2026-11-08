@@ -69,7 +69,29 @@ class Database:
                     FOREIGN KEY (speaker_id) REFERENCES speakers(id) ON DELETE SET NULL
                 )
             """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS app_settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL
+                )
+            """)
             conn.commit()
+
+    def set_setting(self, key: str, value: str) -> None:
+        with self._get_connection() as conn:
+            conn.execute(
+                "INSERT INTO app_settings (key, value) VALUES (?, ?) "
+                "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+                (key, value),
+            )
+            conn.commit()
+
+    def get_setting(self, key: str) -> Optional[str]:
+        with self._get_connection() as conn:
+            row = conn.execute(
+                "SELECT value FROM app_settings WHERE key = ?", (key,)
+            ).fetchone()
+        return row["value"] if row else None
 
     # ── Speaker Operations ────────────────────────────────────────────
     def save_speaker(self, speaker: Speaker) -> None:
@@ -163,4 +185,21 @@ class Database:
                 )
                 conv.turns.append(turn)
             return conv
+
+    def list_conversations(self) -> List[tuple[str, str]]:
+        """Return saved conversations as (id, title), newest edits first."""
+        with self._get_connection() as conn:
+            rows = conn.execute(
+                """SELECT id, title FROM conversations
+                   ORDER BY CASE WHEN id IN ('conversation_01', 'conversation_02', 'conversation_03')
+                                 THEN 0 ELSE 1 END,
+                            CASE id
+                                WHEN 'conversation_01' THEN 1
+                                WHEN 'conversation_02' THEN 2
+                                WHEN 'conversation_03' THEN 3
+                                ELSE 4
+                            END,
+                            updated_at DESC, title ASC"""
+            ).fetchall()
+        return [(row["id"], row["title"]) for row in rows]
 

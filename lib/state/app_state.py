@@ -1,13 +1,16 @@
 # ── Imports & Setup ──────────────────────────────────────────────────
 import logging
+import json
 import threading
+import uuid
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
 from ..audio import AudioDevice, AudioEngine, PlaybackStatus
 from ..backend import Database
 from ..conversation import Conversation, ConversationManager, DialogueTurn, GenerationStatus, Speaker
-from ..elevenlabs import SpeechGenerator, VoiceInfo, VoiceManager
-from ..storage import AudioCache
+from ..elevenlabs import PaidPlanRequiredError, SpeechGenerator, VoiceInfo, VoiceManager
+from ..storage import AudioCache, PlaybackArchive
+from ..conversation.json_import import load_conversation_json
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +36,7 @@ class AppState:
         # ── Backend Engine Singletons ─────────────────────────────────
         self.audio_engine = AudioEngine()
         self.audio_cache = AudioCache()
+        self.playback_archive = PlaybackArchive()
         self.database = Database()
         self.voice_manager = VoiceManager()
         self.speech_generator = SpeechGenerator(cache=self.audio_cache)
@@ -45,12 +49,59 @@ class AppState:
         self.active_turn_id: Optional[str] = None
         self.status_message: str = "Ready"
         self.is_generating: bool = False
+        self._last_playback_error: Optional[str] = None
+        self.available_voices: List[VoiceInfo] = []
 
         # Initialize speakers from DB or defaults
         self._init_default_speakers()
+        self._register_bundled_conversations()
+        # Restore the last selected script rather than always showing the
+        # temporary starter dialogue after an app restart.
+        saved_conversation_id = self.database.get_setting("active_conversation_id")
+        if saved_conversation_id:
+            saved_conversation = self.database.get_conversation(saved_conversation_id)
+            if saved_conversation:
+                self.conversation_manager.current_conversation = saved_conversation
 
         # Connect playback queue callbacks to UI listeners
         self._bind_queue_callbacks()
+        self._connect_elevenlabs()
+
+    def _connect_elevenlabs(self) -> None:
+        """Load the account voice catalog without blocking the Pythra UI thread."""
+        if not self.voice_manager.client.api_key:
+            self.status_message = "ElevenLabs disconnected · add ELEVENLABS_API_KEY to .env"
+            return
+
+        self.status_message = "Connecting to ElevenLabs…"
+
+        def worker():
+            try:
+                # Library voices can appear in the catalog even when the account
+                # cannot synthesize them through the API (for example on Free).
+                # Keep the selector limited to account voices that are usable.
+                self.available_voices = [
+                    voice
+                    for voice in self.voice_manager.fetch_voices(force_refresh=True)
+                    if not voice.is_library_voice
+                ]
+                self.status_message = f"ElevenLabs connected · {len(self.available_voices)} voices loaded"
+            except Exception as exc:
+                logger.warning("Could not connect to ElevenLabs: %s", exc)
+                self.status_message = f"ElevenLabs connection failed: {exc}"
+            self.notify_listeners()
+
+        threading.Thread(target=worker, name="ElevenLabsVoiceCatalog", daemon=True).start()
+
+    def _handle_paid_plan_required(self) -> str:
+        """Stop retries and leave non-library account voices selectable."""
+        self.available_voices = [
+            voice for voice in self.available_voices if not voice.is_library_voice
+        ]
+        return (
+            "This Voice Library voice requires a paid ElevenLabs plan for API use. "
+            "Voice Library voices are hidden. Select an account voice to continue."
+        )
 
     # ── Listener Subscription ─────────────────────────────────────────
     def add_listener(self, listener: Callable[[], None]) -> None:
@@ -111,6 +162,117 @@ class AppState:
                 )
                 self.database.save_conversation(self.conversation_manager.current_conversation)
 
+    def _register_bundled_conversations(self) -> None:
+        """Make JSON scripts shipped with the project available in the library."""
+        scripts_dir = Path(__file__).resolve().parent.parent.parent / "conversations"
+        saved_ids = {conversation_id for conversation_id, _ in self.database.list_conversations()}
+        for script_path in sorted(scripts_dir.glob("*.json")):
+            try:
+                payload = json.loads(script_path.read_text(encoding="utf-8"))
+                conversation_id = str(payload.get("id", ""))
+                if conversation_id in saved_ids:
+                    continue
+                conversation, imported_speakers = load_conversation_json(
+                    script_path,
+                    self.conversation_manager.speakers,
+                )
+                for speaker in imported_speakers.values():
+                    self.database.save_speaker(speaker)
+                self.conversation_manager.speakers.update(imported_speakers)
+                self.database.save_conversation(conversation)
+                saved_ids.add(conversation.id)
+            except Exception as exc:
+                logger.warning("Could not register bundled conversation %s: %s", script_path.name, exc)
+
+    def import_conversation_json(
+        self,
+        path: str | Path,
+        reuse_existing: bool = False,
+    ) -> Conversation:
+        """Import a JSON conversation, save it, and make it the active script.
+
+        Bundled conversation buttons use ``reuse_existing`` so they run through
+        this known-good activation path without creating a duplicate each click.
+        """
+        source = Path(path)
+        try:
+            payload = json.loads(source.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError(f"Could not read JSON file: {exc}") from exc
+        existing_ids = {conversation_id for conversation_id, _ in self.database.list_conversations()}
+        source_id = str(payload.get("id") or "") if isinstance(payload, dict) else ""
+        if reuse_existing and source_id in existing_ids:
+            if self.load_conversation(source_id):
+                return self.conversation
+        imported_id = source_id if source_id and source_id not in existing_ids else uuid.uuid4().hex[:8]
+        conversation, imported_speakers = load_conversation_json(
+            source,
+            self.conversation_manager.speakers,
+            conversation_id=imported_id,
+        )
+        for speaker in imported_speakers.values():
+            self.database.save_speaker(speaker)
+        self.conversation_manager.speakers.update(imported_speakers)
+        self.database.save_conversation(conversation)
+        self.conversation_manager.current_conversation = conversation
+        self.database.set_setting("active_conversation_id", conversation.id)
+        self.status_message = f"Imported {conversation.title}"
+        self.notify_listeners()
+        return conversation
+
+    def load_conversation(self, conversation_id: str) -> bool:
+        """Switch to a saved conversation and resolve audio for current voices."""
+        if self.is_playing:
+            self.stop()
+        conversation = self.database.get_conversation(conversation_id)
+        if not conversation:
+            return False
+        self.conversation_manager.current_conversation = conversation
+        self.database.set_setting("active_conversation_id", conversation.id)
+        for turn in conversation.turns:
+            speaker = self.speakers.get(turn.speaker_id)
+            if not speaker:
+                continue
+            cached = self._resolve_turn_audio(turn, speaker)
+            if cached:
+                turn.audio_path = str(cached)
+                turn.generation_status = GenerationStatus.READY
+            else:
+                turn.audio_path = None
+                turn.generation_status = GenerationStatus.PENDING
+        self.status_message = f"Loaded {conversation.title}"
+        self.notify_listeners()
+        return True
+
+    def _archive_turn_audio(self, turn: DialogueTurn) -> None:
+        if turn.audio_path:
+            self.playback_archive.archive_turn(
+                self.conversation,
+                turn,
+                self.speakers,
+                turn.audio_path,
+            )
+
+    def _resolve_turn_audio(self, turn: DialogueTurn, speaker: Speaker) -> Optional[Path]:
+        """Resolve this voice's cache entry, restoring it from the archive if needed."""
+        cached = self.speech_generator.get_cached_path(
+            turn.text,
+            speaker.voice_id,
+            speaking_rate=speaker.speaking_rate,
+        )
+        if cached:
+            return cached
+        archived = self.playback_archive.find_turn(self.conversation, turn, self.speakers)
+        if not archived:
+            return None
+        extension = archived.suffix.lstrip(".") or "wav"
+        cache_key = self.audio_cache.derive_cache_key(
+            speaker.voice_id,
+            turn.text,
+            speaking_rate=speaker.speaking_rate,
+        )
+        return self.audio_cache.store(cache_key, archived.read_bytes(), extension=extension)
+
     def _bind_queue_callbacks(self) -> None:
         queue = self.conversation_manager.queue
 
@@ -121,14 +283,21 @@ class AppState:
             self.notify_listeners()
 
         def on_turn_completed(turn: DialogueTurn):
+            self._archive_turn_audio(turn)
+            self.database.save_conversation(self.conversation)
             self.notify_listeners()
 
         def on_finished():
             self.active_turn_id = None
-            self.status_message = "Playback completed"
+            self.status_message = self._last_playback_error or "Playback completed"
             self.notify_listeners()
 
         def on_error(turn: DialogueTurn, error_msg: str):
+            if "paid plan" in error_msg.lower():
+                self._last_playback_error = self._handle_paid_plan_required()
+                self.status_message = self._last_playback_error
+                self.notify_listeners()
+                return
             self.status_message = f"Error on turn: {error_msg}"
             self.notify_listeners()
 
@@ -172,6 +341,13 @@ class AppState:
         speaker = self.conversation_manager.update_speaker(speaker_id=speaker_id, voice_id=voice_id)
         if speaker:
             self.database.save_speaker(speaker)
+            for turn in self.conversation.turns:
+                if turn.speaker_id != speaker_id:
+                    continue
+                cached = self._resolve_turn_audio(turn, speaker)
+                turn.audio_path = str(cached) if cached else None
+                turn.generation_status = GenerationStatus.READY if cached else GenerationStatus.PENDING
+            self.database.save_conversation(self.conversation)
             self.notify_listeners()
 
     def add_turn(self, speaker_id: str, text: str) -> DialogueTurn:
@@ -193,12 +369,15 @@ class AppState:
     # ── Turn Audio Generation & Caching ───────────────────────────────
     def is_turn_cached(self, turn: DialogueTurn) -> bool:
         """Check if audio file exists on disk for this turn."""
-        if turn.audio_path and Path(turn.audio_path).exists() and Path(turn.audio_path).stat().st_size > 0:
-            return True
         speaker = self.speakers.get(turn.speaker_id)
         if not speaker:
             return False
-        return self.speech_generator.is_cached(turn.text, speaker.voice_id, speaking_rate=speaker.speaking_rate)
+        cached = self._resolve_turn_audio(turn, speaker)
+        if cached:
+            turn.audio_path = str(cached)
+            turn.generation_status = GenerationStatus.READY
+            return True
+        return False
 
     def generate_turn_audio(self, turn_id: str, force: bool = False) -> None:
         """Generate audio for a single dialogue turn in a background worker."""
@@ -215,20 +394,27 @@ class AppState:
                 self.status_message = f"Synthesizing audio for {speaker.name}..."
                 self.notify_listeners()
 
-                path = self.speech_generator.generate(
-                    text=turn.text,
-                    voice_id=speaker.voice_id,
-                    speaking_rate=speaker.speaking_rate,
-                    force_regenerate=force,
-                )
+                path = None if force else self._resolve_turn_audio(turn, speaker)
+                if path is None:
+                    path = self.speech_generator.generate(
+                        text=turn.text,
+                        voice_id=speaker.voice_id,
+                        speaking_rate=speaker.speaking_rate,
+                        force_regenerate=force,
+                    )
                 turn.audio_path = str(path)
                 turn.generation_status = GenerationStatus.READY
+                self._archive_turn_audio(turn)
                 self.database.save_conversation(self.conversation)
                 self.status_message = f"Audio ready for {speaker.name}"
             except Exception as e:
                 logger.error("Error generating turn audio: %s", e)
                 turn.generation_status = GenerationStatus.FAILED
-                self.status_message = f"Generation error: {e}"
+                self.status_message = (
+                    self._handle_paid_plan_required()
+                    if isinstance(e, PaidPlanRequiredError)
+                    else f"Generation error: {e}"
+                )
             finally:
                 self.notify_listeners()
 
@@ -242,6 +428,7 @@ class AppState:
         def worker():
             self.is_generating = True
             total = len(self.conversation.turns)
+            plan_error = False
             for idx, turn in enumerate(self.conversation.turns):
                 speaker = self.speakers.get(turn.speaker_id)
                 if not speaker:
@@ -249,20 +436,29 @@ class AppState:
                 self.status_message = f"Generating line {idx + 1} of {total}..."
                 self.notify_listeners()
                 try:
-                    path = self.speech_generator.generate(
-                        text=turn.text,
-                        voice_id=speaker.voice_id,
-                        speaking_rate=speaker.speaking_rate,
-                    )
+                    path = self._resolve_turn_audio(turn, speaker)
+                    if path is None:
+                        path = self.speech_generator.generate(
+                            text=turn.text,
+                            voice_id=speaker.voice_id,
+                            speaking_rate=speaker.speaking_rate,
+                        )
                     turn.audio_path = str(path)
                     turn.generation_status = GenerationStatus.READY
+                    self._archive_turn_audio(turn)
                 except Exception as e:
                     logger.error("Failed generating turn %s: %s", turn.id, e)
                     turn.generation_status = GenerationStatus.FAILED
+                    if isinstance(e, PaidPlanRequiredError):
+                        plan_error = True
+                        self.status_message = self._handle_paid_plan_required()
+                        self.notify_listeners()
+                        break
 
             self.database.save_conversation(self.conversation)
             self.is_generating = False
-            self.status_message = "All dialogue lines synthesized and cached"
+            if not plan_error:
+                self.status_message = "All dialogue lines synthesized and cached"
             self.notify_listeners()
 
         threading.Thread(target=worker, daemon=True).start()
@@ -278,8 +474,9 @@ class AppState:
 
         def worker():
             try:
-                audio_path = turn.audio_path
-                if not audio_path or not Path(audio_path).exists():
+                current_cache = self._resolve_turn_audio(turn, speaker)
+                audio_path = str(current_cache) if current_cache else None
+                if not audio_path:
                     path = self.speech_generator.generate(
                         text=turn.text,
                         voice_id=speaker.voice_id,
@@ -288,7 +485,12 @@ class AppState:
                     audio_path = str(path)
                     turn.audio_path = audio_path
                     turn.generation_status = GenerationStatus.READY
+                    self._archive_turn_audio(turn)
                     self.database.save_conversation(self.conversation)
+                else:
+                    turn.audio_path = audio_path
+                    turn.generation_status = GenerationStatus.READY
+                    self._archive_turn_audio(turn)
 
                 target_device_id = turn.output_device_override or speaker.output_device_id
                 target_dev = (
@@ -308,7 +510,11 @@ class AppState:
 
             except Exception as e:
                 logger.error("Error previewing turn: %s", e)
-                self.status_message = f"Preview error: {e}"
+                self.status_message = (
+                    self._handle_paid_plan_required()
+                    if isinstance(e, PaidPlanRequiredError)
+                    else f"Preview error: {e}"
+                )
             finally:
                 self.active_turn_id = None
                 self.notify_listeners()
@@ -317,6 +523,7 @@ class AppState:
 
     # ── Playback Controls ─────────────────────────────────────────────
     def play(self) -> None:
+        self._last_playback_error = None
         self.status_message = "Starting playback..."
         self.conversation_manager.play_conversation()
         self.notify_listeners()

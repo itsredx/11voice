@@ -32,10 +32,11 @@ class AudioCache:
         text: str,
         model_id: str = "eleven_multilingual_v2",
         speaking_rate: float = 1.0,
+        provider: str = "elevenlabs",
     ) -> str:
         """Generate a deterministic SHA-256 hash for speech synthesis inputs."""
         normalized_text = text.strip()
-        payload = f"{voice_id}|{normalized_text}|{model_id}|{speaking_rate:.2f}"
+        payload = f"{provider}|{voice_id}|{normalized_text}|{model_id}|{speaking_rate:.2f}"
         return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
     # ── Cache Access & Persistence ────────────────────────────────────

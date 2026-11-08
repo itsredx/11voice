@@ -1,9 +1,15 @@
 # ── Imports & Framework Dependencies ───────────────────────────────────
+from pathlib import Path
 from typing import Optional
+from PySide6.QtWidgets import QFileDialog
 from pythra.base import Key
 from pythra.styles import (
+    BorderRadius,
+    BorderSide,
+    ButtonStyle,
     CrossAxisAlignment,
     EdgeInsets,
+    InputDecoration,
     TextStyle,
     MainAxisAlignment,
 )
@@ -11,12 +17,15 @@ from pythra.widgets import SizedBox
 from pythra import (
     Column,
     Container,
+    ElevatedButton,
     Expanded,
+    Framework,
     SingleChildScrollView,
     Row,
     State,
     StatefulWidget,
     Text,
+    dispatch_to_main,
 )
 from ..constants.colors import StudioColors
 from ..conversation.models import GenerationStatus
@@ -46,11 +55,65 @@ class ConversationScreenState(State):
         self.app_state.add_listener(self._on_app_state_change)
 
     def _on_app_state_change(self):
-        self.setState()
+        # PyThra hot reload can replace the screen widget while retaining old
+        # listeners. Drop callbacks whose weak widget reference is no longer live.
+        if self.get_widget() is None:
+            self.app_state.remove_listener(self._on_app_state_change)
+            return
+        # WebChannel callbacks and background catalog/audio workers may notify
+        # from different threads. Reconciliation must run on Qt's UI thread.
+        dispatch_to_main(self._refresh_screen)
+
+    def _refresh_screen(self):
+        if self.get_widget() is not None:
+            self.setState()
+
+    def dispose(self):
+        self.app_state.remove_listener(self._on_app_state_change)
 
     # ── User Actions ──────────────────────────────────────────────────
     def on_refresh_devices(self):
         self.app_state.refresh_devices()
+
+    def on_select_conversation(self, conversation_id):
+        if conversation_id:
+            loaded = self.app_state.load_conversation(str(conversation_id))
+            if not loaded:
+                self.app_state.status_message = "Could not load the selected conversation."
+                self.app_state.notify_listeners()
+
+    def _load_bundled_json(self, conversation_id: str):
+        """Use the same import-and-activate path as the working Import JSON action."""
+        source = Path(__file__).resolve().parent.parent.parent / "conversations" / f"{conversation_id}.json"
+        try:
+            self.app_state.import_conversation_json(source, reuse_existing=True)
+        except Exception as exc:
+            self.app_state.status_message = f"Could not load conversation: {exc}"
+            self.app_state.notify_listeners()
+
+    def on_load_conversation_01(self):
+        self._load_bundled_json("conversation_01")
+
+    def on_load_conversation_02(self):
+        self._load_bundled_json("conversation_02")
+
+    def on_load_conversation_03(self):
+        self._load_bundled_json("conversation_03")
+
+    def on_import_conversation(self):
+        path, _ = QFileDialog.getOpenFileName(
+            None,
+            "Import 11Voice Conversation",
+            str(Path(__file__).resolve().parent.parent.parent / "conversations"),
+            "Conversation JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            self.app_state.import_conversation_json(path)
+        except Exception as exc:
+            self.app_state.status_message = f"Could not import conversation: {exc}"
+            self.app_state.notify_listeners()
 
     def on_speaker_device_changed(self, speaker_id: str, device_id: str):
         self.app_state.update_speaker_device(speaker_id, device_id)
@@ -71,12 +134,17 @@ class ConversationScreenState(State):
         turn = next((t for t in self.app_state.conversation.turns if t.id == turn_id), None)
         if turn and turn.speaker_id != new_speaker_id:
             turn.speaker_id = new_speaker_id
+            turn.audio_path = None
+            turn.generation_status = GenerationStatus.PENDING
             self.app_state.database.save_conversation(self.app_state.conversation)
         self.editing_turn_id = None
         self.setState()
 
     def on_add_turn(self):
-        speakers = list(self.app_state.speakers.values())
+        speaker_ids = list(dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns))
+        if not speaker_ids:
+            speaker_ids = [sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers]
+        speakers = [self.app_state.speakers[sid] for sid in speaker_ids if sid in self.app_state.speakers]
         if not speakers:
             return
         turns = self.app_state.conversation.turns
@@ -101,8 +169,32 @@ class ConversationScreenState(State):
 
     # ── UI Tree Build ─────────────────────────────────────────────────
     def build(self):
-        speakers = self.app_state.speakers
+        active_speaker_ids = list(dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns))
+        if not active_speaker_ids:
+            active_speaker_ids = [sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers]
+        speakers = {
+            speaker_id: self.app_state.speakers[speaker_id]
+            for speaker_id in active_speaker_ids
+            if speaker_id in self.app_state.speakers
+        }
         devices = self.app_state.devices
+        conversation_items = self.app_state.database.list_conversations()
+        current_conversation_id = self.app_state.conversation.id
+        featured_actions = (
+            ("conversation_01", self.on_load_conversation_01),
+            ("conversation_02", self.on_load_conversation_02),
+            ("conversation_03", self.on_load_conversation_03),
+        )
+        framework = Framework.instance()
+        if framework and getattr(framework, "api", None):
+            for _, action in featured_actions:
+                framework.api.register_callback(action.__name__, action)
+        conversation_titles = dict(conversation_items)
+        featured_conversations = [
+            (conversation_id, conversation_titles[conversation_id], action)
+            for conversation_id, action in featured_actions
+            if conversation_id in conversation_titles
+        ]
         speaker_cards = []
         speaker_accents = [StudioColors.speaker_a, StudioColors.speaker_b]
 
@@ -116,6 +208,7 @@ class ConversationScreenState(State):
                         speaker=speaker,
                         devices=devices,
                         accent_color=accent,
+                        available_voices=self.app_state.available_voices,
                         on_device_selected=lambda d_id, s_id=spk_id: self.on_speaker_device_changed(s_id, d_id),
                         on_voice_selected=lambda v_id, s_id=spk_id: self.on_speaker_voice_changed(s_id, v_id),
                     ),
@@ -190,6 +283,59 @@ class ConversationScreenState(State):
                     build_heading(
                         title="11Voice Conversation Studio",
                         on_refresh_devices=self.on_refresh_devices,
+                    ),
+
+                    # ── Conversation Library ─────────────────────────
+                    Container(
+                        key=Key("conversation_library_bar"),
+                        padding=EdgeInsets.symmetric(horizontal=20, vertical=10),
+                        width="-webkit-fill-available",
+                        child=Row(
+                            key=Key("conversation_library_row"),
+                            crossAxisAlignment=CrossAxisAlignment.CENTER,
+                            children=[
+                                Text(
+                                    "Conversation",
+                                    key=Key("conversation_library_label"),
+                                    style=TextStyle(color=StudioColors.text_primary, fontSize=13, fontWeight="bold"),
+                                ),
+                                SizedBox(width=12, key=Key("conversation_library_gap")),
+                                    *[
+                                    ElevatedButton(
+                                        key=Key(f"load_conversation_{conversation_id}"),
+                                            onPressed=action,
+                                        style=ButtonStyle(
+                                            backgroundColor=(
+                                                StudioColors.primary
+                                                if current_conversation_id == conversation_id
+                                                else StudioColors.surface_elevated
+                                            ),
+                                            foregroundColor=StudioColors.text_primary,
+                                            padding=EdgeInsets.symmetric(horizontal=10, vertical=10),
+                                            shape=BorderRadius.circular(8),
+                                        ),
+                                        child=Text(
+                                            conversation_titles[conversation_id],
+                                            style=TextStyle(fontSize=12, fontWeight="bold"),
+                                        ),
+                                    )
+                                        for conversation_id, _, action in featured_conversations
+                                ],
+                                SizedBox(width=12, key=Key("conversation_import_gap")),
+                                ElevatedButton(
+                                    key=Key("conversation_import_json_btn"),
+                                    onPressed=self.on_import_conversation,
+                                    onPressedName="import_conversation_json",
+                                    style=ButtonStyle(
+                                        backgroundColor=StudioColors.surface_elevated,
+                                        foregroundColor=StudioColors.text_primary,
+                                        padding=EdgeInsets.symmetric(horizontal=14, vertical=10),
+                                        shape=BorderRadius.circular(8),
+                                    ),
+                                    child=Text("Import JSON", style=TextStyle(fontSize=13, fontWeight="bold")),
+                                ),
+                            ],
+                        ),
                     ),
 
                     # ── Speaker Output Routing Deck ───────────────────

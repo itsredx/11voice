@@ -14,6 +14,11 @@ class RateLimitError(ElevenLabsError):
     pass
 
 
+class PaidPlanRequiredError(ElevenLabsError):
+    """Raised when a voice or feature is unavailable on the current plan."""
+    pass
+
+
 class VoiceNotFoundError(ElevenLabsError):
     """Raised when a specified voice ID does not exist."""
     pass

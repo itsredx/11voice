@@ -15,7 +15,9 @@ Powered by [ElevenLabs](https://elevenlabs.io/) for voice generation and PipeWir
 - **Dialogue editor:** Write, edit, reorder, and manage conversation turns.
 - **Audio caching:** Reuse generated audio instead of repeatedly calling the TTS API.
 - **Playback controls:** Play, pause, resume, and replay conversations.
+- **Conversation library:** Select saved scripts or import a conversation JSON file.
 - **Device discovery:** Detect available audio output devices.
+- **Voice-pair archives:** Keep generated turn audio locally by conversation and speaker voice pairing.
 
 ## Technology Stack
 
@@ -36,6 +38,15 @@ Powered by [ElevenLabs](https://elevenlabs.io/) for voice generation and PipeWir
 4. Assign an audio output device to each speaker.
 5. Generate the speech.
 6. Play the conversation with each speaker routed to their assigned output.
+
+Bundled scripts are available from the conversation selector. Imported scripts are saved in
+the local SQLite library; their named speakers get separate profiles initialized from the
+current Speaker A/B voices. Generated turn audio is cached in `assets/audio_cache/` and copied
+to `assets/playback_archive/<conversation-id>/<voice-pair-id>/` so each voice pairing remains
+available locally.
+
+To connect ElevenLabs, add your key to the ignored `.env` file as `ELEVENLABS_API_KEY=...`,
+then start 11voice with `python3 -m lib.main`. The app loads your account voices on startup.
 
 ## Project Status
 

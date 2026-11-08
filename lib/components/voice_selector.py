@@ -14,17 +14,12 @@ from pythra import (
     Dropdown,
 )
 from ..constants.colors import StudioColors
+from ..elevenlabs.voices import FALLBACK_USABLE_VOICES, VoiceInfo
 
 # ── Preset Voices Catalog ─────────────────────────────────────────────
 DEFAULT_VOICES = [
-    ("Rachel (Calm & Clear)", "21m00Tcm4TlvDq8ikWAM"),
-    ("Domi (Strong & Engaging)", "AZnzlk1XvdvUeBnXmlld"),
-    ("Bella (Expressive Narrative)", "EXAVITQu4vr4xnSDxMaL"),
-    ("Antoni (Warm & Natural)", "ErXwobaYiN019PkySvjV"),
-    ("Josh (Deep & Conversational)", "TxGEqnHWrfWFTfGW9XjX"),
-    ("Adam (Professional & Narrative)", "pNInz6obpgDQGcFmaJgB"),
-    ("Arnold (Crisp & Articulate)", "VR6AewLTigWG4xSOukaG"),
-    ("Sam (Dynamic & Lively)", "yoZ06aMxZJJ28mfd3POQ"),
+    ("Adam · Male · premade", "pNInz6obpgDQGcFmaJgB"),
+    ("Bella · Female · premade", "EXAVITQu4vr4xnSDxMaL"),
 ]
 
 
@@ -33,11 +28,31 @@ def build_voice_selector(
     selected_voice_id: Optional[str],
     on_voice_selected: Callable[[str], None],
     widget_key_prefix: str = "voice_sel",
+    available_voices: Optional[list[VoiceInfo]] = None,
 ):
     """
     Dropdown component for selecting ElevenLabs voices for a speaker.
     """
-    items = list(DEFAULT_VOICES)
+    if available_voices is not None:
+        # Seed the selector with the two confirmed usable presets, then add
+        # account voices as the remote catalog arrives.
+        voices_by_id = {voice.voice_id: voice for voice in FALLBACK_USABLE_VOICES}
+        voices_by_id.update(
+            {
+                voice.voice_id: voice
+                for voice in available_voices
+                if voice.voice_id and not voice.is_library_voice
+            }
+        )
+        items = [
+            (
+                f"{voice.name} · {voice.gender.title()} · {voice.category}",
+                voice.voice_id,
+            )
+            for voice in voices_by_id.values()
+        ]
+    else:
+        items = list(DEFAULT_VOICES)
     selected_val = None
 
     for label, v_id in items:
@@ -46,11 +61,11 @@ def build_voice_selector(
             break
 
     if selected_val is None:
-        if selected_voice_id:
-            items.insert(0, (f"Custom ({selected_voice_id[:8]}...)", selected_voice_id))
-            selected_val = selected_voice_id
-        else:
+        if items:
             selected_val = items[0][1]
+        else:
+            items = [("No usable voices found", "")]
+            selected_val = ""
 
     controller = DropdownController(selectedValue=selected_val)
 

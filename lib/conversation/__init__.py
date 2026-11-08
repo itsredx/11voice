@@ -2,6 +2,7 @@
 from .models import Conversation, DialogueTurn, GenerationStatus, Speaker
 from .queue import PlaybackQueue
 from .manager import ConversationManager
+from .json_import import load_conversation_json
 
 __all__ = [
     "Conversation",
@@ -10,4 +11,5 @@ __all__ = [
     "Speaker",
     "PlaybackQueue",
     "ConversationManager",
+    "load_conversation_json",
 ]

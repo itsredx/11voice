@@ -1,0 +1,469 @@
+{
+  "id": "conversation_02",
+  "title": "The Museum After Closing",
+  "created_at": null,
+  "updated_at": null,
+  "target_speaking_rate_wpm": 140,
+  "estimated_duration_minutes": 11.18,
+  "spoken_word_count": 1565,
+  "speakers": [
+    {
+      "id": "speaker_a",
+      "name": "Nora",
+      "voice_id": "",
+      "output_device_id": null,
+      "volume": 1.0,
+      "speaking_rate": 1.0
+    },
+    {
+      "id": "speaker_b",
+      "name": "Jonah",
+      "voice_id": "",
+      "output_device_id": null,
+      "volume": 1.0,
+      "speaking_rate": 1.0
+    }
+  ],
+  "turns": [
+    {
+      "id": "turn_01",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The museum sounded completely different after the last visitors left. During the day, every room has footsteps, school groups, and the little chime from the front desk. At closing, I could hear the ventilation system and the rain tapping against the high windows.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 0,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_02",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I noticed that too while I was checking the labels. The timeline presents the founder as a lone genius, even though the letters in the archive show that several technicians and neighbors helped test the early designs.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 1,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_03",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "I stayed late to finish the audio guide notes, and I realized the exhibit tells the history in a very tidy order. The objects move from invention to success as if nobody ever doubted the choices.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 2,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_04",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We should be careful about adding a new story just because it feels more balanced, but the documents give us a basis to ask better questions.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 3,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_05",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "I think visitors would understand the collection better if we showed the experiments that failed and the people whose ideas were overlooked. That gives us a careful way to explain what the records show, make room for questions, and avoid making claims we cannot support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 4,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_06",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "Maybe we can pair the public timeline with a small section called 'What the records leave out.' It could explain which sources survive, whose voices are missing, and how historians distinguish evidence from an appealing guess.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 5,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_07",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "I like that framing because it makes uncertainty part of the exhibit instead of hiding it. We could start with the workshop notebook. It has several names in the margins, but the handwriting changes, and we do not know who wrote every note.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 6,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_08",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We should also speak with the descendants of the technicians mentioned in the letters. Some families may have stories or photographs, but we need to ask how they want those materials used.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 7,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_09",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "A conservator could help us show a close-up without putting the original under too much light. Then we could invite visitors to compare the notebook with the official patent drawing.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 8,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_10",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "A family photograph is not automatically public property just because it would fit the exhibit. We can offer a conversation first, explain the project, and let people set limits.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 9,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_11",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The contrast might prompt them to ask how collaboration becomes invisible when a final product is associated with one name. We would need an accessible transcript and a clear explanation of the technical terms.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 10,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_12",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "If someone shares a story that cannot be independently confirmed, we can describe it as a family account rather than presenting it as a proven event. That distinction respects the people involved and teaches visitors how historical evidence is handled.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 11,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_13",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "There is another issue: the exhibit is built for people who can stand and read for a long time. That gives us a careful way to explain what the records show, make room for questions, and avoid making claims we cannot support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 12,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_14",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I can contact the consultant tomorrow and ask for a short review of the current gallery and our draft. We should also ask the front desk staff what questions visitors already bring up.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 13,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_15",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The new section should work for someone using a chair, a child who is just learning to read, and a visitor who is tired or has low vision.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 14,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_16",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "They hear confusion that the curators never see because we tend to watch people from across the room. That gives us a careful way to explain what the records show, make room for questions, and avoid making claims we cannot support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 15,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_17",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "We could make the main idea available in large print and audio, and place the details in a booklet for people who want more.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 16,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_18",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "Perhaps visitors wonder why one invention gets a case while another is represented only by a label. Their questions could guide which documents we make visible.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 17,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_19",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "A tactile reproduction of one component might help explain how the device worked, but we would need to label it clearly so no one mistakes it for an original. We should ask our access consultant early, not at the end.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 18,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_20",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I would like to test two versions of the text with a small group before we print anything. A few honest reactions can save us from polishing a confusing explanation.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 19,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_21",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "For the first draft, I will write three layers: a short introduction, a label beside the notebook, and an optional longer account for the booklet and website. The short version should tell visitors what the object is and why the record is incomplete.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 20,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_22",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "That last sentence could anchor the section. I would add that inventions are shaped by workshops, money, materials, and the people who maintain them afterward. Those details broaden the story without claiming that every contributor had the same role.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 21,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_23",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The next layer can explain the names and the evidence we found. The longer text can include references and questions we are still investigating. That structure lets people choose how deeply to read. I will avoid calling anyone a forgotten genius until we have stronger support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 22,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_24",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I can check the archive catalog for purchase receipts and repair logs. Sometimes the mundane records reveal who kept a project going when the celebratory accounts focus on a launch.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 23,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_25",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The point is not to replace one simplified hero with another; it is to show how knowledge is made together. That gives us a careful way to explain what the records show, make room for questions, and avoid making claims we cannot support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 24,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_26",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We should record where each claim comes from in a shared research sheet, with a note about how confident we are. That will make later reviews clearer and keep our label language connected to the evidence.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 25,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_27",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "Let's also think about how visitors leave the room. If the exhibit ends with a single triumphant photograph, it may still imply that the story is settled. Perhaps we could end with a question about what kinds of work deserve recognition today.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 26,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_28",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I can sketch that station, but I want us to check the staffing and maintenance before proposing it. An interactive element can become a burden if nobody has time to review it.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 27,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_29",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "A small response station could invite people to name someone whose contribution is often overlooked. We would need moderation and a plan for privacy, especially if visitors mention living people. A paper card box may be more manageable than an online wall.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 28,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_30",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We could pilot the question during one weekend event and ask volunteers to observe how visitors use it. If people respond thoughtfully, we can plan a longer trial. If they ignore it, we learn that without building a permanent feature.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 29,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_31",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "We could review submissions each week and share a few anonymous examples in a rotating display, with clear guidelines about respectful language. That gives us a careful way to explain what the records show, make room for questions, and avoid making claims we cannot support.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 30,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_32",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "I will put together a research list, and you can send me the label draft. Tomorrow we can meet with the access consultant and the front desk team, then decide what we can support this season.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 31,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_33",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "Before we settle the plan, I want to talk about the online version of the exhibit. People often visit the website after seeing a photograph in the gallery, and the web page can hold source notes that would overwhelm a physical label.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 32,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_34",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "Good point. Digital pages can make a project feel finished even when the research is still active, so we should date the page and say when we last reviewed the sources.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 33,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_35",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "We could include a zoomable image of the notebook, a transcript, and links to the catalog records. It should also explain why some images are restricted and how a visitor can request more information.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 34,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_36",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "If a family contributes a photograph, we can state what permission covers and whether the image may be reused elsewhere. I can ask the rights coordinator about a consent form written in plain language.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 35,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_37",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "The same audio description can help people who use screen readers and people who prefer listening. We should treat the digital material as part of the exhibit, with its own review and update schedule.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 36,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_38",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We should also make sure the page works on a phone and does not require a special account. Visitors should be able to explore the evidence without surrendering personal information or navigating a complicated interface.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 37,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_39",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "Then let's include a digital checklist alongside the physical design: permissions, accessible descriptions, source links, and a named person responsible for updates. I will share the first label draft with you by Thursday, and you can add the",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 38,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_40",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "That feels like a careful way to present the history. I’ll keep checking the records, and we can make the remaining questions visible to visitors.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 39,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_41",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "archival references as you verify them. We can review both versions with the access consultant and a small visitor group before anything goes to print. It feels like a slower route, but it gives us a better chance",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 40,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_42",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "We should review the labels, web page, and access details together before anything is printed. That gives families and visitors a chance to respond.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 41,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_43",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_a",
+      "text": "of telling a careful story that people can question and explore. The collection has more to say than one timeline can hold, and we can invite visitors into that process without pretending we already know every answer.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 42,
+      "output_device_override": null
+    },
+    {
+      "id": "turn_44",
+      "conversation_id": "conversation_02",
+      "speaker_id": "speaker_b",
+      "text": "Let's meet with the consultant and front desk team, then test the draft. The exhibit can invite curiosity without claiming the archive answers everything.",
+      "audio_path": null,
+      "generation_status": "PENDING",
+      "position": 43,
+      "output_device_override": null
+    }
+  ]
+}

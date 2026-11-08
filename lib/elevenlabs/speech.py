@@ -5,7 +5,6 @@ from typing import Optional
 from ..storage.audio_cache import AudioCache
 from ..utils.audio_utils import generate_synthetic_audio_bytes
 from .client import ElevenLabsClient
-from .exceptions import AuthenticationError
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +39,7 @@ class SpeechGenerator:
             text=text,
             model_id=model_id,
             speaking_rate=speaking_rate,
+            provider="mock" if self.mock_mode else "elevenlabs",
         )
         return self.cache.exists(key, extension="mp3") or self.cache.exists(key, extension="wav")
 
@@ -56,6 +56,7 @@ class SpeechGenerator:
             text=text,
             model_id=model_id,
             speaking_rate=speaking_rate,
+            provider="mock" if self.mock_mode else "elevenlabs",
         )
         if self.cache.exists(key, extension="mp3"):
             return self.cache.get_path(key, extension="mp3")
@@ -82,6 +83,7 @@ class SpeechGenerator:
             text=text,
             model_id=model_id,
             speaking_rate=speaking_rate,
+            provider="mock" if self.mock_mode else "elevenlabs",
         )
 
         if not force_regenerate:
@@ -90,26 +92,22 @@ class SpeechGenerator:
                 logger.info("Cache hit for voice '%s': %s", voice_id, cached.name)
                 return cached
 
-        # Use mock generation if requested or if no API key is set
-        if self.mock_mode or not self.client.api_key:
+        # Synthetic output is opt-in only; missing credentials must not look like a
+        # successful ElevenLabs generation to the user.
+        if self.mock_mode:
             logger.info("Generating synthetic mock audio for '%s'...", voice_id)
             # Vary pitch based on hash of voice_id for distinctive speaker tones
             pitch = 380.0 + (hash(voice_id) % 240)
             audio_bytes = generate_synthetic_audio_bytes(text=text, frequency=pitch)
             return self.cache.store(cache_key, audio_bytes, extension="wav")
 
-        try:
-            logger.info("Requesting synthesis from ElevenLabs for '%s'...", voice_id)
-            audio_bytes = self.client.generate_tts_bytes(
-                text=text,
-                voice_id=voice_id,
-                model_id=model_id,
-                stability=stability,
-                similarity_boost=similarity_boost,
-            )
-            return self.cache.store(cache_key, audio_bytes, extension="mp3")
-        except AuthenticationError as e:
-            logger.warning("ElevenLabs authentication failed (%s). Falling back to synthetic audio.", e)
-            pitch = 380.0 + (hash(voice_id) % 240)
-            audio_bytes = generate_synthetic_audio_bytes(text=text, frequency=pitch)
-            return self.cache.store(cache_key, audio_bytes, extension="wav")
+        logger.info("Requesting synthesis from ElevenLabs for '%s'...", voice_id)
+        audio_bytes = self.client.generate_tts_bytes(
+            text=text,
+            voice_id=voice_id,
+            model_id=model_id,
+            stability=stability,
+            similarity_boost=similarity_boost,
+            speed=speaking_rate,
+        )
+        return self.cache.store(cache_key, audio_bytes, extension="mp3")

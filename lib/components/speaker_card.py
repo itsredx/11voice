@@ -21,6 +21,7 @@ from pythra import (
 from ..audio.devices import AudioDevice
 from ..constants.colors import StudioColors
 from ..conversation.models import Speaker
+from ..elevenlabs.voices import VoiceInfo
 from .audio_device_selector import build_audio_device_selector
 from .voice_selector import build_voice_selector
 
@@ -32,6 +33,7 @@ def build_speaker_card(
     accent_color=StudioColors.speaker_a,
     on_device_selected: Optional[Callable[[str], None]] = None,
     on_voice_selected: Optional[Callable[[str], None]] = None,
+    available_voices: Optional[List[VoiceInfo]] = None,
 ):
     """
     Card displaying speaker profile, ElevenLabs voice selector dropdown,
@@ -112,6 +114,7 @@ def build_speaker_card(
                     selected_voice_id=speaker.voice_id,
                     on_voice_selected=on_voice_selected or (lambda v: None),
                     widget_key_prefix=f"voice_sel_{speaker.id}",
+                    available_voices=available_voices,
                 ),
                 SizedBox(height=10, key=Key(f"spk_spc_mid_{speaker.id}")),
 

@@ -2,8 +2,10 @@
 import logging
 import threading
 import time
+from pathlib import Path
 from typing import Callable, Dict, List, Optional
 from ..audio import AudioEngine, AudioDevice, PlaybackHandle, PlaybackStatus
+from ..elevenlabs.exceptions import PaidPlanRequiredError
 from ..elevenlabs.speech import SpeechGenerator
 from .models import Conversation, DialogueTurn, GenerationStatus, Speaker
 
@@ -100,8 +102,20 @@ class PlaybackQueue:
                 )
 
                 # Ensure audio file is generated / cached
-                audio_path = turn.audio_path
-                if not audio_path or not audio_path.strip():
+                cached_path = self.speech_generator.get_cached_path(
+                    text=turn.text,
+                    voice_id=speaker.voice_id,
+                    speaking_rate=speaker.speaking_rate,
+                )
+                audio_path = str(cached_path) if cached_path else None
+                if (
+                    not audio_path
+                    and turn.audio_path
+                    and turn.generation_status == GenerationStatus.READY
+                    and Path(turn.audio_path).is_file()
+                ):
+                    audio_path = turn.audio_path
+                if not audio_path:
                     try:
                         turn.generation_status = GenerationStatus.GENERATING
                         cached_path = self.speech_generator.generate(
@@ -117,8 +131,13 @@ class PlaybackQueue:
                         turn.generation_status = GenerationStatus.FAILED
                         if self.on_error:
                             self.on_error(turn, str(e))
+                        if isinstance(e, PaidPlanRequiredError):
+                            break
                         self._current_turn_index += 1
                         continue
+                else:
+                    turn.audio_path = audio_path
+                    turn.generation_status = GenerationStatus.READY
 
                 # Notify turn start
                 if self.on_turn_started:
