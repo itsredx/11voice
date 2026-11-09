@@ -165,6 +165,7 @@ def build_conversation_bubble(
         key=Key(f"turn_bubble_{turn.id}"),
         padding=EdgeInsets.all(16),
         decoration=bubble_decoration,
+        height="-webkit-fill-available",
         child=Column(
             key=Key(f"turn_col_{turn.id}"),
             crossAxisAlignment=CrossAxisAlignment.START,
@@ -238,15 +239,22 @@ def build_conversation_bubble(
                 SizedBox(height=10, key=Key(f"turn_spc_3_{turn.id}")),
 
                 # ── Dialogue Utterance Text ───────────────────────────
-                Text(
-                    turn.text,
-                    key=Key(f"turn_text_{turn.id}"),
-                    style=TextStyle(
-                        fontSize=15,
-                        color=StudioColors.text_primary,
-                        lineHeight=1.4,
+                Container(
+                    key=Key(f"turn_text_{turn.id}_cont"),
+                    width="-webkit-fill-available",
+                    height="-webkit-fill-available",
+                    child=Text(
+                        turn.text,
+                        key=Key(f"turn_text_{turn.id}"),
+                        overflow="ellipsis",
+                        maxLines=4,
+                        style=TextStyle(
+                            fontSize=15,
+                            color=StudioColors.text_primary,
+                            lineHeight=1.4,
+                        ),
                     ),
-                ),
+                )
             ],
         ),
     )

@@ -15,10 +15,23 @@ export class PythraVirtualList {
             return;
         }
 
+        // Pythra can emit both a keyed virtual-list initializer and a
+        // Scrollbar initializer for the same host. Reuse the live engine so
+        // each initializer cannot append another SimpleBar/list layer.
+        const existing = Object.values(window._pythra_instances || {}).find(
+            instance => instance instanceof PythraVirtualList
+                && instance.container === this.container
+        );
+        if (existing) {
+            existing.options = options;
+            return existing;
+        }
+
         console.log(`✅ PythraVirtualList engine is initializing for #${elementId}`);
         
         this.options = options;
-        this.simplebar = new SimpleBar(this.container, this.options.simplebarOptions || {});
+        this.simplebar = SimpleBar.instances?.get(this.container)
+            || new SimpleBar(this.container, this.options.simplebarOptions || {});
         this.scrollEl = this.simplebar.getScrollElement();
         this.contentEl = this.simplebar.getContentElement();
         

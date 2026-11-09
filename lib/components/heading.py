@@ -12,8 +12,8 @@ from pythra.widgets import SizedBox
 from pythra import (
     Colors,
     Container,
+    ElevatedButton,
     Icon,
-    IconButton,
     Icons,
     Row,
     Text,
@@ -22,7 +22,11 @@ from ..constants.colors import StudioColors
 
 
 # ── Studio Header Bar Component ────────────────────────────────────────
-def build_heading(title: str = "11Voice Conversation Studio", on_refresh_devices=None):
+def build_heading(
+    title: str = "11Voice Conversation Studio",
+    on_refresh_devices=None,
+    is_syncing_outputs: bool = False,
+):
     """Top application header with studio branding and device refresh action."""
     return Container(
         key=Key("studio_heading_container"),
@@ -74,14 +78,30 @@ def build_heading(title: str = "11Voice Conversation Studio", on_refresh_devices
                             ),
                         ),
                         SizedBox(width=12, key=Key("action_spacer")),
-                        IconButton(
+                        ElevatedButton(
                             key=Key("refresh_devices_btn"),
-                            icon=Icon(Icons.refresh_rounded, color=StudioColors.text_primary),
+                            child=Row(
+                                key=Key("refresh_devices_content"),
+                                crossAxisAlignment=CrossAxisAlignment.CENTER,
+                                children=[
+                                    Icon(Icons.refresh_rounded, color=StudioColors.text_primary),
+                                    SizedBox(width=6, key=Key("refresh_devices_gap")),
+                                    Text(
+                                        "Syncing..." if is_syncing_outputs else "Sync Outputs",
+                                        key=Key("refresh_devices_label"),
+                                        style=TextStyle(
+                                            fontSize=12,
+                                            fontWeight="bold",
+                                            color=StudioColors.text_primary,
+                                        ),
+                                    ),
+                                ],
+                            ),
                             onPressed=on_refresh_devices,
                             onPressedName="header_refresh_devices",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
-                                padding=EdgeInsets.all(8),
+                                padding=EdgeInsets.symmetric(horizontal=10, vertical=8),
                                 shape=BorderRadius.circular(6),
                             ),
                         ),

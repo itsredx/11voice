@@ -1,4 +1,5 @@
 # ── Imports & Framework Dependencies ───────────────────────────────────
+import json
 from pathlib import Path
 from typing import Optional
 from PySide6.QtWidgets import QFileDialog
@@ -13,14 +14,18 @@ from pythra.styles import (
     TextStyle,
     MainAxisAlignment,
 )
-from pythra.widgets import SizedBox
+from pythra.widgets import (
+    SizedBox,
+    VirtualListController,
+    VirtualListView,
+    _VirtualListViewState,
+)
 from pythra import (
     Column,
     Container,
     ElevatedButton,
     Expanded,
     Framework,
-    SingleChildScrollView,
     Row,
     State,
     StatefulWidget,
@@ -39,6 +44,80 @@ from ..components import (
 from ..state.app_state import AppState
 
 
+class _ConversationTurnListState(_VirtualListViewState):
+    """Keep one virtual-list DOM instance and update its data in place."""
+
+    def initState(self):
+        super().initState()
+        self._initial_virtualization_options = dict(self._virtualization_options or {})
+
+    def didUpdateWidget(self, oldWidget, newWidget):
+        super().didUpdateWidget(oldWidget, newWidget)
+        data_changed = (
+            oldWidget.conversation_id != newWidget.conversation_id
+            or oldWidget.itemCount != newWidget.itemCount
+            or oldWidget.itemExtent != newWidget.itemExtent
+        )
+        if not data_changed:
+            return
+
+        self._virtualization_options = {
+            "type": "list",
+            "itemCount": newWidget.itemCount,
+            "itemExtent": newWidget.itemExtent,
+            "itemBuilderName": self.item_builder_name,
+            "initialItems": {},
+        }
+        if not (self.framework and self.framework.window):
+            return
+
+        instance_name = json.dumps(f"{newWidget.key.value}_vlist")
+        item_count = newWidget.itemCount
+        item_extent = newWidget.itemExtent
+        sizer_height = item_count * item_extent
+        reset_scroll = oldWidget.conversation_id != newWidget.conversation_id
+        script = f"""
+            (() => {{
+                const list = window._pythra_instances?.[{instance_name}];
+                if (!list) return;
+                const oldExtent = Math.max(1, list.options.itemExtent);
+                const oldScrollTop = list.scrollEl.scrollTop;
+                list.options.itemCount = {item_count};
+                list.options.itemExtent = {item_extent};
+                list.sizer.style.height = '{sizer_height}px';
+                const nextScrollTop = {"0" if reset_scroll else f"oldScrollTop * {item_extent} / oldExtent"};
+                list.scrollEl.scrollTop = Math.max(
+                    0,
+                    Math.min(nextScrollTop, {sizer_height} - list.scrollEl.clientHeight)
+                );
+                list.visibleItemElements.forEach((element) => {{
+                    element.style.height = '{item_extent}px';
+                }});
+                list.refresh();
+            }})();
+        """
+        self.framework.window.evaluate_js(self.framework.id, script)
+
+    def build(self):
+        # Keep the Scrollbar initializer props stable. didUpdateWidget updates
+        # the live JS list above, so reconciliation must not create another one.
+        current_options = self._virtualization_options
+        self._virtualization_options = self._initial_virtualization_options
+        try:
+            return super().build()
+        finally:
+            self._virtualization_options = current_options
+
+
+class _ConversationTurnList(VirtualListView):
+    def __init__(self, conversation_id: str, **kwargs):
+        self.conversation_id = conversation_id
+        super().__init__(**kwargs)
+
+    def createState(self):
+        return _ConversationTurnListState()
+
+
 # ── Conversation Studio Screen State ──────────────────────────────────
 class ConversationScreenState(State):
     """
@@ -51,6 +130,10 @@ class ConversationScreenState(State):
         super().__init__()
         self.app_state = AppState.get()
         self.editing_turn_id: Optional[str] = None
+        self.turn_list_controller = VirtualListController()
+        self._last_turn_signature = None
+        self._last_controls_signature = None
+        self._last_turn_list_config = None
         # Bind Pythra setState to AppState updates
         self.app_state.add_listener(self._on_app_state_change)
 
@@ -66,7 +149,88 @@ class ConversationScreenState(State):
 
     def _refresh_screen(self):
         if self.get_widget() is not None:
-            self.setState()
+            turn_signature = self._get_turn_signature()
+            previous_turn_signature = self._last_turn_signature
+            turn_list_config = self._get_turn_list_config()
+            previous_turn_list_config = self._last_turn_list_config
+            self._last_turn_signature = turn_signature
+            self._last_turn_list_config = turn_list_config
+
+            # A structural list update already invalidates all visible rows in
+            # _ConversationTurnListState.didUpdateWidget. Avoid racing it with
+            # per-row refresh requests for the same conversation switch.
+            if (
+                previous_turn_signature is not None
+                and previous_turn_list_config == turn_list_config
+            ):
+                changed_indices = [
+                    index
+                    for index in range(max(len(previous_turn_signature), len(turn_signature)))
+                    if index >= len(previous_turn_signature)
+                    or index >= len(turn_signature)
+                    or previous_turn_signature[index] != turn_signature[index]
+                ]
+                for index in changed_indices:
+                    if index < len(turn_signature):
+                        self.turn_list_controller.refreshItem(index)
+
+            controls_signature = self._get_controls_signature()
+            if controls_signature != self._last_controls_signature:
+                self._last_controls_signature = controls_signature
+                self.setState()
+
+    def _get_turn_signature(self):
+        """Capture only the values rendered inside each virtualized row."""
+        signature = []
+        devices_by_id = {device.id: device for device in self.app_state.devices}
+        for turn in self.app_state.conversation.turns:
+            speaker = self.app_state.speakers.get(turn.speaker_id)
+            device = devices_by_id.get(speaker.output_device_id) if speaker else None
+            signature.append((
+                turn.id,
+                turn.text,
+                turn.speaker_id,
+                turn.generation_status,
+                turn.audio_path,
+                turn.id == self.app_state.active_turn_id,
+                speaker.name if speaker else None,
+                device.name if device else "Default Sink",
+                turn.id == self.editing_turn_id,
+            ))
+        return tuple(signature)
+
+    def _get_turn_list_config(self):
+        turns = self.app_state.conversation.turns
+        longest_turn = max((len(turn.text) for turn in turns), default=0)
+        estimated_lines = max(1, (longest_turn + 39) // 40)
+        item_extent = 92 + estimated_lines * 22
+        if self.editing_turn_id:
+            item_extent += 120
+        return (
+            self.app_state.conversation.id,
+            max(1, len(turns)),
+            item_extent,
+        )
+
+    def _get_controls_signature(self):
+        speaker_signature = tuple(
+            (sid, speaker.name, speaker.voice_id, speaker.output_device_id)
+            for sid, speaker in self.app_state.speakers.items()
+        )
+        device_signature = tuple(
+            (device.id, device.name) for device in self.app_state.devices
+        )
+        return (
+            self.app_state.conversation.id,
+            len(self.app_state.conversation.turns),
+            self.app_state.is_playing,
+            self.app_state.is_paused,
+            self.app_state.is_generating,
+            self.app_state.is_refreshing_devices,
+            self.app_state.status_message,
+            speaker_signature,
+            device_signature,
+        )
 
     def dispose(self):
         self.app_state.remove_listener(self._on_app_state_change)
@@ -197,6 +361,7 @@ class ConversationScreenState(State):
         ]
         speaker_cards = []
         speaker_accents = [StudioColors.speaker_a, StudioColors.speaker_b]
+        devices_by_id = {device.id: device for device in devices}
 
         for idx, (spk_id, speaker) in enumerate(speakers.items()):
             accent = speaker_accents[idx % len(speaker_accents)]
@@ -217,59 +382,86 @@ class ConversationScreenState(State):
             if idx < len(speakers) - 1:
                 speaker_cards.append(SizedBox(width=16, key=Key(f"spk_gap_{spk_id}")))
 
-        # Build turn bubbles or in-line editors
-        turn_widgets = []
-        for turn in self.app_state.conversation.turns:
-            if turn.id == self.editing_turn_id:
-                # Render in-line editor
-                turn_widgets.append(
-                    build_dialogue_editor(
-                        turn=turn,
-                        speakers=speakers,
-                        on_save=lambda txt, s_id, t_id=turn.id: self.on_save_edit_turn(t_id, txt, s_id),
-                        on_cancel=self.on_cancel_edit_turn,
-                    )
-                )
-            else:
-                speaker = speakers.get(turn.speaker_id)
-                if not speaker:
-                    continue
-                is_active = (turn.id == self.app_state.active_turn_id)
-                is_cached = self.app_state.is_turn_cached(turn)
-                is_generating = (turn.generation_status == GenerationStatus.GENERATING)
-                dev = self.app_state.audio_engine.get_device_by_id(speaker.output_device_id)
-                dev_label = dev.name if dev else "Default Sink"
-                spk_idx = list(speakers.keys()).index(speaker.id) if speaker.id in speakers else 0
-                accent = speaker_accents[spk_idx % len(speaker_accents)]
+        turns = self.app_state.conversation.turns
 
-                turn_widgets.append(
-                    build_conversation_bubble(
-                        turn=turn,
-                        speaker=speaker,
-                        is_active=is_active,
-                        is_cached=is_cached,
-                        is_generating=is_generating,
-                        device_label=dev_label,
-                        accent_color=accent,
-                        on_preview=lambda t_id=turn.id: self.app_state.preview_turn(t_id),
-                        on_generate=lambda t_id=turn.id: self.app_state.generate_turn_audio(t_id, force=True),
-                        on_edit=lambda t_id=turn.id: self.on_start_edit_turn(t_id),
-                        on_delete=lambda t_id=turn.id: self.on_delete_turn(t_id),
-                    )
-                )
-            turn_widgets.append(SizedBox(height=12, key=Key(f"turn_gap_{turn.id}")))
-
-        if not turn_widgets:
-            turn_widgets.append(
-                Container(
-                    key=Key("empty_turns_notice"),
+        def build_turn_item(index: int):
+            current_turns = self.app_state.conversation.turns
+            if not current_turns:
+                return Container(
+                    key=Key("empty_turn_item"),
+                    height=turn_item_extent,
                     padding=EdgeInsets.all(32),
                     child=Text(
                         "No dialogue turns yet. Click '+ Add Turn' to start the script.",
                         style=TextStyle(color=StudioColors.text_muted, fontSize=14),
                     ),
                 )
+            if index >= len(current_turns):
+                return Container(key=Key(f"turn_item_empty_{index}"), height=turn_item_extent)
+            turn = current_turns[index]
+            if turn.id == self.editing_turn_id:
+                content = build_dialogue_editor(
+                    turn=turn,
+                    speakers=speakers,
+                    on_save=lambda txt, s_id, t_id=turn.id: self.on_save_edit_turn(t_id, txt, s_id),
+                    on_cancel=self.on_cancel_edit_turn,
+                )
+            else:
+                speaker = self.app_state.speakers.get(turn.speaker_id)
+                if not speaker:
+                    return Container(key=Key(f"turn_item_missing_{turn.id}"), height=turn_item_extent)
+                is_active = turn.id == self.app_state.active_turn_id
+                is_cached = self.app_state.is_turn_cached(turn)
+                is_generating = turn.generation_status == GenerationStatus.GENERATING
+                dev = devices_by_id.get(speaker.output_device_id)
+                dev_label = dev.name if dev else "Default Sink"
+                speaker_ids = list(speakers.keys())
+                spk_idx = speaker_ids.index(speaker.id) if speaker.id in speaker_ids else 0
+                content = build_conversation_bubble(
+                    turn=turn,
+                    speaker=speaker,
+                    is_active=is_active,
+                    is_cached=is_cached,
+                    is_generating=is_generating,
+                    device_label=dev_label,
+                    accent_color=speaker_accents[spk_idx % len(speaker_accents)],
+                    on_preview=lambda t_id=turn.id: self.app_state.preview_turn(t_id),
+                    on_generate=lambda t_id=turn.id: self.app_state.generate_turn_audio(t_id, force=True),
+                    on_edit=lambda t_id=turn.id: self.on_start_edit_turn(t_id),
+                    on_delete=lambda t_id=turn.id: self.on_delete_turn(t_id),
+                )
+            return Container(
+                key=Key(f"turn_item_{turn.id}"),
+                height=turn_item_extent,
+                width="-webkit-fill-available",
+                padding=EdgeInsets.symmetric(horizontal=16, vertical=6),
+                child=content,
             )
+
+        # VirtualListView requires one fixed extent. Size every row for the
+        # longest turn at a narrow desktop width so dialogue remains untruncated.
+        longest_turn = max((len(turn.text) for turn in turns), default=0)
+        estimated_lines = max(1, (longest_turn + 39) // 40)
+        turn_item_extent = 92 + estimated_lines * 22
+        turn_item_extent = min(turn_item_extent, 168)
+        if self.editing_turn_id:
+            turn_item_extent += 120
+
+        timeline = _ConversationTurnList(
+            conversation_id=self.app_state.conversation.id,
+            key=Key("conversation_turns"),
+            controller=self.turn_list_controller,
+            itemCount=max(1, len(turns)),
+            itemBuilder=build_turn_item,
+            itemExtent=turn_item_extent,
+            initialItemCount=min(5, max(1, len(turns))),
+            width="100%",
+            height="100%",
+        )
+
+        self._last_turn_signature = self._get_turn_signature()
+        self._last_turn_list_config = self._get_turn_list_config()
+        self._last_controls_signature = self._get_controls_signature()
 
         return Container(
             key=Key("studio_root_view"),
@@ -283,6 +475,7 @@ class ConversationScreenState(State):
                     build_heading(
                         title="11Voice Conversation Studio",
                         on_refresh_devices=self.on_refresh_devices,
+                        is_syncing_outputs=self.app_state.is_refreshing_devices,
                     ),
 
                     # ── Conversation Library ─────────────────────────
@@ -353,15 +546,7 @@ class ConversationScreenState(State):
                     # ── Dialogue Script Timeline ──────────────────────
                     Expanded(
                         key=Key("timeline_expanded"),
-                        child=SingleChildScrollView(
-                            key=Key("timeline_scroll"),
-                            padding=EdgeInsets.symmetric(horizontal=16, vertical=8),
-                            child=Column(
-                                key=Key("timeline_col"),
-                                crossAxisAlignment=CrossAxisAlignment.STRETCH,
-                                children=turn_widgets,
-                            ),
-                        ),
+                        child=timeline,
                     ),
 
                     # ── Playback Controls Toolbar ─────────────────────
@@ -374,6 +559,7 @@ class ConversationScreenState(State):
                         on_pause=self.app_state.pause,
                         on_stop=self.app_state.stop,
                         on_generate_all=self.app_state.generate_all_audio,
+                        on_generate_uncached=self.app_state.generate_uncached_audio,
                         on_add_turn=self.on_add_turn,
                     ),
                 ],

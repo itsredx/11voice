@@ -49,6 +49,7 @@ class AppState:
         self.active_turn_id: Optional[str] = None
         self.status_message: str = "Ready"
         self.is_generating: bool = False
+        self.is_refreshing_devices: bool = False
         self._last_playback_error: Optional[str] = None
         self.available_voices: List[VoiceInfo] = []
 
@@ -328,8 +329,35 @@ class AppState:
         return self.conversation_manager.queue.is_paused
 
     def refresh_devices(self) -> None:
-        self.audio_engine.refresh_devices()
+        """Refresh PipeWire outputs in the background so the UI stays responsive."""
+        if self.is_refreshing_devices:
+            return
+
+        self.is_refreshing_devices = True
         self.notify_listeners()
+
+        def worker():
+            try:
+                devices = self.audio_engine.refresh_devices()
+                if devices:
+                    valid_ids = {device.id for device in devices}
+                    fallback = next((device for device in devices if device.is_default), devices[0])
+                    for speaker in self.speakers.values():
+                        if speaker.output_device_id and speaker.output_device_id not in valid_ids:
+                            speaker.output_device_id = fallback.id
+                            self.database.save_speaker(speaker)
+                    self.status_message = f"PipeWire outputs synchronized · {len(devices)} found"
+                else:
+                    # Keep remembered routes if PipeWire is temporarily unavailable.
+                    self.status_message = "No PipeWire outputs detected"
+            except Exception as exc:
+                logger.exception("Could not refresh PipeWire outputs")
+                self.status_message = f"Output sync failed: {exc}"
+            finally:
+                self.is_refreshing_devices = False
+                self.notify_listeners()
+
+        threading.Thread(target=worker, name="PipeWireDeviceRefresh", daemon=True).start()
 
     def update_speaker_device(self, speaker_id: str, device_id: str) -> None:
         speaker = self.conversation_manager.update_speaker(speaker_id=speaker_id, output_device_id=device_id)
@@ -421,28 +449,45 @@ class AppState:
         threading.Thread(target=worker, daemon=True).start()
 
     def generate_all_audio(self) -> None:
-        """Pre-generate audio for all uncached dialogue turns sequentially."""
+        """Regenerate audio for every dialogue turn sequentially."""
+        self._generate_audio_batch(force=True)
+
+    def generate_uncached_audio(self) -> None:
+        """Generate audio only for turns that have no usable cached audio."""
+        self._generate_audio_batch(force=False)
+
+    def _generate_audio_batch(self, force: bool) -> None:
         if self.is_generating:
             return
 
+        self.is_generating = True
+        self.status_message = (
+            "Regenerating all dialogue audio..."
+            if force else "Checking for uncached dialogue audio..."
+        )
+        self.notify_listeners()
+
         def worker():
-            self.is_generating = True
             total = len(self.conversation.turns)
             plan_error = False
+            generated_count = 0
             for idx, turn in enumerate(self.conversation.turns):
                 speaker = self.speakers.get(turn.speaker_id)
                 if not speaker:
                     continue
-                self.status_message = f"Generating line {idx + 1} of {total}..."
-                self.notify_listeners()
                 try:
-                    path = self._resolve_turn_audio(turn, speaker)
+                    path = None if force else self._resolve_turn_audio(turn, speaker)
                     if path is None:
+                        turn.generation_status = GenerationStatus.GENERATING
+                        self.status_message = f"Synthesizing line {idx + 1} of {total}..."
+                        self.notify_listeners()
                         path = self.speech_generator.generate(
                             text=turn.text,
                             voice_id=speaker.voice_id,
                             speaking_rate=speaker.speaking_rate,
+                            force_regenerate=force,
                         )
+                        generated_count += 1
                     turn.audio_path = str(path)
                     turn.generation_status = GenerationStatus.READY
                     self._archive_turn_audio(turn)
@@ -458,7 +503,10 @@ class AppState:
             self.database.save_conversation(self.conversation)
             self.is_generating = False
             if not plan_error:
-                self.status_message = "All dialogue lines synthesized and cached"
+                self.status_message = (
+                    "All dialogue lines regenerated"
+                    if force else f"Generated {generated_count} uncached turn(s)"
+                )
             self.notify_listeners()
 
         threading.Thread(target=worker, daemon=True).start()

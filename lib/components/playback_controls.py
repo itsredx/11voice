@@ -33,6 +33,7 @@ def build_playback_controls(
     on_pause: Optional[Callable[[], None]] = None,
     on_stop: Optional[Callable[[], None]] = None,
     on_generate_all: Optional[Callable[[], None]] = None,
+    on_generate_uncached: Optional[Callable[[], None]] = None,
     on_add_turn: Optional[Callable[[], None]] = None,
 ):
     """
@@ -120,10 +121,10 @@ def build_playback_controls(
                     crossAxisAlignment=CrossAxisAlignment.CENTER,
                     mainAxisAlignment=MainAxisAlignment.END,
                     children=[
-                        # Pre-generate all dialogue audio button
+                        # Regenerate all dialogue audio button
                         ElevatedButton(
                             key=Key("gen_all_btn"),
-                            onPressed=on_generate_all,
+                            onPressed=None if is_generating else on_generate_all,
                             onPressedName="main_gen_all",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
@@ -142,7 +143,7 @@ def build_playback_controls(
                                     ),
                                     SizedBox(width=6, key=Key("gen_all_spc")),
                                     Text(
-                                        "Synthesize All" if not is_generating else "Synthesizing...",
+                                        "Regenerate All" if not is_generating else "Synthesizing...",
                                         key=Key("gen_all_label"),
                                         style=TextStyle(
                                             fontSize=13,
@@ -154,6 +155,29 @@ def build_playback_controls(
                             ),
                         ),
                         SizedBox(width=12, key=Key("action_grp_spc")),
+
+                        # Generate only audio that is not already cached
+                        ElevatedButton(
+                            key=Key("gen_uncached_btn"),
+                            onPressed=None if is_generating else on_generate_uncached,
+                            onPressedName="main_gen_uncached",
+                            style=ButtonStyle(
+                                backgroundColor=StudioColors.surface_elevated,
+                                foregroundColor=StudioColors.success,
+                                padding=EdgeInsets.symmetric(horizontal=14, vertical=12),
+                                shape=BorderRadius.circular(8),
+                            ),
+                            child=Text(
+                                "Synthesize Uncached",
+                                key=Key("gen_uncached_label"),
+                                style=TextStyle(
+                                    fontSize=13,
+                                    fontWeight="bold",
+                                    color=StudioColors.success,
+                                ),
+                            ),
+                        ),
+                        SizedBox(width=12, key=Key("uncached_add_spc")),
 
                         # Add Turn Button
                         ElevatedButton(
