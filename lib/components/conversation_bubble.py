@@ -94,6 +94,7 @@ def build_conversation_bubble(
             ),
             onPressed=on_preview,
             onPressedName=f"preview_turn_{turn.id}",
+            tooltip="Preview this turn",
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
@@ -114,6 +115,7 @@ def build_conversation_bubble(
             ),
             onPressed=on_generate,
             onPressedName=f"generate_turn_{turn.id}",
+            tooltip="Generate or regenerate speech for this turn",
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
@@ -134,6 +136,7 @@ def build_conversation_bubble(
             ),
             onPressed=on_edit,
             onPressedName=f"edit_turn_{turn.id}",
+            tooltip="Edit this turn",
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
@@ -154,6 +157,7 @@ def build_conversation_bubble(
             ),
             onPressed=on_delete,
             onPressedName=f"delete_turn_{turn.id}",
+            tooltip="Delete this turn",
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),

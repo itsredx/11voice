@@ -54,6 +54,7 @@ def build_dialogue_editor(
                 key=Key(f"edit_spk_btn_{turn.id}_{spk_id}"),
                 onPressed=lambda s_id=spk_id: on_save(text_ctrl.text, s_id),
                 onPressedName=f"select_spk_{turn.id}_{spk_id}",
+                tooltip=f"Assign this turn to {spk.name}",
                 style=ButtonStyle(
                     backgroundColor=btn_bg,
                     foregroundColor=StudioColors.text_primary,
@@ -133,6 +134,7 @@ def build_dialogue_editor(
                             key=Key(f"editor_cancel_btn_{turn.id}"),
                             onPressed=on_cancel,
                             onPressedName=f"cancel_edit_{turn.id}",
+                            tooltip="Discard edits and close the editor",
                             child=Text(
                                 "Cancel",
                                 style=TextStyle(
@@ -146,6 +148,7 @@ def build_dialogue_editor(
                             key=Key(f"editor_save_btn_{turn.id}"),
                             onPressed=lambda: on_save(text_ctrl.text, selected_speaker_id),
                             onPressedName=f"save_edit_{turn.id}",
+                            tooltip="Save the dialogue text and speaker",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.primary,
                                 foregroundColor=StudioColors.text_primary,

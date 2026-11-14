@@ -64,6 +64,13 @@ def build_playback_controls(
                             icon=Icon(play_pause_icon, size=24, color=StudioColors.text_primary),
                             onPressed=play_pause_action,
                             onPressedName="main_play_pause",
+                            tooltip=(
+                                "Pause conversation playback"
+                                if is_playing and not is_paused
+                                else "Resume conversation playback"
+                                if is_paused
+                                else "Play the conversation"
+                            ),
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.primary,
                                 padding=EdgeInsets.all(12),
@@ -78,6 +85,7 @@ def build_playback_controls(
                             icon=Icon(Icons.stop_rounded, size=22, color=StudioColors.text_primary),
                             onPressed=on_stop,
                             onPressedName="main_stop",
+                            tooltip="Stop playback",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.all(12),
@@ -126,6 +134,7 @@ def build_playback_controls(
                             key=Key("gen_all_btn"),
                             onPressed=None if is_generating else on_generate_all,
                             onPressedName="main_gen_all",
+                            tooltip="Regenerate speech for every dialogue turn",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 foregroundColor=StudioColors.primary,
@@ -161,6 +170,7 @@ def build_playback_controls(
                             key=Key("gen_uncached_btn"),
                             onPressed=None if is_generating else on_generate_uncached,
                             onPressedName="main_gen_uncached",
+                            tooltip="Generate speech only for turns without cached audio",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 foregroundColor=StudioColors.success,
@@ -184,6 +194,7 @@ def build_playback_controls(
                             key=Key("add_turn_btn"),
                             onPressed=on_add_turn,
                             onPressedName="main_add_turn",
+                            tooltip="Add a new dialogue turn",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 foregroundColor=StudioColors.text_primary,

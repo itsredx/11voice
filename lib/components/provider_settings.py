@@ -61,6 +61,7 @@ def _provider_key_card(
                             key=Key(f"{provider}_save_key_btn"),
                             onPressed=on_save,
                             onPressedName=f"save_{provider}_key",
+                            tooltip=f"Save the {display_name} API key",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.primary,
                                 padding=EdgeInsets.symmetric(horizontal=14, vertical=8),
@@ -73,6 +74,7 @@ def _provider_key_card(
                             key=Key(f"{provider}_remove_key_btn"),
                             onPressed=on_remove if has_key else None,
                             onPressedName=f"remove_{provider}_key",
+                            tooltip=f"Remove the saved {display_name} API key",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.symmetric(horizontal=14, vertical=8),
@@ -113,6 +115,7 @@ def build_provider_settings(
                             key=Key("provider_settings_back_btn"),
                             onPressed=on_back,
                             onPressedName="close_settings",
+                            tooltip="Return to the conversation studio",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.symmetric(horizontal=14, vertical=8),

@@ -626,6 +626,7 @@ class ConversationScreenState(State):
                                                     f"load_conversation_{conversation_id}"
                                                 ),
                                                 onPressed=action,
+                                                tooltip=f"Load conversation: {conversation_titles[conversation_id]}",
                                                 style=ButtonStyle(
                                                     backgroundColor=(
                                                         StudioColors.primary
@@ -658,6 +659,7 @@ class ConversationScreenState(State):
                                     key=Key("conversation_import_json_btn"),
                                     onPressed=self.on_import_conversation,
                                     onPressedName="import_conversation_json",
+                                    tooltip="Import a conversation from a JSON file",
                                     style=ButtonStyle(
                                         backgroundColor=StudioColors.surface_elevated,
                                         foregroundColor=StudioColors.text_primary,

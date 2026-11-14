@@ -84,6 +84,7 @@ def build_heading(
                             ),
                             onPressed=on_switch_provider,
                             onPressedName="switch_provider",
+                            tooltip="Switch between ElevenLabs and Speechify",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.symmetric(horizontal=12, vertical=8),
@@ -113,6 +114,7 @@ def build_heading(
                             ),
                             onPressed=on_open_settings,
                             onPressedName="open_settings",
+                            tooltip="Configure provider API keys",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.symmetric(horizontal=12, vertical=8),
@@ -141,6 +143,7 @@ def build_heading(
                             ),
                             onPressed=on_refresh_devices,
                             onPressedName="header_refresh_devices",
+                            tooltip="Refresh the available PipeWire output devices",
                             style=ButtonStyle(
                                 backgroundColor=StudioColors.surface_elevated,
                                 padding=EdgeInsets.symmetric(horizontal=10, vertical=8),
