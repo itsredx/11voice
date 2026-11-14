@@ -20,6 +20,7 @@ from pythra.widgets import (
     VirtualListView,
     _VirtualListViewState,
 )
+from pythra.controllers import TextEditingController
 from pythra import (
     Column,
     Container,
@@ -40,6 +41,7 @@ from ..components import (
     build_heading,
     build_playback_controls,
     build_speaker_card,
+    build_provider_settings,
 )
 from ..state.app_state import AppState
 
@@ -134,6 +136,10 @@ class ConversationScreenState(State):
         self._last_turn_signature = None
         self._last_controls_signature = None
         self._last_turn_list_config = None
+        self._last_active_turn_id = None
+        self.show_settings = False
+        self.elevenlabs_key_controller = TextEditingController()
+        self.speechify_key_controller = TextEditingController()
         # Bind Pythra setState to AppState updates
         self.app_state.add_listener(self._on_app_state_change)
 
@@ -149,6 +155,27 @@ class ConversationScreenState(State):
 
     def _refresh_screen(self):
         if self.get_widget() is not None:
+            active_turn_id = self.app_state.active_turn_id
+            if active_turn_id != self._last_active_turn_id:
+                self._last_active_turn_id = active_turn_id
+                if active_turn_id:
+                    active_index = next(
+                        (
+                            index
+                            for index, turn in enumerate(
+                                self.app_state.conversation.turns
+                            )
+                            if turn.id == active_turn_id
+                        ),
+                        None,
+                    )
+                    if active_index is not None:
+                        self.turn_list_controller.scrollToIndex(
+                            active_index,
+                            alignment="center",
+                            behavior="smooth",
+                        )
+
             turn_signature = self._get_turn_signature()
             previous_turn_signature = self._last_turn_signature
             turn_list_config = self._get_turn_list_config()
@@ -165,7 +192,9 @@ class ConversationScreenState(State):
             ):
                 changed_indices = [
                     index
-                    for index in range(max(len(previous_turn_signature), len(turn_signature)))
+                    for index in range(
+                        max(len(previous_turn_signature), len(turn_signature))
+                    )
                     if index >= len(previous_turn_signature)
                     or index >= len(turn_signature)
                     or previous_turn_signature[index] != turn_signature[index]
@@ -186,17 +215,19 @@ class ConversationScreenState(State):
         for turn in self.app_state.conversation.turns:
             speaker = self.app_state.speakers.get(turn.speaker_id)
             device = devices_by_id.get(speaker.output_device_id) if speaker else None
-            signature.append((
-                turn.id,
-                turn.text,
-                turn.speaker_id,
-                turn.generation_status,
-                turn.audio_path,
-                turn.id == self.app_state.active_turn_id,
-                speaker.name if speaker else None,
-                device.name if device else "Default Sink",
-                turn.id == self.editing_turn_id,
-            ))
+            signature.append(
+                (
+                    turn.id,
+                    turn.text,
+                    turn.speaker_id,
+                    turn.generation_status,
+                    turn.audio_path,
+                    turn.id == self.app_state.active_turn_id,
+                    speaker.name if speaker else None,
+                    device.name if device else "Default Sink",
+                    turn.id == self.editing_turn_id,
+                )
+            )
         return tuple(signature)
 
     def _get_turn_list_config(self):
@@ -228,6 +259,9 @@ class ConversationScreenState(State):
             self.app_state.is_generating,
             self.app_state.is_refreshing_devices,
             self.app_state.status_message,
+            self.app_state.active_provider,
+            tuple(voice.voice_id for voice in self.app_state.available_voices),
+            self.show_settings,
             speaker_signature,
             device_signature,
         )
@@ -239,16 +273,51 @@ class ConversationScreenState(State):
     def on_refresh_devices(self):
         self.app_state.refresh_devices()
 
+    def on_switch_provider(self):
+        self.app_state.switch_provider()
+
+    def on_open_settings(self):
+        self.show_settings = True
+        self.setState()
+
+    def on_close_settings(self):
+        self.show_settings = False
+        self.setState()
+
+    def on_save_provider_key(self, provider: str, value: str):
+        if not value.strip():
+            return
+        self.app_state.save_provider_api_key(provider, value)
+        (
+            self.elevenlabs_key_controller
+            if provider == "elevenlabs"
+            else self.speechify_key_controller
+        ).clear()
+
+    def on_remove_provider_key(self, provider: str):
+        self.app_state.save_provider_api_key(provider, "")
+        (
+            self.elevenlabs_key_controller
+            if provider == "elevenlabs"
+            else self.speechify_key_controller
+        ).clear()
+
     def on_select_conversation(self, conversation_id):
         if conversation_id:
             loaded = self.app_state.load_conversation(str(conversation_id))
             if not loaded:
-                self.app_state.status_message = "Could not load the selected conversation."
+                self.app_state.status_message = (
+                    "Could not load the selected conversation."
+                )
                 self.app_state.notify_listeners()
 
     def _load_bundled_json(self, conversation_id: str):
         """Use the same import-and-activate path as the working Import JSON action."""
-        source = Path(__file__).resolve().parent.parent.parent / "conversations" / f"{conversation_id}.json"
+        source = (
+            Path(__file__).resolve().parent.parent.parent
+            / "conversations"
+            / f"{conversation_id}.json"
+        )
         try:
             self.app_state.import_conversation_json(source, reuse_existing=True)
         except Exception as exc:
@@ -295,7 +364,9 @@ class ConversationScreenState(State):
 
     def on_save_edit_turn(self, turn_id: str, new_text: str, new_speaker_id: str):
         self.app_state.update_turn_text(turn_id, new_text)
-        turn = next((t for t in self.app_state.conversation.turns if t.id == turn_id), None)
+        turn = next(
+            (t for t in self.app_state.conversation.turns if t.id == turn_id), None
+        )
         if turn and turn.speaker_id != new_speaker_id:
             turn.speaker_id = new_speaker_id
             turn.audio_path = None
@@ -305,10 +376,18 @@ class ConversationScreenState(State):
         self.setState()
 
     def on_add_turn(self):
-        speaker_ids = list(dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns))
+        speaker_ids = list(
+            dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns)
+        )
         if not speaker_ids:
-            speaker_ids = [sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers]
-        speakers = [self.app_state.speakers[sid] for sid in speaker_ids if sid in self.app_state.speakers]
+            speaker_ids = [
+                sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers
+            ]
+        speakers = [
+            self.app_state.speakers[sid]
+            for sid in speaker_ids
+            if sid in self.app_state.speakers
+        ]
         if not speakers:
             return
         turns = self.app_state.conversation.turns
@@ -333,9 +412,31 @@ class ConversationScreenState(State):
 
     # ── UI Tree Build ─────────────────────────────────────────────────
     def build(self):
-        active_speaker_ids = list(dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns))
+        if self.show_settings:
+            return Container(
+                key=Key("provider_settings_root"),
+                height="100vh",
+                width="100vw",
+                color=StudioColors.background,
+                child=build_provider_settings(
+                    elevenlabs_controller=self.elevenlabs_key_controller,
+                    speechify_controller=self.speechify_key_controller,
+                    has_elevenlabs_key=self.app_state.has_provider_api_key(
+                        "elevenlabs"
+                    ),
+                    has_speechify_key=self.app_state.has_provider_api_key("speechify"),
+                    on_save_key=self.on_save_provider_key,
+                    on_remove_key=self.on_remove_provider_key,
+                    on_back=self.on_close_settings,
+                ),
+            )
+        active_speaker_ids = list(
+            dict.fromkeys(turn.speaker_id for turn in self.app_state.conversation.turns)
+        )
         if not active_speaker_ids:
-            active_speaker_ids = [sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers]
+            active_speaker_ids = [
+                sid for sid in ("spk_a", "spk_b") if sid in self.app_state.speakers
+            ]
         speakers = {
             speaker_id: self.app_state.speakers[speaker_id]
             for speaker_id in active_speaker_ids
@@ -365,7 +466,7 @@ class ConversationScreenState(State):
 
         for idx, (spk_id, speaker) in enumerate(speakers.items()):
             accent = speaker_accents[idx % len(speaker_accents)]
-            
+
             speaker_cards.append(
                 Container(
                     key=Key(f"spk_exp_{spk_id}"),
@@ -374,8 +475,13 @@ class ConversationScreenState(State):
                         devices=devices,
                         accent_color=accent,
                         available_voices=self.app_state.available_voices,
-                        on_device_selected=lambda d_id, s_id=spk_id: self.on_speaker_device_changed(s_id, d_id),
-                        on_voice_selected=lambda v_id, s_id=spk_id: self.on_speaker_voice_changed(s_id, v_id),
+                        provider=self.app_state.active_provider,
+                        on_device_selected=lambda d_id, s_id=spk_id: self.on_speaker_device_changed(
+                            s_id, d_id
+                        ),
+                        on_voice_selected=lambda v_id, s_id=spk_id: self.on_speaker_voice_changed(
+                            s_id, v_id
+                        ),
                     ),
                 )
             )
@@ -397,26 +503,34 @@ class ConversationScreenState(State):
                     ),
                 )
             if index >= len(current_turns):
-                return Container(key=Key(f"turn_item_empty_{index}"), height=turn_item_extent)
+                return Container(
+                    key=Key(f"turn_item_empty_{index}"), height=turn_item_extent
+                )
             turn = current_turns[index]
             if turn.id == self.editing_turn_id:
                 content = build_dialogue_editor(
                     turn=turn,
                     speakers=speakers,
-                    on_save=lambda txt, s_id, t_id=turn.id: self.on_save_edit_turn(t_id, txt, s_id),
+                    on_save=lambda txt, s_id, t_id=turn.id: self.on_save_edit_turn(
+                        t_id, txt, s_id
+                    ),
                     on_cancel=self.on_cancel_edit_turn,
                 )
             else:
                 speaker = self.app_state.speakers.get(turn.speaker_id)
                 if not speaker:
-                    return Container(key=Key(f"turn_item_missing_{turn.id}"), height=turn_item_extent)
+                    return Container(
+                        key=Key(f"turn_item_missing_{turn.id}"), height=turn_item_extent
+                    )
                 is_active = turn.id == self.app_state.active_turn_id
                 is_cached = self.app_state.is_turn_cached(turn)
                 is_generating = turn.generation_status == GenerationStatus.GENERATING
                 dev = devices_by_id.get(speaker.output_device_id)
                 dev_label = dev.name if dev else "Default Sink"
                 speaker_ids = list(speakers.keys())
-                spk_idx = speaker_ids.index(speaker.id) if speaker.id in speaker_ids else 0
+                spk_idx = (
+                    speaker_ids.index(speaker.id) if speaker.id in speaker_ids else 0
+                )
                 content = build_conversation_bubble(
                     turn=turn,
                     speaker=speaker,
@@ -426,7 +540,9 @@ class ConversationScreenState(State):
                     device_label=dev_label,
                     accent_color=speaker_accents[spk_idx % len(speaker_accents)],
                     on_preview=lambda t_id=turn.id: self.app_state.preview_turn(t_id),
-                    on_generate=lambda t_id=turn.id: self.app_state.generate_turn_audio(t_id, force=True),
+                    on_generate=lambda t_id=turn.id: self.app_state.generate_turn_audio(
+                        t_id, force=True
+                    ),
                     on_edit=lambda t_id=turn.id: self.on_start_edit_turn(t_id),
                     on_delete=lambda t_id=turn.id: self.on_delete_turn(t_id),
                 )
@@ -476,44 +592,67 @@ class ConversationScreenState(State):
                         title="11Voice Conversation Studio",
                         on_refresh_devices=self.on_refresh_devices,
                         is_syncing_outputs=self.app_state.is_refreshing_devices,
+                        active_provider=self.app_state.active_provider,
+                        on_switch_provider=self.on_switch_provider,
+                        on_open_settings=self.on_open_settings,
                     ),
-
                     # ── Conversation Library ─────────────────────────
                     Container(
                         key=Key("conversation_library_bar"),
                         padding=EdgeInsets.symmetric(horizontal=20, vertical=10),
                         width="-webkit-fill-available",
                         child=Row(
-                            key=Key("conversation_library_row"),
+                            key=Key("conversation_library_and_action_row"),
                             crossAxisAlignment=CrossAxisAlignment.CENTER,
+                            mainAxisAlignment=MainAxisAlignment.SPACE_BETWEEN,
                             children=[
                                 Text(
-                                    "Conversation",
+                                    "Conversations",
                                     key=Key("conversation_library_label"),
-                                    style=TextStyle(color=StudioColors.text_primary, fontSize=13, fontWeight="bold"),
+                                    style=TextStyle(
+                                        color=StudioColors.text_primary,
+                                        fontSize=13,
+                                        fontWeight="bold",
+                                    ),
                                 ),
                                 SizedBox(width=12, key=Key("conversation_library_gap")),
-                                    *[
-                                    ElevatedButton(
-                                        key=Key(f"load_conversation_{conversation_id}"),
-                                            onPressed=action,
-                                        style=ButtonStyle(
-                                            backgroundColor=(
-                                                StudioColors.primary
-                                                if current_conversation_id == conversation_id
-                                                else StudioColors.surface_elevated
-                                            ),
-                                            foregroundColor=StudioColors.text_primary,
-                                            padding=EdgeInsets.symmetric(horizontal=10, vertical=10),
-                                            shape=BorderRadius.circular(8),
-                                        ),
-                                        child=Text(
-                                            conversation_titles[conversation_id],
-                                            style=TextStyle(fontSize=12, fontWeight="bold"),
-                                        ),
-                                    )
-                                        for conversation_id, _, action in featured_conversations
-                                ],
+                                Row(
+                                    key=Key("conversation_library_row"),
+                                    crossAxisAlignment=CrossAxisAlignment.CENTER,
+                                    children=[
+                                        *[
+                                            ElevatedButton(
+                                                key=Key(
+                                                    f"load_conversation_{conversation_id}"
+                                                ),
+                                                onPressed=action,
+                                                style=ButtonStyle(
+                                                    backgroundColor=(
+                                                        StudioColors.primary
+                                                        if current_conversation_id
+                                                        == conversation_id
+                                                        else StudioColors.surface_elevated
+                                                    ),
+                                                    foregroundColor=StudioColors.text_primary,
+                                                    padding=EdgeInsets.symmetric(
+                                                        horizontal=10, vertical=10
+                                                    ),
+                                                    shape=BorderRadius.circular(8),
+                                                    minimumSize=(155, 40),
+                                                ),
+                                                child=Text(
+                                                    conversation_titles[
+                                                        conversation_id
+                                                    ],
+                                                    style=TextStyle(
+                                                        fontSize=12, fontWeight="bold"
+                                                    ),
+                                                ),
+                                            )
+                                            for conversation_id, _, action in featured_conversations
+                                        ],
+                                    ],
+                                ),
                                 SizedBox(width=12, key=Key("conversation_import_gap")),
                                 ElevatedButton(
                                     key=Key("conversation_import_json_btn"),
@@ -522,33 +661,36 @@ class ConversationScreenState(State):
                                     style=ButtonStyle(
                                         backgroundColor=StudioColors.surface_elevated,
                                         foregroundColor=StudioColors.text_primary,
-                                        padding=EdgeInsets.symmetric(horizontal=14, vertical=10),
+                                        padding=EdgeInsets.symmetric(
+                                            horizontal=14, vertical=10
+                                        ),
                                         shape=BorderRadius.circular(8),
+                                        minimumSize=(150, 40),
                                     ),
-                                    child=Text("Import JSON", style=TextStyle(fontSize=13, fontWeight="bold")),
+                                    child=Text(
+                                        "Import JSON",
+                                        style=TextStyle(fontSize=13, fontWeight="bold"),
+                                    ),
                                 ),
                             ],
                         ),
                     ),
-
                     # ── Speaker Output Routing Deck ───────────────────
                     Container(
                         key=Key("speakers_deck"),
                         padding=EdgeInsets.all(16),
-                        width='-webkit-fill-available',
+                        width="-webkit-fill-available",
                         child=Row(
                             mainAxisAlignment=MainAxisAlignment.SPACE_AROUND,
                             key=Key("speakers_row"),
                             children=speaker_cards,
                         ),
                     ),
-
                     # ── Dialogue Script Timeline ──────────────────────
                     Expanded(
                         key=Key("timeline_expanded"),
                         child=timeline,
                     ),
-
                     # ── Playback Controls Toolbar ─────────────────────
                     build_playback_controls(
                         is_playing=self.app_state.is_playing,

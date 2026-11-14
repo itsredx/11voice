@@ -6,6 +6,7 @@ from .playback_controls import build_playback_controls
 from .audio_device_selector import build_audio_device_selector
 from .voice_selector import build_voice_selector
 from .dialogue_editor import build_dialogue_editor
+from .provider_settings import build_provider_settings
 
 __all__ = [
     "build_heading",
@@ -15,4 +16,5 @@ __all__ = [
     "build_audio_device_selector",
     "build_voice_selector",
     "build_dialogue_editor",
+    "build_provider_settings",
 ]

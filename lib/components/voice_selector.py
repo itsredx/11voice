@@ -5,16 +5,18 @@ from pythra.controllers import DropdownController
 from pythra.styles import (
     BorderRadius,
     BorderSide,
+    DropdownTheme,
     EdgeInsets,
     InputDecoration,
     TextStyle,
 )
 from pythra import (
+    Colors,
     Container,
-    Dropdown,
 )
 from ..constants.colors import StudioColors
 from ..elevenlabs.voices import FALLBACK_USABLE_VOICES, VoiceInfo
+from .scrollable_dropdown import ScrollableDropdown
 
 # ── Preset Voices Catalog ─────────────────────────────────────────────
 DEFAULT_VOICES = [
@@ -29,19 +31,23 @@ def build_voice_selector(
     on_voice_selected: Callable[[str], None],
     widget_key_prefix: str = "voice_sel",
     available_voices: Optional[list[VoiceInfo]] = None,
+    provider: str = "elevenlabs",
 ):
     """
     Dropdown component for selecting ElevenLabs voices for a speaker.
     """
     if available_voices is not None:
-        # Seed the selector with the two confirmed usable presets, then add
-        # account voices as the remote catalog arrives.
-        voices_by_id = {voice.voice_id: voice for voice in FALLBACK_USABLE_VOICES}
+        # Seed the selector with confirmed ElevenLabs presets while its
+        # remote catalog loads. Speechify voices must come from its own catalog.
+        voices_by_id = (
+            {voice.voice_id: voice for voice in FALLBACK_USABLE_VOICES}
+            if provider == "elevenlabs" else {}
+        )
         voices_by_id.update(
             {
                 voice.voice_id: voice
                 for voice in available_voices
-                if voice.voice_id and not voice.is_library_voice
+                if voice.voice_id and (provider != "elevenlabs" or not voice.is_library_voice)
             }
         )
         items = [
@@ -53,6 +59,10 @@ def build_voice_selector(
         ]
     else:
         items = list(DEFAULT_VOICES)
+    # Pythra's dropdown keeps its JS options from the initial widget mount.
+    # Give it a new key when the async catalog changes so reconciliation
+    # remounts the dropdown with the newly fetched options.
+    catalog_version = hash((provider, tuple(value for _, value in items)))
     selected_val = None
 
     for label, v_id in items:
@@ -75,12 +85,20 @@ def build_voice_selector(
 
     return Container(
         key=Key(f"{widget_key_prefix}_container"),
-        child=Dropdown(
-            key=Key(f"{widget_key_prefix}_dropdown"),
+        width="-webkit-fill-available",
+        child=ScrollableDropdown(
+            key=Key(f"{widget_key_prefix}_dropdown_{catalog_version}"),
             controller=controller,
             items=items,
             onChanged=handle_changed,
             hintText="Select Voice",
+            theme=DropdownTheme(
+                dropdownColor=Colors.hex("#F8FAFC"),
+                dropdownTextColor=Colors.hex("#0F172A"),
+                dropdownHoverColor=Colors.hex("#F8FAFC"),
+                itemHoverColor=Colors.hex("#C7D2FE"),
+                selectedItemColor=Colors.hex("#E0E7FF"),
+            ),
             decoration=InputDecoration(
                 filled=True,
                 fillColor=StudioColors.surface_elevated,

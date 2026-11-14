@@ -1,0 +1,195 @@
+{
+  "title": "Weekend Cafe Plans",
+  "speakers": [
+    {
+      "id": "speaker_1",
+      "name": "First Speaker"
+    },
+    {
+      "id": "speaker_2",
+      "name": "Second Speaker"
+    }
+  ],
+  "turns": [
+    {
+      "speaker_id": "speaker_1",
+      "text": "Hey, are you free for a minute? I need help choosing what to do this weekend.",
+      "position": 0
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I am. Is this a real decision, or are you asking me to help you avoid your errands?",
+      "position": 1
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "It can be both. I have laundry, groceries, and a pile of things I said I would sort out.",
+      "position": 2
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Then let’s plan something small so the whole weekend doesn’t disappear into chores.",
+      "position": 3
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That sounds good. I was thinking we could try that new cafe near the bookshop.",
+      "position": 4
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "The one with the plants in the window? I’ve walked past it a few times.",
+      "position": 5
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yes. Their menu looks nice, and they have a little patio at the back.",
+      "position": 6
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "A patio would be lovely if it isn’t too hot. What time were you thinking?",
+      "position": 7
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Maybe Saturday around one, before it gets busy.",
+      "position": 8
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "One works. I can meet you by the bookshop, and we can walk over together.",
+      "position": 9
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Perfect. I should probably do the grocery shopping in the morning first.",
+      "position": 10
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Make a list before you go, or you’ll come home with snacks and forget the actual groceries.",
+      "position": 11
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That happened once. I bought three kinds of biscuits and no cooking oil.",
+      "position": 12
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "It happened last month. You called me from the shop asking what you needed.",
+      "position": 13
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "All right, I’ll write everything down this time. Do you want anything while I’m there?",
+      "position": 14
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Could you get tea if you see the ginger kind? I’m almost out.",
+      "position": 15
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Sure. I’ll send you a photo if I’m not sure which one you mean.",
+      "position": 16
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Thanks. And don’t rush through your chores just to get out the door. We can meet a little later if you need to.",
+      "position": 17
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I appreciate that. I’ve been trying to make every free hour productive, and it’s getting tiring.",
+      "position": 18
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "A quiet lunch and a walk count as a good use of the day too.",
+      "position": 19
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You’re right. Maybe after lunch we can browse the bookshop without buying anything.",
+      "position": 20
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Without buying anything? That sounds ambitious for both of us.",
+      "position": 21
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "We can look. Whether we leave empty-handed is a separate question.",
+      "position": 22
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Fair. I’ve been meaning to find a novel for the train anyway.",
+      "position": 23
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "What are you in the mood for? Something funny, or something mysterious?",
+      "position": 24
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "A mystery, as long as it isn’t so complicated that I need a notebook to follow it.",
+      "position": 25
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I know exactly the kind. I’ll show you one I finished last week.",
+      "position": 26
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Great. Then lunch, a little browsing, and no pressure to hurry home.",
+      "position": 27
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That sounds like the sort of Saturday I need.",
+      "position": 28
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "It’s a plan, then. Saturday at one by the bookshop.",
+      "position": 29
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Saturday at one. I’ll message you when I’m heading out.",
+      "position": 30
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Sounds good. I’ll see you then, and I’ll bring my recommendations for the mystery shelf.",
+      "position": 31
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Excellent. Now I’m going to write that shopping list before I forget why I opened my notes app.",
+      "position": 32
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Put ginger tea on it first. That way at least one of us gets what they need.",
+      "position": 33
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Done. Talk to you later, and thanks for helping me plan a proper day off.",
+      "position": 34
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Anytime. Have a restful evening, and I’ll see you Saturday.",
+      "position": 35
+    }
+  ]
+}

@@ -1,0 +1,1140 @@
+{
+  "title": "First Speaker and Second Speaker Conversation",
+  "speakers": [
+    {
+      "id": "speaker_1",
+      "name": "First Speaker"
+    },
+    {
+      "id": "speaker_2",
+      "name": "Second Speaker"
+    }
+  ],
+  "turns": [
+    {
+      "speaker_id": "speaker_1",
+      "text": "Hello? Can you hear me?",
+      "position": 0
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes, I can hear you. Wait, let me move away from this window. There’s a generator outside, and I can barely hear myself think. Okay. Is that better?",
+      "position": 1
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Much better. I called you earlier, but you didn’t pick up. I thought you had gone out.",
+      "position": 2
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I did go out, actually. I went to buy a few things, and somehow a quick trip turned into half my afternoon. By the time I got home, I just dropped everything and sat down. My phone was still inside the bag.",
+      "position": 3
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That explains it. I was about to send you one of those messages that sounds polite but is really a complaint.",
+      "position": 4
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Something like, “Hope you’re doing well. Some of us are still alive, in case you’ve forgotten.”",
+      "position": 5
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Exactly. You already know yourself.",
+      "position": 6
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Please, don’t start. Didn’t I call you last week and you returned the call two days later?",
+      "position": 7
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That was different.",
+      "position": 8
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Of course it was. Your own case always has a special explanation.",
+      "position": 9
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "No, listen. I saw your missed call while I was doing something, and I told myself I would call back in five minutes. Then, somehow, it became Thursday.",
+      "position": 10
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That’s exactly what happens to me. Sometimes I even have the conversation in my head. I think about what I’m going to tell you, imagine your reply, and then forget I haven’t actually called.",
+      "position": 11
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Well, next time, please inform the imaginary version of me that the real one is waiting.",
+      "position": 12
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I’ll pass the message along. How was your day, anyway?",
+      "position": 13
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "It was okay. A little annoying in the morning, but it got better. I woke up early because I had so many things I wanted to do. Then I made the mistake of checking my phone before getting out of bed.",
+      "position": 14
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Ah. So your day started properly around eleven?",
+      "position": 15
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Not eleven. Around nine thirty.",
+      "position": 16
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That pause before you answered tells me it was closer to eleven.",
+      "position": 17
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "It was ten. But I was reading something useful at first. Then somebody sent a video, and I opened it. From there, I don’t even know how I ended up watching a man repair an old refrigerator.",
+      "position": 18
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Did you learn how to repair one?",
+      "position": 19
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "No. But I was very interested in whether he would get it working.",
+      "position": 20
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "And did he?",
+      "position": 21
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yes, he did. So at least one of us achieved something this morning.",
+      "position": 22
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Honestly, I understand. Yesterday I watched somebody clean a carpet for almost fifteen minutes. I kept thinking, surely it’s clean now. Then more dirt would come out, and I had to keep watching.",
+      "position": 23
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Those videos are dangerous. You’ll leave your own cup unwashed beside you while watching somebody clean an entire house.",
+      "position": 24
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Please don’t describe my room while I’m sitting inside it.",
+      "position": 25
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Wait, have you eaten?",
+      "position": 26
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes. Well, I ate earlier.",
+      "position": 27
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Earlier when?",
+      "position": 28
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Around twelve.",
+      "position": 29
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "It’s almost eight.",
+      "position": 30
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I know what time it is. I was going to cook when I got back, but I sat down first. That was the mistake.",
+      "position": 31
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "What were you planning to make?",
+      "position": 32
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Rice. Nothing complicated. Rice, stew, maybe eggs. But now that I’m sitting here, even washing the pot feels like a serious commitment.",
+      "position": 33
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Put the water on while we talk.",
+      "position": 34
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You sound like my mother.",
+      "position": 35
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Your mother is making sense. Go and put it on.",
+      "position": 36
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "All right, hold on. Let me get up. Ah, my legs. I didn’t realise I was this tired.",
+      "position": 37
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "What did you buy that involved so much walking?",
+      "position": 38
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That’s the annoying part. Almost nothing. I went for bread, eggs, tomatoes, and detergent. Then I remembered I needed to collect something from someone. I got there and the person said, “I’m just coming.”",
+      "position": 39
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Oh, no. How long?",
+      "position": 40
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Almost forty minutes.",
+      "position": 41
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You waited?",
+      "position": 42
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "At first, I thought it meant five minutes. Then after ten minutes I called, and they said they were nearby. By the time I had waited twenty minutes, I felt I had already waited too long to leave.",
+      "position": 43
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I hate that. Then you spend another twenty minutes defending the first twenty minutes.",
+      "position": 44
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Exactly. And when they finally arrived, they were walking slowly. That was the part that annoyed me. At least pretend to be in a hurry.",
+      "position": 45
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "A little breathlessness would have helped.",
+      "position": 46
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Thank you. Even if you’re not sorry, give me a convincing performance.",
+      "position": 47
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Did you tell them you were annoyed?",
+      "position": 48
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I said, “I’ve been here for quite a while.”",
+      "position": 49
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That’s your polite voice. I know that voice.",
+      "position": 50
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "And they said, “Sorry, there was traffic.” Anyway, I collected what I needed and left. Wait, let me rinse this pot.",
+      "position": 51
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Okay. Don’t put the phone near the tap.",
+      "position": 52
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I haven’t.",
+      "position": 53
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I can hear water as if I’m inside the sink.",
+      "position": 54
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You’re on the counter. You’re safe.",
+      "position": 55
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That’s reassuring. I wasn’t ready to become part of dinner.",
+      "position": 56
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Speaking of dinner, what did you eat?",
+      "position": 57
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I bought food on my way home. Rice and chicken.",
+      "position": 58
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "So you’re sitting comfortably with a full stomach, giving me instructions.",
+      "position": 59
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yes. I’m supervising from a position of experience.",
+      "position": 60
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Was the food good?",
+      "position": 61
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "The rice was good. The chicken was... I don’t know how to describe it. It tasted fine, but it required determination.",
+      "position": 62
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Hard?",
+      "position": 63
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Very. I had to stop talking while eating it.",
+      "position": 64
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You were eating alone. Who were you talking to?",
+      "position": 65
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I was on the phone with my brother.",
+      "position": 66
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Oh, how is he? Did he finally move?",
+      "position": 67
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "He did. Last weekend. And now he calls me every day to complain about something in the new place.",
+      "position": 68
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "What’s wrong with it?",
+      "position": 69
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Nothing major. The kitchen is smaller than he remembered. One of the sockets doesn’t work. The neighbour plays music early in the morning. Yesterday he called to tell me the curtains he bought were too short.",
+      "position": 70
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Didn’t he measure the windows?",
+      "position": 71
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "He said he estimated.",
+      "position": 72
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Well, there you go.",
+      "position": 73
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That’s what I told him. But apparently, he wanted sympathy, not an explanation.",
+      "position": 74
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Sometimes you do that, you know.",
+      "position": 75
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Do what?",
+      "position": 76
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Somebody tells you a problem, and you immediately begin explaining how they could have prevented it.",
+      "position": 77
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Really?",
+      "position": 78
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "A little. You mean well, but sometimes I just want you to say, “Ah, that’s annoying,” before giving me a full investigation.",
+      "position": 79
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Okay. That’s fair. I didn’t realise I did it that much.",
+      "position": 80
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Not all the time. Just when the solution seems obvious to you.",
+      "position": 81
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’ll remember that. And for the record, waiting forty minutes for someone was annoying.",
+      "position": 82
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Thank you. I feel supported now.",
+      "position": 83
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You’re welcome. Has the water started boiling?",
+      "position": 84
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Not yet. I only just put it on. You’re a very impatient supervisor.",
+      "position": 85
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’m checking progress. Anyway, his new place is nice. I went there on Sunday, and it felt strange seeing him with his own furniture. In my mind, he’s still the person who used to borrow my slippers and deny it while wearing them.",
+      "position": 86
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Did you remind him?",
+      "position": 87
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Of course. He told me to stop bringing childhood matters into his adult home.",
+      "position": 88
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "His adult home with the short curtains.",
+      "position": 89
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Exactly. I wanted to say that, but I behaved myself.",
+      "position": 90
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I’m proud of you. That must have been difficult.",
+      "position": 91
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You have no idea. So, what’s happening with you? Apart from waiting for people and avoiding your kitchen.",
+      "position": 92
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Honestly? I’ve been a bit tired lately. Not even from one particular thing. It just feels like there’s always something waiting to be done. I finish one thing, and before I can enjoy finishing it, I remember three more.",
+      "position": 93
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yeah. I’ve had weeks like that. Is it mostly work?",
+      "position": 94
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Work, messages, things at home. Small things. Someone needs a reply. Something needs fixing. I need to go somewhere. Nothing is terrible on its own, but together it feels like I never properly stop.",
+      "position": 95
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Have you had any time to yourself this week?",
+      "position": 96
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I’ve been alone, but I don’t think that’s the same thing.",
+      "position": 97
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "No, I know what you mean. You can be sitting by yourself and still feel like everybody is asking you for something.",
+      "position": 98
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Exactly. Even when my phone is quiet, I’m thinking about what I haven’t answered.",
+      "position": 99
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Would it help to switch it off for an evening?",
+      "position": 100
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Maybe. Though I’d probably spend the first hour checking whether I really switched it off.",
+      "position": 101
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You could start with an hour. Eat something, watch one episode of something, and leave the phone in another room.",
+      "position": 102
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That sounds nice, actually. But I don’t want another thing that I have to do properly. Even resting feels like a task when people give you instructions for it.",
+      "position": 103
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "All right. Forget the instructions. What would you enjoy doing tonight?",
+      "position": 104
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Talking to you has been nice.",
+      "position": 105
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Well, good. I wasn’t planning to go anywhere yet.",
+      "position": 106
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "And eating would probably improve my mood.",
+      "position": 107
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yes, but I’m trying not to give instructions.",
+      "position": 108
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You’re learning quickly.",
+      "position": 109
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’m making an effort. Wait, I’ve just remembered something. Did you ever finish that series you told me about?",
+      "position": 110
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "No. And please don’t tell me the ending.",
+      "position": 111
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I haven’t watched it. You told me to watch it, but you never sent the name.",
+      "position": 112
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I did.",
+      "position": 113
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You said, “I’ll send it now.” That’s different.",
+      "position": 114
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Let me check. Oh. You’re right. I typed it and didn’t send it.",
+      "position": 115
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "We’re very good at maintaining this friendship in our heads.",
+      "position": 116
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Apparently. I’ll send it after this call.",
+      "position": 117
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Just tell me the name now, because we both know what might happen after this call.",
+      "position": 118
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Wait, I need to look it up. I can picture the cover, but the title has disappeared from my mind.",
+      "position": 119
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You were going to send me a series you can’t remember?",
+      "position": 120
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I watched several episodes. I remember the people. There’s a woman who moves back to her hometown, and her neighbour is hiding something.",
+      "position": 121
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That describes about two hundred series.",
+      "position": 122
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Fine, let me find it. Actually, wait. My water is boiling.",
+      "position": 123
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Attend to your rice. The mysterious neighbour can wait.",
+      "position": 124
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I’m putting it in now. How much rice do you usually cook for yourself?",
+      "position": 125
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Less than I want, but more than I need.",
+      "position": 126
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That is completely unhelpful.",
+      "position": 127
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I don’t measure properly. I pour some in, think it looks too small, add more, and end up cooking for visitors who aren’t coming.",
+      "position": 128
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That’s what I do. Dry rice looks so innocent.",
+      "position": 129
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Then twenty minutes later, you need a bigger pot.",
+      "position": 130
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I think I’ve already put too much.",
+      "position": 131
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You’ll have lunch tomorrow.",
+      "position": 132
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Unless I get bored and eat it all tonight.",
+      "position": 133
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Let’s leave that decision until the rice is cooked.",
+      "position": 134
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Fair enough. Are you doing anything this weekend?",
+      "position": 135
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Nothing fixed. I need to wash clothes, and I promised my aunt I would visit. Apart from that, I’m free.",
+      "position": 136
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "We should go somewhere.",
+      "position": 137
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’d like that. Where?",
+      "position": 138
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Somewhere quiet. Somewhere we can sit and talk without having to shout over music.",
+      "position": 139
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "And somewhere that tells you the real price before you sit down.",
+      "position": 140
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes, please. I don’t want to enjoy a meal and then become quiet when the bill arrives.",
+      "position": 141
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "There’s a place near me I’ve been meaning to try. I haven’t eaten there, though. I just pass it sometimes.",
+      "position": 142
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "What made you notice it?",
+      "position": 143
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "It has outdoor seats and it never looks crowded.",
+      "position": 144
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "That could be a good sign or a very bad one.",
+      "position": 145
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "True. We can look at the menu first. If it doesn’t look good, we’ll go somewhere else.",
+      "position": 146
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Saturday?",
+      "position": 147
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Saturday afternoon should work. Maybe around three.",
+      "position": 148
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Around three, or three?",
+      "position": 149
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Three. Why are you asking like you don’t know me?",
+      "position": 150
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Because I do know you. You’ll call at two fifty and say you’re about to iron your clothes.",
+      "position": 151
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That happened once.",
+      "position": 152
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "It happened the last time we went out.",
+      "position": 153
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Yes. Once recently.",
+      "position": 154
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Let’s meet at three thirty.",
+      "position": 155
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That won’t solve anything if you’ve already decided I’ll be late.",
+      "position": 156
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Fine. Three. I’ll be ready.",
+      "position": 157
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’ll be ready too. And let’s actually do it this time. We keep saying we should meet, then a month passes.",
+      "position": 158
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I know. It’s strange. When we were younger, we didn’t need to plan so much. Somebody would just show up, and that was the day arranged.",
+      "position": 159
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Because none of us had anything else to do.",
+      "position": 160
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "We thought we were busy.",
+      "position": 161
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "We also thought being an adult meant nobody could tell us what to do.",
+      "position": 162
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Now the electricity bill tells me what to do.",
+      "position": 163
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "And the laundry.",
+      "position": 164
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "And whatever is making that noise in my kitchen.",
+      "position": 165
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Wait, what noise?",
+      "position": 166
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Nothing serious. The lid is rattling. Hold on, let me turn the heat down.",
+      "position": 167
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I was about to ask whether we needed to end the call.",
+      "position": 168
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "No, it’s fine. Although I should probably start the eggs. How do you feel about fried eggs with rice?",
+      "position": 169
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I feel that if you’re offering, I’m interested.",
+      "position": 170
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You’re welcome to come. There’s enough rice for you, me, and the mysterious neighbour from that series.",
+      "position": 171
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Tempting. But if I leave now, you’ll have finished cooking before I arrive.",
+      "position": 172
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You say that as if I cook quickly.",
+      "position": 173
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Don’t you?",
+      "position": 174
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Only when someone is coming over. When it’s just me, I keep wandering away from the kitchen.",
+      "position": 175
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I do that with tea. I’ll boil water, forget about it, boil it again, then discover I don’t really want tea anymore.",
+      "position": 176
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "My mother would say we have too many things on our minds.",
+      "position": 177
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "She might be right.",
+      "position": 178
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "She usually is, which is inconvenient.",
+      "position": 179
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Have you spoken to her today?",
+      "position": 180
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes, this morning. She called to ask if I had eaten, then told me about somebody I’m supposed to remember from years ago.",
+      "position": 181
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "And did you remember?",
+      "position": 182
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Not at all. But she kept giving me more relatives to help. “You know his sister. Her husband used to live near your uncle.” At one point, I just said yes.",
+      "position": 183
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That’s dangerous. Now you’re responsible for knowing the whole family.",
+      "position": 184
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I know. Next time she’ll begin the story from there, and I’ll be lost again.",
+      "position": 185
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You should have asked for a photograph.",
+      "position": 186
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I did. She sent a group photograph with about fifteen people and said, “He’s there.”",
+      "position": 187
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Helpful.",
+      "position": 188
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Very. Anyway, she sounded happy. It was nice hearing her laugh. I’d been rushing around when she called, but I ended up sitting down and listening.",
+      "position": 189
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Those calls are good sometimes. You think you don’t have time, then afterwards you’re glad you answered.",
+      "position": 190
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Like this one.",
+      "position": 191
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Exactly like this one. Although this one comes with a lot more kitchen noise.",
+      "position": 192
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Sorry. That was a spoon.",
+      "position": 193
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I guessed. Either that or you dropped a very small bicycle.",
+      "position": 194
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You complain too much. Hold on, let me taste the rice.",
+      "position": 195
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Well?",
+      "position": 196
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "It needs a few more minutes.",
+      "position": 197
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Is that the polite version?",
+      "position": 198
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "It’s a little hard.",
+      "position": 199
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Then give it a few more minutes.",
+      "position": 200
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Thank you, chef.",
+      "position": 201
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’m available for consultations.",
+      "position": 202
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Actually, you’ve been useful tonight. You got me out of the chair.",
+      "position": 203
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "You got yourself out of the chair. I just kept talking until you moved.",
+      "position": 204
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Whatever it was, it worked. I feel better than I did when you called.",
+      "position": 205
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Me too. I didn’t realise how much I wanted an ordinary conversation. Most of my calls lately have been about arrangements. Where are you? Have you sent it? Can you check something?",
+      "position": 206
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes. Sometimes it’s nice for nobody to need anything.",
+      "position": 207
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Well, I do need you to send that series.",
+      "position": 208
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I knew there was a hidden agenda.",
+      "position": 209
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "And confirm Saturday tomorrow.",
+      "position": 210
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Fine. You’ll get both.",
+      "position": 211
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I’ll let you finish cooking now. Message me when you’ve eaten.",
+      "position": 212
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "You don’t have to go yet.",
+      "position": 213
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "I know. But I need to charge my phone, and I still have clothes on the bed that I’ve been pretending aren’t there.",
+      "position": 214
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Just move them to the chair. That seems to be the usual system.",
+      "position": 215
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "That chair is already occupied by last week’s decisions.",
+      "position": 216
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Then I won’t interfere. Go and sort them out.",
+      "position": 217
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Enjoy your food. And don’t forget the heat is on while you’re looking for the series.",
+      "position": 218
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "I won’t. Thanks for calling.",
+      "position": 219
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Of course. Speak tomorrow?",
+      "position": 220
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "Yes. And Saturday at three.",
+      "position": 221
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Three. I heard you.",
+      "position": 222
+    },
+    {
+      "speaker_id": "speaker_2",
+      "text": "All right. Good night.",
+      "position": 223
+    },
+    {
+      "speaker_id": "speaker_1",
+      "text": "Good night. Save some rice for tomorrow.",
+      "position": 224
+    }
+  ]
+}

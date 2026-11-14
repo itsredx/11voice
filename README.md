@@ -4,13 +4,14 @@
 
 Conversation Studio is a desktop application that lets you create, edit, and play conversations between multiple speakers, each with a distinct AI-generated voice and independently assigned audio output device.
 
-Powered by [ElevenLabs](https://elevenlabs.io/) for voice generation and PipeWire for audio routing, Conversation Studio aims to make multi-speaker audio playback flexible and customizable.
+Powered by [ElevenLabs](https://elevenlabs.io/) or [Speechify](https://speechify.ai/) for voice generation and PipeWire for audio routing, Conversation Studio aims to make multi-speaker audio playback flexible and customizable.
 
 ## Features
 
 - **Multi-speaker conversations:** Create conversations with multiple speakers.
-- **AI voice generation:** Generate realistic speech using ElevenLabs.
-- **Voice customization:** Assign different ElevenLabs voices to individual speakers.
+- **AI voice generation:** Generate speech using ElevenLabs or Speechify.
+- **Voice customization:** Choose from each provider's voice catalog, with separate speaker voices remembered for each provider.
+- **Provider settings:** Save both API keys in the in-app settings page and switch providers from the header.
 - **Independent audio routing:** Route each speaker to a different physical audio output.
 - **Dialogue editor:** Write, edit, reorder, and manage conversation turns.
 - **Audio caching:** Reuse generated audio instead of repeatedly calling the TTS API.
@@ -26,6 +27,7 @@ Powered by [ElevenLabs](https://elevenlabs.io/) for voice generation and PipeWir
 | Python | Application logic |
 | Pythra | Desktop UI framework |
 | ElevenLabs API | AI voice generation |
+| Speechify API | AI voice generation |
 | PipeWire | Linux audio routing |
 | SQLite | Local persistence |
 | GStreamer | Audio playback |
@@ -45,8 +47,10 @@ current Speaker A/B voices. Generated turn audio is cached in `assets/audio_cach
 to `assets/playback_archive/<conversation-id>/<voice-pair-id>/` so each voice pairing remains
 available locally.
 
-To connect ElevenLabs, add your key to the ignored `.env` file as `ELEVENLABS_API_KEY=...`,
-then start 11voice with `python3 -m lib.main`. The app loads your account voices on startup.
+Open **Settings** in the app to add or replace either provider's API key. Keys are stored
+in the ignored local `.env` file (`ELEVENLABS_API_KEY` and `SPEECHIFY_API_KEY`). Use the
+provider button in the header to switch providers; the voice dropdown updates to that
+provider's catalog. Start 11voice with `python3 -m lib.main`.
 
 ## Project Status
 
@@ -62,7 +66,7 @@ Features and architecture are subject to change.
 - Python 3.11+
 - PipeWire
 - Bluetooth audio support (when using Bluetooth devices)
-- ElevenLabs API key
+- ElevenLabs or Speechify API key
 
 ## Installation
 
@@ -70,7 +74,7 @@ Installation instructions will be added as the project matures.
 
 ## Configuration
 
-An ElevenLabs API key will be required for speech generation.
+An API key for either ElevenLabs or Speechify is required for speech generation.
 
 Store API credentials locally and never commit them to version control.
 

@@ -10,6 +10,7 @@ from pythra.styles import (
     EdgeInsets,
     MainAxisAlignment,
     TextStyle,
+    Colors,
 )
 from pythra.widgets import SizedBox
 from pythra import (
@@ -60,25 +61,27 @@ def build_conversation_bubble(
     # Action items list
     action_items = []
     if is_active:
-        action_items.extend([
-            Icon(
-                Icons.volume_up_rounded,
-                key=Key(f"play_icon_{turn.id}"),
-                size=16,
-                color=StudioColors.warning,
-            ),
-            SizedBox(width=4, key=Key(f"play_spc_{turn.id}")),
-            Text(
-                "PLAYING",
-                key=Key(f"play_txt_{turn.id}"),
-                style=TextStyle(
-                    fontSize=11,
-                    fontWeight="bold",
+        action_items.extend(
+            [
+                Icon(
+                    Icons.volume_up_rounded,
+                    key=Key(f"play_icon_{turn.id}"),
+                    size=16,
                     color=StudioColors.warning,
                 ),
-            ),
-            SizedBox(width=10, key=Key(f"play_spc2_{turn.id}")),
-        ])
+                SizedBox(width=4, key=Key(f"play_spc_{turn.id}")),
+                Text(
+                    "PLAYING",
+                    key=Key(f"play_txt_{turn.id}"),
+                    style=TextStyle(
+                        fontSize=11,
+                        fontWeight="bold",
+                        color=StudioColors.warning,
+                    ),
+                ),
+                SizedBox(width=30, key=Key(f"play_spc2_{turn.id}")),
+            ]
+        )
 
     # Single-turn preview button
     action_items.append(
@@ -94,6 +97,7 @@ def build_conversation_bubble(
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
+                backgroundColor=Colors.hex("#0f172a")
             ),
         )
     )
@@ -113,6 +117,7 @@ def build_conversation_bubble(
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
+                backgroundColor=Colors.hex("#0f172a")
             ),
         )
     )
@@ -132,6 +137,7 @@ def build_conversation_bubble(
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
+                backgroundColor=Colors.hex("#0f172a")
             ),
         )
     )
@@ -151,6 +157,7 @@ def build_conversation_bubble(
             style=ButtonStyle(
                 padding=EdgeInsets.all(4),
                 shape=BorderRadius.circular(4),
+                backgroundColor=Colors.hex("#0f172a")
             ),
         )
     )
@@ -158,7 +165,11 @@ def build_conversation_bubble(
     bubble_decoration = BoxDecoration(
         color=bg_color,
         borderRadius=BorderRadius.circular(10),
-        border=BorderSide(color=StudioColors.active_turn_border, width=1) if is_active else None,
+        border=(
+            BorderSide(color=StudioColors.active_turn_border, width=1)
+            if is_active
+            else None
+        ),
     )
 
     return Container(
@@ -209,10 +220,14 @@ def build_conversation_bubble(
                                         fontFamily="monospace",
                                     ),
                                 ),
-                                SizedBox(width=10, key=Key(f"status_pill_spc_{turn.id}")),
+                                SizedBox(
+                                    width=10, key=Key(f"status_pill_spc_{turn.id}")
+                                ),
                                 Container(
                                     key=Key(f"turn_status_pill_{turn.id}"),
-                                    padding=EdgeInsets.symmetric(horizontal=6, vertical=2),
+                                    padding=EdgeInsets.symmetric(
+                                        horizontal=6, vertical=2
+                                    ),
                                     decoration=BoxDecoration(
                                         color=StudioColors.surface_elevated,
                                         borderRadius=BorderRadius.circular(4),
@@ -229,15 +244,18 @@ def build_conversation_bubble(
                                 ),
                             ],
                         ),
-                        Row(
-                            key=Key(f"turn_actions_{turn.id}"),
-                            crossAxisAlignment=CrossAxisAlignment.CENTER,
-                            children=action_items,
+                        Container(
+                            key=Key(f"Turn_Actions_{turn.id}"),
+                            # color='red',
+                            child=Row(
+                                key=Key(f"turn_actions_{turn.id}"),
+                                crossAxisAlignment=CrossAxisAlignment.CENTER,
+                                children=action_items,
+                            ),
                         ),
                     ],
                 ),
                 SizedBox(height=10, key=Key(f"turn_spc_3_{turn.id}")),
-
                 # ── Dialogue Utterance Text ───────────────────────────
                 Container(
                     key=Key(f"turn_text_{turn.id}_cont"),
@@ -254,7 +272,7 @@ def build_conversation_bubble(
                             lineHeight=1.4,
                         ),
                     ),
-                )
+                ),
             ],
         ),
     )

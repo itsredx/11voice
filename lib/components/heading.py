@@ -26,6 +26,9 @@ def build_heading(
     title: str = "11Voice Conversation Studio",
     on_refresh_devices=None,
     is_syncing_outputs: bool = False,
+    active_provider: str = "elevenlabs",
+    on_switch_provider=None,
+    on_open_settings=None,
 ):
     """Top application header with studio branding and device refresh action."""
     return Container(
@@ -68,6 +71,26 @@ def build_heading(
                     crossAxisAlignment=CrossAxisAlignment.CENTER,
                     mainAxisAlignment=MainAxisAlignment.SPACE_BETWEEN,
                     children=[
+                        ElevatedButton(
+                            key=Key("provider_switch_btn"),
+                            child=Text(
+                                f"Provider: {'ElevenLabs' if active_provider == 'elevenlabs' else 'Speechify'}",
+                                key=Key("provider_switch_label"),
+                                style=TextStyle(
+                                    fontSize=12,
+                                    fontWeight="bold",
+                                    color=StudioColors.text_primary,
+                                ),
+                            ),
+                            onPressed=on_switch_provider,
+                            onPressedName="switch_provider",
+                            style=ButtonStyle(
+                                backgroundColor=StudioColors.surface_elevated,
+                                padding=EdgeInsets.symmetric(horizontal=12, vertical=8),
+                                shape=BorderRadius.circular(6),
+                            ),
+                        ),
+                        SizedBox(width=8, key=Key("provider_btn_spacer")),
                         Text(
                             "PipeWire Multi-Output",
                             key=Key("pipewire_badge"),
@@ -78,6 +101,25 @@ def build_heading(
                             ),
                         ),
                         SizedBox(width=12, key=Key("action_spacer")),
+                        ElevatedButton(
+                            key=Key("settings_btn"),
+                            child=Text(
+                                "Settings",
+                                style=TextStyle(
+                                    fontSize=12,
+                                    fontWeight="bold",
+                                    color=StudioColors.text_primary,
+                                ),
+                            ),
+                            onPressed=on_open_settings,
+                            onPressedName="open_settings",
+                            style=ButtonStyle(
+                                backgroundColor=StudioColors.surface_elevated,
+                                padding=EdgeInsets.symmetric(horizontal=12, vertical=8),
+                                shape=BorderRadius.circular(6),
+                            ),
+                        ),
+                        SizedBox(width=8, key=Key("settings_btn_spacer")),
                         ElevatedButton(
                             key=Key("refresh_devices_btn"),
                             child=Row(

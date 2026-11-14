@@ -6,7 +6,6 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from urllib.parse import urlencode
 from .exceptions import AuthenticationError, ElevenLabsError, PaidPlanRequiredError, RateLimitError, VoiceNotFoundError
 
 logger = logging.getLogger(__name__)
@@ -97,27 +96,10 @@ class ElevenLabsClient:
 
     # ── API Methods ───────────────────────────────────────────────────
     def get_voices(self) -> List[Dict[str, Any]]:
-        """Fetch all account voices using the paginated v2 voices endpoint."""
-        voices: List[Dict[str, Any]] = []
-        page_token: Optional[str] = None
-        seen_tokens = set()
-        while True:
-            params = {"page_size": 100, "include_total_count": "false"}
-            if page_token:
-                if page_token in seen_tokens:
-                    break
-                seen_tokens.add(page_token)
-                params["next_page_token"] = page_token
-            raw = self._request(
-                f"{self.V2_BASE_URL}/voices?{urlencode(params)}",
-                method="GET",
-            )
-            data = json.loads(raw.decode("utf-8"))
-            voices.extend(data.get("voices", []))
-            page_token = data.get("next_page_token")
-            if not data.get("has_more") or not page_token:
-                break
-        return voices
+        """Fetch the voices available to this user, including premade voices."""
+        raw = self._request("/voices", method="GET")
+        data = json.loads(raw.decode("utf-8"))
+        return data.get("voices", [])
 
     def generate_tts_bytes(
         self,

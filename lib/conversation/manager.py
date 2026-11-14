@@ -3,6 +3,7 @@ import logging
 from typing import Dict, List, Optional
 from ..audio import AudioEngine
 from ..storage.audio_cache import AudioCache
+from ..elevenlabs.speech import SpeechGenerator
 from .models import Conversation, DialogueTurn, GenerationStatus, Speaker
 from .queue import PlaybackQueue
 
@@ -20,10 +21,14 @@ class ConversationManager:
         self,
         audio_engine: Optional[AudioEngine] = None,
         audio_cache: Optional[AudioCache] = None,
+        speech_generator: Optional[SpeechGenerator] = None,
     ):
         self.audio_engine = audio_engine or AudioEngine()
         self.audio_cache = audio_cache or AudioCache()
-        self.queue = PlaybackQueue(audio_engine=self.audio_engine)
+        self.queue = PlaybackQueue(
+            audio_engine=self.audio_engine,
+            speech_generator=speech_generator,
+        )
 
         self.current_conversation = Conversation(title="New Conversation")
         self.speakers: Dict[str, Speaker] = {}

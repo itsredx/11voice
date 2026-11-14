@@ -98,3 +98,38 @@ python3 -c "import sys; from pathlib import Path; sys.path.insert(0, str(Path('.
 python3 -c "import inspect, pythra; print([line for line in inspect.getsource(pythra.IconButton).splitlines() if 'Api' in line or 'register' in line or 'callback' in line])"
 # Search where IconButton registers its callback in pythra-toolkit
 grep -rn "IconButton" /home/red-x/projects/desktop/pythra-toolkit/src/pythra/pythra/ | grep -i "callback"
+# Check git status for commit preparation
+git status
+# Inspect recent commits
+git log -n 5 --oneline
+# View last commit details
+git show -s --format=fuller 40490b6
+# Check git diff stat
+git diff --stat
+# Inspect new lib/speechify directory
+ls -la lib/speechify/
+# Check git diff summary of lib/
+git diff lib/elevenlabs/ lib/state/app_state.py lib/components/
+# Check git diff of README.md and .env.example
+git diff README.md .env.example
+# Check git diff of conversation manager and elevenlabs modules
+git diff lib/conversation/manager.py lib/elevenlabs/
+# Check if assets/audio_cache/ has any tracked files
+git ls-files assets/audio_cache/
+# Check git diff of render/index.html
+git diff render/index.html | head -n 30
+# Verify .env is properly ignored
+git check-ignore .env
+# Stage all files for commit
+git add .
+# Check staged status
+git status -s
+# Stage commands.cmd
+git add commands.cmd
+# Verify staged changes before commit
+git status --short
+# Final stage of commands.cmd before commit
+git add commands.cmd
+# Commit staged changes with detailed architectural documentation
+git commit -F .git_commit_msg.tmp
+rm .git_commit_msg.tmp

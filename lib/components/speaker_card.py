@@ -8,6 +8,7 @@ from pythra.styles import (
     EdgeInsets,
     MainAxisAlignment,
     TextStyle,
+    BorderSide,
 )
 from pythra.widgets import SizedBox
 from pythra import (
@@ -34,6 +35,7 @@ def build_speaker_card(
     on_device_selected: Optional[Callable[[str], None]] = None,
     on_voice_selected: Optional[Callable[[str], None]] = None,
     available_voices: Optional[List[VoiceInfo]] = None,
+    provider: str = "elevenlabs",
 ):
     """
     Card displaying speaker profile, ElevenLabs voice selector dropdown,
@@ -46,6 +48,7 @@ def build_speaker_card(
         decoration=BoxDecoration(
             color=StudioColors.surface,
             borderRadius=BorderRadius.circular(10),
+            border=BorderSide(color=StudioColors.border, width=1),
         ),
         child=Column(
             key=Key(f"speaker_col_{speaker.id}"),
@@ -115,6 +118,7 @@ def build_speaker_card(
                     on_voice_selected=on_voice_selected or (lambda v: None),
                     widget_key_prefix=f"voice_sel_{speaker.id}",
                     available_voices=available_voices,
+                    provider=provider,
                 ),
                 SizedBox(height=10, key=Key(f"spk_spc_mid_{speaker.id}")),
 
