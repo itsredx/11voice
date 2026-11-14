@@ -668,6 +668,7 @@ class ConversationScreenState(State):
                                         ),
                                         shape=BorderRadius.circular(8),
                                         minimumSize=(150, 40),
+                                        side=BorderSide(color=StudioColors.active_turn_border, width=1)
                                     ),
                                     child=Text(
                                         "Import JSON",
